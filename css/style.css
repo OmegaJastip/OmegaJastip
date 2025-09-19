@@ -106,7 +106,7 @@ header {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(images/hero-background.jpg);
+    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(../images/hero-background.jpg);
     background-size: cover;
     background-position: center;
     height: 600px;
@@ -167,6 +167,48 @@ header {
 /* Section Styles */
 section {
     padding: 60px 0;
+}
+
+/* Scroll Animation Styles */
+.services,
+.pricing-calculator,
+.how-it-works,
+.testimonials,
+.cta {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Enable scroll animation on mobile */
+@media (max-width: 768px) {
+    .services,
+    .pricing-calculator,
+    .how-it-works,
+    .testimonials,
+    .cta {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .services.animate,
+    .pricing-calculator.animate,
+    .how-it-works.animate,
+    .testimonials.animate,
+    .cta.animate {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.services.animate,
+.pricing-calculator.animate,
+.how-it-works.animate,
+.testimonials.animate,
+.cta.animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .section-title {
