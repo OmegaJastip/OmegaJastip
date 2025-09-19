@@ -145,6 +145,37 @@ document.addEventListener('DOMContentLoaded', function() {
 // Manual calculation button (optional, in case user wants to recalculate)
 calculateBtn.addEventListener('click', calculatePrice);
 
+// Scroll Animation for Sections
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.services, .pricing-calculator, .how-it-works, .testimonials, .cta');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Display random visitor count
+    const visitorCountElement = document.getElementById('visitor-count');
+    if (visitorCountElement) {
+        const randomCount = Math.floor(Math.random() * 1000) + 1; // Random number between 1 and 1000
+        visitorCountElement.textContent = randomCount.toLocaleString();
+    }
+});
+
 // Map initialization and functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Koordinat default LubukLinggau
