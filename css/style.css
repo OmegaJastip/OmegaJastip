@@ -106,7 +106,7 @@ header {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(../images/hero-background.jpg);
+    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(images/hero-background.jpg);
     background-size: cover;
     background-position: center;
     height: 600px;
@@ -703,4 +703,3 @@ footer {
 .hero-content div {
     animation: fadeInUp 1s ease-out 4s both;
 }
-
