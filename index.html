@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #f59e0b;
-            --accent: #10b981;
-            --light: #f3f4f6;
-            --dark: #1f2937;
-            --text: #4b5563;
+            --primary: #ee4d2d;
+            --secondary: #f57c5a;
+            --accent: #ff7f50;
+            --light: #ffffff;
+            --dark: #333333;
+            --text: #555555;
         }
         
         * {
@@ -61,7 +61,7 @@
         }
         
         .logo-icon {
-            background: var(--primary);
+            background: var(--light);
             color: white;
             width: 40px;
             height: 40px;
@@ -116,7 +116,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(37, 99, 235, 0.8)), url('https://images.unsplash.com/photo-1590649880760-2d4b0f523de7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(images/hero-background.jpg);
             background-size: cover;
             background-position: center;
             height: 600px;
@@ -689,6 +689,30 @@
             font-size: 1rem;
             text-align: center;
         }
+
+        /* Hero Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
+            animation: fadeInUp 1s ease-out 2s both;
+        }
+
+        .hero-content p {
+            animation: fadeInUp 1s ease-out 3s both;
+        }
+
+        .hero-content div {
+            animation: fadeInUp 1s ease-out 4s both;
+        }
     </style>
 </head>
 <body>
@@ -697,7 +721,7 @@
         <div class="container header-container">
             <a href="#" class="logo">
                 <div class="logo-icon">
-                    <i class="fas fa-shuttle-van"></i>
+                    <img src="images/logo.png" alt="Omega Jastip Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
                 </div>
                 <div class="logo-text">Omega <span>Jastip</span></div>
             </a>
@@ -1430,3 +1454,4 @@
     </script>
 </body>
 </html>
+
