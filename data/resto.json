@@ -1,0 +1,289 @@
+[
+    {
+        "id": 1758459244769,
+        "name": "Singkong Meledak",
+        "category": "Jajanan",
+        "description": "Singkong meledak adalah jajanan yang viral di Palembang dan Medan, berupa singkong goreng dengan tekstur empuk di dalam dan garing di luar, yang dinamakan \"meledak\" karena teksturnya akan merekah atau mengembang saat dimasak. Jajanan ini biasanya dijual dalam beberapa pilihan rasa modern seperti balado, BBQ, atau jagung manis, seharga sekitar Rp15.000 per porsi",
+        "address": "Jl. Yos Sudarso No.76, Jawa Kanan, Kec. Lubuk Linggau Tim. I, Kota Lubuklinggau, Sumatera Selatan 31613",
+        "phone": "0895700341213",
+        "price_range": "Rp 15.000 ",
+        "rating": 5,
+        "image": "images\/singkong-meledak.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "13:00 - 22:00",
+        "menu": [
+            {
+                "name": "Balado",
+                "category": "singkong meledak",
+                "price": "15000"
+            },
+            {
+                "name": "Balado Pedas Manis",
+                "category": "singkong meledak",
+                "price": "15000"
+            },
+            {
+                "name": "BBQ",
+                "category": "singkong meledak",
+                "price": "15000"
+            },
+            {
+                "name": "Jagung Manis",
+                "category": "singkong meledak",
+                "price": "15000"
+            },
+            {
+                "name": "Original",
+                "category": "singkong meledak",
+                "price": "15000"
+            },
+            {
+                "name": "MIX",
+                "category": "singkong meledak",
+                "price": "15000"
+            }
+        ]
+    },
+    {
+        "id": 1758461450822,
+        "name": "Mango Queen",
+        "category": "Jajanan",
+        "description": "Jajanan Mango Queen adalah stand atau kafe yang menjual smoothies Thailand dan pancong lumer di Lubuklinggau, menjual berbagai macam minuman dengan harga mulai dari Rp15.000,- dan sering menjadi rekomendasi jajan populer di sana. Jajanan ini dikenal karena whipcream dan kejunya yang melimpah serta rasanya yang enak",
+        "address": "Jl.Yos sudarso jawa kanan (samping seafood 21 ,sebrang tomoro coffe)",
+        "phone": "0895700341213",
+        "price_range": "Rp 5.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/mango-queen.jpg",
+        "delivery_available": true,
+        "pickup_available": true,
+        "operating_hours": "10:00-21:00",
+        "menu": [
+            {
+                "name": "ori",
+                "category": "Pancong Lumer",
+                "price": "Rp 8.000"
+            },
+            {
+                "name": "Coklat",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Greentea",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Tiramisu",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Taro",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "White Choco",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Strawberry",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Keju",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Capucino",
+                "category": "Pancong Lumer",
+                "price": "Rp 11.000"
+            },
+            {
+                "name": "Choco crunch",
+                "category": "Pancong Cruncy",
+                "price": "Rp 12.000"
+            },
+            {
+                "name": "Tiramisu Crunch",
+                "category": "Pancong Cruncy",
+                "price": "Rp 12.000"
+            },
+            {
+                "name": "Grentea Crunchy",
+                "category": "Pancong Cruncy",
+                "price": "Rp 13.000"
+            },
+            {
+                "name": "Jumbo Free 3 Toping + 3 Ex Toping",
+                "category": "Pancong Cruncy",
+                "price": "Rp 25.000"
+            },
+            {
+                "name": "Air Mineral",
+                "category": "Jus",
+                "price": "Rp 5.000"
+            },
+            {
+                "name": "Manga",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000"
+            },
+            {
+                "name": "Alpukat",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000"
+            },
+            {
+                "name": "Strawberry",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000"
+            },
+            {
+                "name": "Kurma",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000"
+            },
+            {
+                "name": "Buah Naga",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000"
+            },
+            {
+                "name": "Coklat",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000"
+            },
+            {
+                "name": "Ubi Ungu",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000"
+            },
+            {
+                "name": "Durian",
+                "category": "Jus",
+                "price": "Rp 12.000 - Rp 14.000"
+            },
+            {
+                "name": "Melon",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000"
+            },
+            {
+                "name": "Mix Rasa",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "Keju",
+                "category": "Extra Toping",
+                "price": "Rp 1.000 - Rp 3.000"
+            },
+            {
+                "name": "Koko krunch",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "Crumb Black",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "c.GreenTea",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "c.Red Velvet",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "Whipecream",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "Marsmellow",
+                "category": "Extra Toping",
+                "price": "Rp 2.000"
+            },
+            {
+                "name": "Salad Buah",
+                "category": "Snack",
+                "price": "Rp 15.000 - Rp 25.000"
+            },
+            {
+                "name": "Ketahuan(TASO)",
+                "category": "Snack",
+                "price": "Rp 10.000 - Rp 15.000"
+            },
+            {
+                "name": "Basreng",
+                "category": "Snack",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "Fruit Sando",
+                "category": "Snack",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "French Fries",
+                "category": "Snack",
+                "price": "Rp 10.000"
+            },
+            {
+                "name": "French Fries & Sausages",
+                "category": "Snack",
+                "price": "Rp 18.000"
+            },
+            {
+                "name": "Mango Thai",
+                "category": "Smothies",
+                "price": "Rp 16.000"
+            },
+            {
+                "name": "Alpukat Thai",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Strawberry Thai",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Ubi Ungu",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Choco Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Dragon Fruit",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Kurma Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            },
+            {
+                "name": "Melon Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000"
+            }
+        ]
+    }
+]
