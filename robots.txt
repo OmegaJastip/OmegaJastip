@@ -1,3 +1,17 @@
 User-agent: *
 Allow: /
+
+# Sitemap location
 Sitemap: https://omegajastip.online/sitemap.xml
+
+# Block access to data folder
+Disallow: /data/
+
+# Allow access to main pages
+Allow: /
+Allow: /index.html
+Allow: /resto.html
+Allow: /toko.html
+
+# Crawl delay to be respectful to server
+Crawl-delay: 1
