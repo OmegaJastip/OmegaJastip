@@ -2,20 +2,22 @@
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    hamburger.innerHTML = navMenu.classList.contains('active')
-        ? '<i class="fas fa-times"></i>'
-        : '<i class="fas fa-bars"></i>';
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        hamburger.innerHTML = navMenu.classList.contains('active')
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
     });
-});
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+    });
+}
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -130,20 +132,26 @@ function calculatePrice() {
     calculatorResult.style.display = 'block';
 }
 
-// Add event listeners for automatic calculation and weight visibility
-serviceType.addEventListener('change', function() {
-    toggleWeightInput();
-    calculatePrice();
-});
-weight.addEventListener('input', calculatePrice);
+// Add event listeners for automatic calculation and weight visibility (only if elements exist)
+if (serviceType && weight) {
+    serviceType.addEventListener('change', function() {
+        toggleWeightInput();
+        calculatePrice();
+    });
+    weight.addEventListener('input', calculatePrice);
+}
 
-// Initialize weight input visibility on page load
+// Initialize weight input visibility on page load (only if elements exist)
 document.addEventListener('DOMContentLoaded', function() {
-    toggleWeightInput();
+    if (serviceType) {
+        toggleWeightInput();
+    }
 });
 
 // Manual calculation button (optional, in case user wants to recalculate)
-calculateBtn.addEventListener('click', calculatePrice);
+if (calculateBtn) {
+    calculateBtn.addEventListener('click', calculatePrice);
+}
 
 // Scroll Animation for Sections
 document.addEventListener('DOMContentLoaded', function() {
@@ -178,6 +186,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Map initialization and functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if map element exists before initializing
+    const mapElement = document.getElementById('map');
+    if (!mapElement) return; // Exit if map doesn't exist on this page
+
     // Koordinat default LubukLinggau
     const defaultCoords = [-3.2966, 102.8618];
 
@@ -198,12 +210,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('address-search');
     const searchButton = document.getElementById('search-button');
 
-    searchButton.addEventListener('click', searchLocation);
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchLocation();
-        }
-    });
+    // Add event listeners only if elements exist
+    if (searchButton && searchInput) {
+        searchButton.addEventListener('click', searchLocation);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchLocation();
+            }
+        });
+    }
 
     function searchLocation() {
         const query = searchInput.value;

@@ -94,6 +94,19 @@ header {
     color: var(--primary);
 }
 
+.admin-link {
+    color: var(--dark) !important;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    color: var(--primary) !important;
+    background: rgba(238, 77, 45, 0.1);
+}
+
 .nav-menu a.btn {
     color: white;
 }
