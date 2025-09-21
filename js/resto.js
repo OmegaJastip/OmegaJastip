@@ -2,18 +2,64 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load restaurant data
     loadRestaurants();
-
-    // Setup search functionality
-    setupSearch();
-
-    // Setup filter functionality
-    setupFilters();
 });
+
+// Function to get unique categories from restaurant data
+function getUniqueCategories(restaurants) {
+    const categories = new Set();
+
+    // Add "all" category for "Semua" button
+    categories.add('all');
+
+    // Extract unique categories from restaurant data
+    restaurants.forEach(restaurant => {
+        if (restaurant.category) {
+            categories.add(restaurant.category);
+        }
+    });
+
+    return Array.from(categories);
+}
+
+// Function to create filter buttons dynamically
+function createFilterButtons(categories) {
+    const filterContainer = document.querySelector('.filter-buttons');
+
+    // Clear existing buttons (except search box)
+    const existingButtons = filterContainer.querySelectorAll('.filter-btn');
+    existingButtons.forEach(button => button.remove());
+
+    // Create new filter buttons based on data
+    categories.forEach(category => {
+        const button = document.createElement('button');
+        button.className = 'filter-btn';
+        button.dataset.category = category;
+
+        // Set button text
+        if (category === 'all') {
+            button.textContent = 'Semua';
+            button.classList.add('active'); // Make "Semua" active by default
+        } else {
+            button.textContent = category;
+        }
+
+        filterContainer.appendChild(button);
+    });
+}
 
 async function loadRestaurants() {
     try {
         const response = await fetch('data/resto.json');
         const restaurants = await response.json();
+
+        // Get unique categories and create filter buttons dynamically
+        const categories = getUniqueCategories(restaurants);
+        createFilterButtons(categories);
+
+        // Setup filter functionality after buttons are created
+        setupFilters();
+
+        // Display restaurants
         displayRestaurants(restaurants);
     } catch (error) {
         console.error('Error loading restaurant data:', error);
@@ -33,7 +79,7 @@ function displayRestaurants(restaurants) {
     container.innerHTML = html;
 }
 
-function createRestaurantCard(restaurant) {
+function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
     const ratingStars = generateStars(restaurant.rating);
     const services = restaurant.delivery_available && restaurant.pickup_available
         ? '<span class="service-badge delivery">Delivery</span><span class="service-badge pickup">Pickup</span>'
@@ -95,7 +141,7 @@ function createRestaurantCard(restaurant) {
                     <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
                         <i class="fab fa-whatsapp"></i> Pesan via WA
                     </a>
-                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id})">
+                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id}, '${currentCategoryFilter}')">
                         <i class="fas fa-info-circle"></i> Detail
                     </button>
                 </div>
@@ -212,14 +258,14 @@ function filterByCategory(category) {
     }
 }
 
-function showRestaurantDetails(restaurantId) {
+function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
     // Get restaurant data
     fetch('data/resto.json')
         .then(response => response.json())
         .then(restaurants => {
             const restaurant = restaurants.find(r => r.id === restaurantId);
             if (restaurant) {
-                showRestaurantModal(restaurant);
+                showRestaurantModal(restaurant, menuCategoryFilter);
             } else {
                 alert('Data restoran tidak ditemukan!');
             }
@@ -230,8 +276,47 @@ function showRestaurantDetails(restaurantId) {
         });
 }
 
-function showRestaurantModal(restaurant) {
+
+function showRestaurantModal(restaurant, menuCategoryFilter = null) {
     const ratingStars = generateStars(restaurant.rating);
+
+    // Group menu items by category
+    const menuByCategory = {};
+    if (restaurant.menu && restaurant.menu.length > 0) {
+        restaurant.menu.forEach(item => {
+            if (!menuByCategory[item.category]) {
+                menuByCategory[item.category] = [];
+            }
+            menuByCategory[item.category].push(item);
+        });
+    }
+
+    // Get unique categories for category filter
+    const categories = Object.keys(menuByCategory);
+
+    // Generate HTML for category filter buttons
+    let categoryFilterHtml = '<div class="modal-category-filters">';
+    categoryFilterHtml += '<button class="category-filter-btn active" data-category="all">Semua</button>';
+    categories.forEach(cat => {
+        categoryFilterHtml += `<button class="category-filter-btn" data-category="${cat}">${cat}</button>`;
+    });
+    categoryFilterHtml += '</div>';
+
+    // Generate HTML for menu grouped by category
+    let menuHtml = '<div id="modal-menu-list">';
+    for (const category in menuByCategory) {
+        menuHtml += `<h4 class="menu-category" data-category="${category}">${category}</h4><div class="services-list">`;
+        menuByCategory[category].forEach(item => {
+            menuHtml += `
+                <div class="service-item-detail" data-name="${item.name.toLowerCase()}">
+                    <span class="service-name">${item.name}</span>
+                    <span class="service-price">${item.price}</span>
+                </div>
+            `;
+        });
+        menuHtml += '</div>';
+    }
+    menuHtml += '</div>';
 
     const modal = document.createElement('div');
     modal.className = 'detail-modal';
@@ -277,15 +362,10 @@ function showRestaurantModal(restaurant) {
                     </div>
 
                     <div class="info-section">
-                        <h3>Menu & Layanan</h3>
-                        <div class="services-list">
-                            ${restaurant.menu && restaurant.menu.map(service => `
-                                <div class="service-item-detail">
-                                    <span class="service-name">${service.name}</span>
-                                    <span class="service-price">${service.price}</span>
-                                </div>
-                            `).join('')}
-                        </div>
+                        <h3>Menu & Layanan (berdasarkan kategori menu)</h3>
+                        <input type="text" id="modal-menu-search" placeholder="Search menu..." />
+                        ${categoryFilterHtml}
+                        ${menuHtml}
                     </div>
 
                     <div class="info-section">
@@ -518,9 +598,93 @@ function showRestaurantModal(restaurant) {
                     flex-direction: column;
                 }
             }
+
+            .modal-category-filters {
+                margin-bottom: 10px;
+            }
+
+            .category-filter-btn {
+                background: #f0f0f0;
+                border: none;
+                border-radius: 20px;
+                padding: 6px 12px;
+                margin-right: 8px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .category-filter-btn.active,
+            .category-filter-btn:hover {
+                background: #007bff;
+                color: white;
+            }
+
+            #modal-menu-search {
+                width: 100%;
+                padding: 8px 12px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                font-size: 1rem;
+            }
         `;
         document.head.appendChild(styles);
     }
+
+    // Add event listeners for search and category filter
+    const searchInput = document.getElementById('modal-menu-search');
+    const categoryButtons = modal.querySelectorAll('.category-filter-btn');
+    const menuList = modal.querySelector('#modal-menu-list');
+
+    function filterMenu() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategoryBtn = modal.querySelector('.category-filter-btn.active');
+        const activeCategory = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'all';
+
+        const menuCategories = menuList.querySelectorAll('.menu-category');
+        menuCategories.forEach(categoryEl => {
+            const category = categoryEl.dataset.category;
+            const serviceItems = categoryEl.nextElementSibling.querySelectorAll('.service-item-detail');
+
+            // Show/hide category based on active category filter
+            if (activeCategory !== 'all' && category !== activeCategory) {
+                categoryEl.style.display = 'none';
+                categoryEl.nextElementSibling.style.display = 'none';
+                return;
+            } else {
+                categoryEl.style.display = '';
+                categoryEl.nextElementSibling.style.display = '';
+            }
+
+            // Filter service items by search term
+            serviceItems.forEach(item => {
+                const name = item.dataset.name;
+                if (name.includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // If all items are hidden, hide the category as well
+            const visibleItems = Array.from(serviceItems).some(item => item.style.display !== 'none');
+            if (!visibleItems) {
+                categoryEl.style.display = 'none';
+                categoryEl.nextElementSibling.style.display = 'none';
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', filterMenu);
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            filterMenu();
+        });
+    });
 }
 
 function closeModal() {
