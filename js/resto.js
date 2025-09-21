@@ -521,7 +521,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .info-item i {
                 width: 16px;
-                color: #007bff;
+                color: #EE4D2D;
             }
 
             .service-item-detail {
@@ -537,7 +537,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             }
 
             .service-price {
-                color: #007bff;
+                color: #EE4D2D;
                 font-weight: 600;
             }
 
@@ -560,7 +560,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             }
 
             .service-badge.pickup {
-                background: #007bff;
+                background: #EE4D2D;
                 color: white;
             }
 
@@ -616,7 +616,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .category-filter-btn.active,
             .category-filter-btn:hover {
-                background: #007bff;
+                background: #EE4D2D;
                 color: white;
             }
 
