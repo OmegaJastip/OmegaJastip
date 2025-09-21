@@ -19,116 +19,7 @@ if (hamburger && navMenu) {
     });
 }
 
-// Loading System
-class LoadingManager {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        this.createLoadingOverlay();
-        this.setupSectionNavigation();
-        this.setupPageNavigation();
-    }
-
-    createLoadingOverlay() {
-        // Create loading overlay if it doesn't exist
-        if (!document.getElementById('loading-overlay')) {
-            const overlay = document.createElement('div');
-            overlay.id = 'loading-overlay';
-            overlay.innerHTML = `
-                <div class="loading-content">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Memuat...</div>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-        }
-    }
-
-    showLoading(duration = 800) {
-        const overlay = document.getElementById('loading-overlay');
-        if (overlay) {
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Auto hide after duration
-            setTimeout(() => {
-                this.hideLoading();
-            }, duration);
-        }
-    }
-
-    hideLoading() {
-        const overlay = document.getElementById('loading-overlay');
-        if (overlay) {
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    setupSectionNavigation() {
-        // Handle smooth scrolling with loading for section navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                const href = anchor.getAttribute('href');
-                if (href === '#') return;
-
-                e.preventDefault();
-
-                // Show loading
-                this.showLoading(600);
-
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    // Scroll to target after a short delay
-                    setTimeout(() => {
-                        const headerHeight = document.querySelector('header')?.offsetHeight || 80;
-                        const targetPosition = targetElement.offsetTop - headerHeight;
-
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-
-                        // Update URL without jumping
-                        if (history.pushState) {
-                            history.pushState(null, null, href);
-                        }
-                    }, 300);
-                }
-            });
-        });
-    }
-
-    setupPageNavigation() {
-        // Handle page navigation with loading
-        document.querySelectorAll('a[href$=".html"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Only handle internal links (same domain)
-                const href = link.getAttribute('href');
-                if (href && !href.startsWith('http') && !href.startsWith('//')) {
-                    e.preventDefault();
-
-                    // Show loading
-                    this.showLoading(1200);
-
-                    // Navigate after loading animation
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 600);
-                }
-            });
-        });
-    }
-}
-
-// Initialize loading system when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    const loadingManager = new LoadingManager();
-});
-
-// Smooth scrolling for navigation links (backup method)
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -241,26 +132,20 @@ function calculatePrice() {
     calculatorResult.style.display = 'block';
 }
 
-// Add event listeners for automatic calculation and weight visibility (only if elements exist)
-if (serviceType && weight) {
-    serviceType.addEventListener('change', function() {
-        toggleWeightInput();
-        calculatePrice();
-    });
-    weight.addEventListener('input', calculatePrice);
-}
+// Add event listeners for automatic calculation and weight visibility
+serviceType.addEventListener('change', function() {
+    toggleWeightInput();
+    calculatePrice();
+});
+weight.addEventListener('input', calculatePrice);
 
-// Initialize weight input visibility on page load (only if elements exist)
+// Initialize weight input visibility on page load
 document.addEventListener('DOMContentLoaded', function() {
-    if (serviceType) {
-        toggleWeightInput();
-    }
+    toggleWeightInput();
 });
 
 // Manual calculation button (optional, in case user wants to recalculate)
-if (calculateBtn) {
-    calculateBtn.addEventListener('click', calculatePrice);
-}
+calculateBtn.addEventListener('click', calculatePrice);
 
 // Scroll Animation for Sections
 document.addEventListener('DOMContentLoaded', function() {
@@ -295,10 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Map initialization and functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if map element exists before initializing
-    const mapElement = document.getElementById('map');
-    if (!mapElement) return; // Exit if map doesn't exist on this page
-
     // Koordinat default LubukLinggau
     const defaultCoords = [-3.2966, 102.8618];
 
@@ -319,15 +200,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('address-search');
     const searchButton = document.getElementById('search-button');
 
-    // Add event listeners only if elements exist
-    if (searchButton && searchInput) {
-        searchButton.addEventListener('click', searchLocation);
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchLocation();
-            }
-        });
-    }
+    searchButton.addEventListener('click', searchLocation);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchLocation();
+        }
+    });
 
     function searchLocation() {
         const query = searchInput.value;
