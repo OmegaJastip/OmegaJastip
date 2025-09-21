@@ -48,33 +48,29 @@
     font-size: 1.2rem;
 }
 
-.filter-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.filter-btn {
-    background: white;
-    border: 2px solid #ddd;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #555555;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-    background: #ee4d2d;
-    border-color: #ee4d2d;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(238, 77, 45, 0.2);
-}
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .filter-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #555555;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #ee4d2d;
+            border-color: #ee4d2d;
+            color: white;
+        }
 
 /* Restaurant Cards */
 .restaurants-grid {
