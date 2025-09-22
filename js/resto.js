@@ -14,7 +14,13 @@ function getUniqueCategories(restaurants) {
     // Extract unique categories from restaurant data
     restaurants.forEach(restaurant => {
         if (restaurant.category) {
-            categories.add(restaurant.category);
+            // Split categories by comma and add each one
+            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim());
+            restaurantCategories.forEach(cat => {
+                if (cat) { // Only add non-empty categories
+                    categories.add(cat);
+                }
+            });
         }
     });
 
@@ -58,6 +64,9 @@ async function loadRestaurants() {
 
         // Setup filter functionality after buttons are created
         setupFilters();
+
+        // Setup search functionality
+        setupSearch();
 
         // Display restaurants
         displayRestaurants(restaurants);
@@ -171,9 +180,48 @@ function generateStars(rating) {
 function setupSearch() {
     const searchInput = document.getElementById('search-resto');
 
+    // Add clear button functionality
+    const clearBtn = document.createElement('button');
+    clearBtn.innerHTML = '<i class="fas fa-times"></i>';
+    clearBtn.className = 'search-clear-btn';
+    clearBtn.style.display = 'none';
+    clearBtn.setAttribute('aria-label', 'Clear search');
+    searchInput.parentNode.style.position = 'relative';
+    searchInput.parentNode.appendChild(clearBtn);
+
+    // Add debouncing for better performance
+    let searchTimeout;
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-        filterRestaurants(searchTerm);
+
+        // Show/hide clear button
+        clearBtn.style.display = searchTerm ? 'block' : 'none';
+
+        // Clear previous timeout
+        clearTimeout(searchTimeout);
+
+        // Set new timeout for debounced search
+        searchTimeout = setTimeout(() => {
+            filterRestaurants(searchTerm);
+        }, 300); // Wait 300ms after user stops typing
+    });
+
+    // Clear search functionality
+    clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        filterRestaurants('');
+        searchInput.focus();
+    });
+
+    // Handle Enter key to search immediately
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            clearTimeout(searchTimeout);
+            const searchTerm = this.value.toLowerCase();
+            filterRestaurants(searchTerm);
+        }
     });
 }
 
@@ -200,8 +248,18 @@ function filterRestaurants(searchTerm) {
     cards.forEach(card => {
         const name = card.dataset.name;
         const category = card.dataset.category;
+        const description = card.querySelector('.restaurant-description')?.textContent.toLowerCase() || '';
+        const menuItems = Array.from(card.querySelectorAll('.menu-item')).map(item => item.textContent.toLowerCase());
 
-        if (name.includes(searchTerm) || category.toLowerCase().includes(searchTerm)) {
+        // Split category by comma for search
+        const categoryList = category.split(',').map(cat => cat.trim().toLowerCase());
+
+        const matchesSearch = name.includes(searchTerm) ||
+                             categoryList.some(cat => cat.includes(searchTerm)) ||
+                             description.includes(searchTerm) ||
+                             menuItems.some(item => item.includes(searchTerm));
+
+        if (matchesSearch) {
             card.style.display = 'block';
             visibleCount++;
         } else {
@@ -217,8 +275,12 @@ function filterRestaurants(searchTerm) {
         if (!noResultsMsg) {
             noResultsMsg = document.createElement('div');
             noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
+            noResultsMsg.textContent = searchTerm ?
+                'Tidak ada restoran yang sesuai dengan pencarian Anda.' :
+                'Tidak ada restoran yang tersedia saat ini.';
             container.appendChild(noResultsMsg);
+        } else if (searchTerm) {
+            noResultsMsg.textContent = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
         }
     } else {
         if (noResultsMsg) {
@@ -232,11 +294,18 @@ function filterByCategory(category) {
     let visibleCount = 0;
 
     cards.forEach(card => {
-        if (category === 'all' || card.dataset.category === category) {
+        if (category === 'all') {
             card.style.display = 'block';
             visibleCount++;
         } else {
-            card.style.display = 'none';
+            // Split category by comma and check if selected category matches any
+            const categoryList = card.dataset.category.split(',').map(cat => cat.trim());
+            if (categoryList.includes(category)) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
         }
     });
 
@@ -483,12 +552,19 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 height: 200px;
                 overflow: hidden;
                 border-radius: 8px;
+                background: #f0f0f0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .modal-image img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: center;
+                display: block;
+                max-width: 100%;
             }
 
             .modal-info {
