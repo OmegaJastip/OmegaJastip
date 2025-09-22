@@ -309,10 +309,27 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
         menuByCategory[category].forEach(item => {
             menuHtml += `
                 <div class="service-item-detail" data-name="${item.name.toLowerCase()}">
-                    <span class="service-name">${item.name}</span>
-                    <span class="service-price">${item.price}</span>
-                </div>
+                    <div class="service-header">
+                        <span class="service-name">${item.name}</span>
+                        <span class="service-price">${item.price}</span>
+                    </div>
             `;
+
+            // Add variants if they exist
+            if (item.variants && item.variants.length > 0) {
+                menuHtml += '<div class="service-variants">';
+                item.variants.forEach(variant => {
+                    menuHtml += `
+                        <div class="variant-item">
+                            <span class="variant-name">${variant.name}</span>
+                            <span class="variant-price">${variant.price}</span>
+                        </div>
+                    `;
+                });
+                menuHtml += '</div>';
+            }
+
+            menuHtml += '</div>';
         });
         menuHtml += '</div>';
     }
@@ -627,6 +644,39 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 border: 1px solid #ccc;
                 border-radius: 8px;
                 font-size: 1rem;
+            }
+
+            .service-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .service-variants {
+                margin-left: 20px;
+                margin-top: 5px;
+                border-left: 2px solid #f0f0f0;
+                padding-left: 15px;
+            }
+
+            .variant-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 4px 0;
+                font-size: 0.9rem;
+            }
+
+            .variant-name {
+                color: #666;
+                font-style: italic;
+            }
+
+            .variant-price {
+                color: #EE4D2D;
+                font-weight: 500;
+                font-size: 0.85rem;
             }
         `;
         document.head.appendChild(styles);
