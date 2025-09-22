@@ -48,6 +48,27 @@
     font-size: 1.2rem;
 }
 
+.search-clear-btn {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #ee4d2d;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.search-clear-btn:hover {
+    background: rgba(238, 77, 45, 0.1);
+    color: #d63c1f;
+}
+
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -96,19 +117,27 @@
 
 .restaurant-image {
     position: relative;
+    width: 100%;
     height: 200px;
     overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .restaurant-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.3s ease;
+    display: block;
+    max-width: 100%;
 }
 
 .restaurant-card:hover .restaurant-image img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .restaurant-overlay {
@@ -415,6 +444,10 @@
     .restaurants-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+
+    .restaurant-image {
+        height: 180px;
     }
 
     .restaurant-header {
