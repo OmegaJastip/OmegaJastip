@@ -1093,5 +1093,164 @@
                 ]
             }
         ]
+    },
+    {
+        "id": 1758516437517,
+        "name": "Sate Padang Pak War",
+        "category": "Sate,Padang,Kacang",
+        "description": "Adalah sebuah tempat makan Sate yang berada di dekat kantor JNE",
+        "address": "Jl. Garuda, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31614",
+        "phone": "-",
+        "price_range": "Rp 25.000 – RP 50.000",
+        "rating": 5,
+        "image": "images\/Sate-Pak-war.webp",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "9:30  – 21:30 Jumat Libur",
+        "menu": [
+            {
+                "name": "Sate",
+                "category": "Makanan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Padang 1 Porsi",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Padang 1\/2 Porsi",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Kacang 1 Porsi",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Padang 1\/2 Porsi",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Indome Goreng",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Indome Rebus",
+                        "price": "Rp 10.000"
+                    }
+                ]
+            },
+            {
+                "name": "Minuman",
+                "category": "Panas",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Teh",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Jeruk",
+                        "price": "Rp 6.000"
+                    },
+                    {
+                        "name": "Kopi",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            },
+            {
+                "name": "Minuman",
+                "category": "Dingin",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Teh",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Jeruk",
+                        "price": "Rp 6.000"
+                    },
+                    {
+                        "name": "Jus Aplukat",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "jus Naga",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Just Mangga",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Jus Melon",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Es Kosong",
+                        "price": "Rp 2.000"
+                    }
+                ]
+            },
+            {
+                "name": "Kerupuk",
+                "category": "Cemilan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Jangek",
+                        "price": "Rp 3.000"
+                    },
+                    {
+                        "name": "Pedas",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Udang",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758516884611,
+        "name": "Martabak Telor Jakarta Di Depan Kantor Pos ",
+        "category": "Martabak,Telor,Jakarta",
+        "description": "Menjual Martabak Telor Dan Martabak Manis",
+        "address": "Jl. Garuda Di Depan Kantor Pos, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31615",
+        "phone": "-",
+        "price_range": "Rp 20.000 - Rp 50.000",
+        "rating": 5,
+        "image": "images\/toko.png",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": " 16:00 - 23:00",
+        "menu": [
+            {
+                "name": "Martabak",
+                "category": "Telor",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Biasa 🥚",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Spesial 🥚🥚",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Istimewa🥚🥚🥚",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Jumbo 🥚🥚🥚🥚",
+                        "price": "Rp 40.000"
+                    }
+                ]
+            }
+        ]
     }
 ]
