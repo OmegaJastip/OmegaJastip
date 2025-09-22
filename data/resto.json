@@ -2,7 +2,7 @@
     {
         "id": 1758459244769,
         "name": "Singkong Meledak",
-        "category": "Jajanan",
+        "category": "Jajanan,Resto",
         "description": "Singkong meledak adalah jajanan yang viral di Palembang dan Medan, berupa singkong goreng dengan tekstur empuk di dalam dan garing di luar, yang dinamakan \"meledak\" karena teksturnya akan merekah atau mengembang saat dimasak. Jajanan ini biasanya dijual dalam beberapa pilihan rasa modern seperti balado, BBQ, atau jagung manis, seharga sekitar Rp15.000 per porsi",
         "address": "Jl. Yos Sudarso No.76, Jawa Kanan, Kec. Lubuk Linggau Tim. I, Kota Lubuklinggau, Sumatera Selatan 31613",
         "phone": "-",
@@ -16,39 +16,45 @@
             {
                 "name": "Balado",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             },
             {
                 "name": "Balado Pedas Manis",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             },
             {
                 "name": "BBQ",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             },
             {
                 "name": "Jagung Manis",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             },
             {
                 "name": "Original",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             },
             {
                 "name": "MIX",
                 "category": "singkong meledak",
-                "price": "15000"
+                "price": "Rp 15.000",
+                "variants": []
             }
         ]
     },
     {
         "id": 1758461450822,
         "name": "Mango Queen",
-        "category": "Jajanan",
+        "category": "Jajanan,resto,thailand",
         "description": "Jajanan Mango Queen adalah stand atau kafe yang menjual smoothies Thailand dan pancong lumer di Lubuklinggau, menjual berbagai macam minuman dengan harga mulai dari Rp15.000,- dan sering menjadi rekomendasi jajan populer di sana. Jajanan ini dikenal karena whipcream dan kejunya yang melimpah serta rasanya yang enak",
         "address": "Jl.Yos sudarso jawa kanan (samping seafood 21 ,sebrang tomoro coffe)",
         "phone": "-",
@@ -334,7 +340,7 @@
     {
         "id": 1758506621196,
         "name": "DImsum Mamita",
-        "category": "Restoran",
+        "category": "Cafe,DimSum",
         "description": "Merupakan salah satu restoran dimsum di Kota Lubuklinggau. Untuk informasi lainnya Anda bisa menghubungi kontak telepon yang tersedia",
         "address": "Jln. Patimura Kel.Sukajadi Barat I Kota Lubuklinggau",
         "phone": "+62 851-8981-7353",
@@ -863,6 +869,226 @@
                     {
                         "name": "Goreng",
                         "price": "Rp 20.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758512911372,
+        "name": "AYAM BAWANG ESHALBIEYAN",
+        "category": "Ayam,Lele,Makan siang",
+        "description": "Menyediakan Ayam,lele dan makan siang untuk anda ",
+        "address": "Jl. Garuda Merah No.252a, Bandung Kanan, Kec. Lubuk Linggau Bar. II, Kota Lubuklinggau, Sumatera Selatan 31613",
+        "phone": "0812 7209 8739",
+        "price_range": "Rp 7.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/AYAM-BAWANG-ESHALBIEYAN.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "10:00 - 20:00",
+        "menu": [
+            {
+                "name": "Ayam",
+                "category": "Goreng Bawang",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ori",
+                        "price": "Rp 12.000"
+                    },
+                    {
+                        "name": "+ telur",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "+ Ati Ampela",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Doubel",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "+ Pete",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Komplit",
+                        "price": "Rp 20.000"
+                    }
+                ]
+            },
+            {
+                "name": "Lele",
+                "category": "Goreng Bawang",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ori",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "+ telur",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "+ Ati Ampela",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Doubel",
+                        "price": "Rp 23.000"
+                    },
+                    {
+                        "name": "+ Pete",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Komplit",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Tumis",
+                "category": "Sayur",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "CahKangkung",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Toge",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Genjer",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Selada",
+                        "price": "Ro 7.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758513470453,
+        "name": "Bakso Len 2 Rian",
+        "category": "Bakso,Makan Siang",
+        "description": "Bakso Terenak Di lubuklinggau ",
+        "address": "jl.Puyuh (Belakang Masjid Agung Assalam)",
+        "phone": "-",
+        "price_range": "Rp 15.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/bakso-len-2-rian.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "09.30-20.15",
+        "menu": [
+            {
+                "name": "Bakso Biasa",
+                "category": "Bakso",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Urat",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "Mercon",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "Isi Daging",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Telur",
+                        "price": "Rp 15.000"
+                    }
+                ]
+            },
+            {
+                "name": "Bakso Spesial",
+                "category": "Bakso",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Daging + Urat",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Daging + Mercon",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Daging + Telur",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Tambahan",
+                "category": "Toping",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Tahu \/ porsi",
+                        "price": "Rp 3.000"
+                    },
+                    {
+                        "name": "Tetelan \/ porsi",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Kuah Dower \/ porsi",
+                        "price": "Rp 3.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758515083821,
+        "name": "Dapur Umi Widia",
+        "category": "Jajanan,Cireng,Lumpia",
+        "description": "Nikmat Rasanya Bikin Bahagia",
+        "address": "Masjid Al Arif bandung kiri",
+        "phone": "-",
+        "price_range": "-",
+        "rating": 5,
+        "image": "images\/dapurumiwid.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "-",
+        "menu": [
+            {
+                "name": "Cireng",
+                "category": "Gorengan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Bumbu Kacang",
+                        "price": "Rp -"
+                    },
+                    {
+                        "name": "Chili oil Mix Bumbu Kacang",
+                        "price": "Rp -"
+                    }
+                ]
+            },
+            {
+                "name": "Lumpia",
+                "category": "Gorengan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Isi ayam Mix",
+                        "price": "Rp -"
                     }
                 ]
             }
