@@ -142,6 +142,90 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 top: targetElement.offsetTop - 80,
                 behavior: 'smooth'
             });
+    }
+});
+
+// Testimonials Story Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const storyDots = document.querySelectorAll('.story-dot');
+    const storyCards = document.querySelectorAll('.story-card');
+
+    if (storyDots.length > 0 && storyCards.length > 0) {
+        storyDots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                // Remove active class from all dots and cards
+                storyDots.forEach(d => d.classList.remove('active'));
+                storyCards.forEach(card => card.style.display = 'none');
+
+                // Add active class to clicked dot and show corresponding card
+                this.classList.add('active');
+                if (storyCards[index]) {
+                    storyCards[index].style.display = 'block';
+                    // Add animation when showing card
+                    storyCards[index].style.animation = 'fadeInScale 0.3s ease-out';
+                }
+            });
+        });
+
+        // Show first story by default
+        storyCards.forEach((card, index) => {
+            if (index === 0) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Add click animation to story reactions
+    const reactions = document.querySelectorAll('.reaction');
+    reactions.forEach(reaction => {
+        reaction.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Add a temporary animation class
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+
+            // Simulate reaction count increase
+            const countText = this.textContent.match(/\d+/);
+            if (countText) {
+                const currentCount = parseInt(countText[0]);
+                this.innerHTML = this.innerHTML.replace(/\d+/, currentCount + 1);
+            }
+        });
+    });
+
+    // Auto-scroll through stories (optional)
+    let currentStory = 0;
+    const autoScrollInterval = setInterval(() => {
+        if (storyDots.length > 1) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory = (currentStory + 1) % storyDots.length;
+            storyDots[currentStory].classList.add('active');
+        }
+    }, 5000); // Change story every 5 seconds
+
+    // Pause auto-scroll on hover
+    const storiesContainer = document.querySelector('.stories-container');
+    if (storiesContainer) {
+        storiesContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoScrollInterval);
+        });
+    }
+
+    // Add keyboard navigation for stories
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' && currentStory > 0) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory--;
+            storyDots[currentStory].classList.add('active');
+        } else if (e.key === 'ArrowRight' && currentStory < storyDots.length - 1) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory++;
+            storyDots[currentStory].classList.add('active');
         }
     });
 });
@@ -539,4 +623,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Terjadi kesalahan saat menghitung rute.");
             });
     }
+});
 });
