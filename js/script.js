@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Register service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js', { scope: './sw.js' })
+        navigator.serviceWorker.register('../sw.js', { scope: '/omegajastip/' })
             .then(registration => {
                 console.log('Service Worker registered successfully:', registration);
             })
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function() {
     progressContainer.style.padding = '20px';
     progressContainer.innerHTML = `
         <div class="install-progress-bar" style="width: 100%; height: 20px; background-color: #e0e0e0; border-radius: 10px; margin: 10px 0; position: relative; overflow: hidden;">
-            <div class="install-progress-fill" id="install-progress-fill" style="width: 0%; height: 100%; background-color: #2563eb; border-radius: 10px; transition: width 0.1s ease;"></div>
+            <div class="install-progress-fill" id="install-progress-fill" style="width: 0%; height: 100%; background-color: #ee4d2d; border-radius: 10px; transition: width 0.1s ease;"></div>
             <div class="install-progress-text" id="install-progress-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333; font-weight: bold;">0%</div>
         </div>
         <div class="install-loading-text" style="margin-top: 10px; color: #666;">Menginstall aplikasi...</div>
@@ -693,9 +693,9 @@ document.addEventListener('DOMContentLoaded', function() {
     successMessage.style.textAlign = 'center';
     successMessage.style.padding = '20px';
     successMessage.innerHTML = `
-        <div class="success-icon" style="font-size: 48px; color: #28a745; margin-bottom: 10px;">✓</div>
+        <div class="success-icon" style="font-size: 48px; color: #ee4d2d; margin-bottom: 10px;">✓</div>
         <div class="success-text" style="font-size: 18px; color: #333; margin-bottom: 20px;">Aplikasi berhasil diinstall!</div>
-        <button id="success-close-btn" class="success-close-btn" style="background-color: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Tutup</button>
+        <button id="success-close-btn" class="success-close-btn" style="background-color: #ee4d2d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Tutup</button>
     `;
 
     if (installPopup) {
@@ -805,6 +805,3 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('pwa-install-dismissed');
     });
 });
-
-
-
