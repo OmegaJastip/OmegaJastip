@@ -1252,5 +1252,153 @@
                 ]
             }
         ]
+    },
+    {
+        "id": 1758781189979,
+        "name": "Pindang Bik muk",
+        "category": "Pindang,Restoran,Palembang",
+        "description": "Selamat datang di Restoran Pindang Bikmuk, sebuah destinasi kuliner legendaris yang mengangkat kelezatan otentik hidangan khas Palembang, terutama Pindang. Nama \"Bikmuk\" sendiri telah menjadi simbol cita rasa turun-temurun yang terjaga, menghadirkan pengalaman makan yang tidak hanya memuaskan lidah tetapi juga menghangatkan hati.",
+        "address": "Jalan Depati Said Di Dekat Bidan Tuning",
+        "phone": "-",
+        "price_range": "Rp 15.000 - Rp 50.000",
+        "rating": 5,
+        "image": "images\/toko.png",
+        "delivery_available": true,
+        "pickup_available": true,
+        "operating_hours": "-",
+        "menu": [
+            {
+                "name": "Pindang",
+                "category": "Patin",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Tulang",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Sungai Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Sungai Badan",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Pegangan Baung",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Penganan Tapa Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Pegangan Tapa Badan",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Makanan",
+                "category": "Makanan",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Lele Goreng\/Bakar",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Nila Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ayam Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ayam Kampung Goreng\/bakar",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Bebek Goreng\/Bakar",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Puyuh Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Telur Dadar",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Ikan Seluang Goreng",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Nasi Putih",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            },
+            {
+                "name": "Gulai",
+                "category": "Tempoyak",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Patin Sungai Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Patin Sungai Badan",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Baung",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Tapa Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Tapa Badan",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Brengkes",
+                "category": "Pepes",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Sungai",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Nila",
+                        "price": "Rp 20.000"
+                    }
+                ]
+            }
+        ]
     }
 ]
