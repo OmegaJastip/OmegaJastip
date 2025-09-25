@@ -673,6 +673,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const installBtn = document.getElementById('pwa-install-btn');
     const closeBtn = document.getElementById('pwa-close-btn');
 
+    // Create progress bar and success message elements
+    const progressContainer = document.createElement('div');
+    progressContainer.id = 'install-progress-container';
+    progressContainer.style.display = 'none';
+    progressContainer.style.textAlign = 'center';
+    progressContainer.style.padding = '20px';
+    progressContainer.innerHTML = `
+        <div class="install-progress-bar" style="width: 100%; height: 20px; background-color: #e0e0e0; border-radius: 10px; margin: 10px 0; position: relative; overflow: hidden;">
+            <div class="install-progress-fill" id="install-progress-fill" style="width: 0%; height: 100%; background-color: #2563eb; border-radius: 10px; transition: width 0.1s ease;"></div>
+            <div class="install-progress-text" id="install-progress-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333; font-weight: bold;">0%</div>
+        </div>
+        <div class="install-loading-text" style="margin-top: 10px; color: #666;">Menginstall aplikasi...</div>
+    `;
+
+    const successMessage = document.createElement('div');
+    successMessage.id = 'install-success-message';
+    successMessage.style.display = 'none';
+    successMessage.style.textAlign = 'center';
+    successMessage.style.padding = '20px';
+    successMessage.innerHTML = `
+        <div class="success-icon" style="font-size: 48px; color: #28a745; margin-bottom: 10px;">✓</div>
+        <div class="success-text" style="font-size: 18px; color: #333; margin-bottom: 20px;">Aplikasi berhasil diinstall!</div>
+        <button id="success-close-btn" class="success-close-btn" style="background-color: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Tutup</button>
+    `;
+
+    if (installPopup) {
+        installPopup.appendChild(progressContainer);
+        installPopup.appendChild(successMessage);
+    }
+
+    // Handle success close button click
+    const successCloseBtn = document.getElementById('success-close-btn');
+    if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', () => {
+            if (installPopup) {
+                installPopup.style.display = 'none';
+                // Clear the dismissal flag
+                localStorage.removeItem('pwa-install-dismissed');
+            }
+        });
+    }
+
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
         return; // App is already installed, don't show popup
@@ -697,26 +739,46 @@ document.addEventListener('DOMContentLoaded', function() {
     if (installBtn) {
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // Show the install prompt
-                deferredPrompt.prompt();
+                // Hide install and close buttons
+                installBtn.style.display = 'none';
+                if (closeBtn) closeBtn.style.display = 'none';
 
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
+                // Show progress bar
+                progressContainer.style.display = 'block';
 
-                // Reset the deferred prompt variable
-                deferredPrompt = null;
+                // Animate progress bar
+                const progressFill = document.getElementById('install-progress-fill');
+                const progressText = document.getElementById('install-progress-text');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2; // Increase by 2% every 50ms for 2.5 seconds
+                    if (progressFill) progressFill.style.width = progress + '%';
+                    if (progressText) progressText.textContent = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        // Show the install prompt after animation
+                        deferredPrompt.prompt();
 
-                // Hide the popup
-                if (installPopup) {
-                    installPopup.style.display = 'none';
-                }
+                        // Wait for the user to respond to the prompt
+                        deferredPrompt.userChoice.then(({ outcome }) => {
+                            // Reset the deferred prompt variable
+                            deferredPrompt = null;
 
-                // Track the outcome
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                } else {
-                    console.log('User dismissed the install prompt');
-                }
+                            if (outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                                // Hide progress and show success message
+                                progressContainer.style.display = 'none';
+                                successMessage.style.display = 'block';
+                            } else {
+                                console.log('User dismissed the install prompt');
+                                // Hide popup
+                                if (installPopup) {
+                                    installPopup.style.display = 'none';
+                                }
+                            }
+                        });
+                    }
+                }, 50);
             }
         });
     }
