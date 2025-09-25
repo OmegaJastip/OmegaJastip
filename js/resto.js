@@ -382,6 +382,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                         <span class="service-name">${item.name}</span>
                         <span class="service-price">${item.price}</span>
                     </div>
+                    ${item.description ? `<p class="service-description">${item.description}</p>` : ''}
             `;
 
             // Add variants if they exist
@@ -425,8 +426,6 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                         <span class="category">${restaurant.category}</span>
                     </div>
 
-                    <p class="description">${restaurant.description}</p>
-
                     <div class="info-section">
                         <h3>Informasi Kontak</h3>
                         <div class="info-item">
@@ -446,6 +445,8 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                             <span>${restaurant.price_range}</span>
                         </div>
                     </div>
+
+                    <p class="description">${restaurant.description}</p>
 
                     <div class="info-section">
                         <h3>Menu & Layanan (berdasarkan kategori menu)</h3>
@@ -500,26 +501,32 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .modal-content {
                 background: white;
-                border-radius: 12px;
-                max-width: 600px;
+                border-radius: 16px;
+                max-width: 700px;
                 max-height: 90vh;
-                width: 90%;
+                width: 95%;
                 overflow-y: auto;
                 animation: slideIn 0.3s ease;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                border: 1px solid #e0e0e0;
             }
 
             .modal-header {
-                padding: 20px;
-                border-bottom: 1px solid #eee;
+                padding: 24px 20px;
+                border-bottom: 2px solid #f8f9fa;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                background: linear-gradient(135deg, #ee4d2d 0%, #f57c5a 100%);
+                color: white;
+                border-radius: 16px 16px 0 0;
             }
 
             .modal-header h2 {
                 margin: 0;
-                color: #333;
-                font-size: 1.5rem;
+                color: white;
+                font-size: 1.6rem;
+                font-weight: 600;
             }
 
             .close-btn {
@@ -541,11 +548,11 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             }
 
             .modal-body {
-                padding: 20px;
+                padding: 24px;
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
-            }
+                gap: 24px;
+                background: #fafafa;
 
             .modal-image {
                 width: 100%;
@@ -619,19 +626,53 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .service-item-detail {
                 display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px 0;
+                border-bottom: 1px solid #f0f0f0;
+                transition: background-color 0.2s ease;
+            }
+
+            .service-item-detail:hover {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 12px;
+                margin: 0 -12px;
+            }
+
+            .service-header {
+                display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 8px 0;
-                border-bottom: 1px solid #f0f0f0;
+                width: 100%;
             }
 
             .service-name {
-                font-weight: 500;
+                font-weight: 600;
+                font-size: 1rem;
+                color: #333;
             }
 
             .service-price {
                 color: #EE4D2D;
-                font-weight: 600;
+                font-weight: 700;
+                font-size: 1.1rem;
+                background: #fff5f5;
+                padding: 4px 8px;
+                border-radius: 6px;
+                border: 1px solid #ffeaea;
+            }
+
+            .service-description {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #666;
+                line-height: 1.4;
+                font-style: normal;
+                background: #f8f9fa;
+                padding: 8px 12px;
+                border-radius: 6px;
+                border-left: 3px solid #EE4D2D;
             }
 
             .services-badges {
@@ -753,6 +794,13 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 color: #EE4D2D;
                 font-weight: 500;
                 font-size: 0.85rem;
+            }
+
+            .service-description {
+                margin: 5px 0 0 0;
+                font-size: 0.9rem;
+                color: #666;
+                font-style: italic;
             }
         `;
         document.head.appendChild(styles);
