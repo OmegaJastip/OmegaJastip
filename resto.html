@@ -10,6 +10,7 @@
     <link rel="canonical" href="https://omegajastip.online/resto.html">
     <title>Jastip Restoran Lubuklinggau - Daftar Restoran untuk Antar Makanan</title>
     <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -189,6 +190,24 @@
 
     <script src="js/resto.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/protection.js"></script>    
+    <script src="js/protection.js"></script>
+
+    <!-- PWA Install Popup -->
+    <div id="pwa-install-popup" class="pwa-install-popup">
+        <div class="pwa-popup-content">
+            <div class="pwa-popup-icon">
+                <img src="images/logo.png" alt="Omega Jastip Logo" width="40" height="40">
+            </div>
+            <div class="pwa-popup-text">
+                <h4>Install Omega Jastip</h4>
+                <p>Install aplikasi untuk akses lebih cepat dan offline</p>
+            </div>
+            <div class="pwa-popup-buttons">
+                <button id="pwa-install-btn" class="pwa-btn-install">Install</button>
+                <button id="pwa-close-btn" class="pwa-btn-close">Nanti</button>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
