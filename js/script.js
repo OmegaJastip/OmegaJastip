@@ -383,6 +383,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const mapElement = document.getElementById('map');
     if (!mapElement) return; // Exit if map doesn't exist on this page
 
+    // Check if map is already initialized to prevent multiple initializations
+    if (mapElement._leaflet_id) {
+        console.log('Map already initialized, skipping...');
+        return;
+    }
+
     // Koordinat default LubukLinggau
     const defaultCoords = [-3.2966, 102.8618];
 
@@ -624,4 +630,116 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 });
+});
+
+// Add smooth scroll to top button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        );
+
+        // Show button when scrolling down
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+    }
+});
+
+// PWA Install Prompt
+document.addEventListener('DOMContentLoaded', function() {
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../sw.js', { scope: '/omegajastip/' })
+            .then(registration => {
+                console.log('Service Worker registered successfully:', registration);
+            })
+            .catch(error => {
+                console.log('Service Worker registration failed:', error);
+            });
+    }
+
+    let deferredPrompt;
+    const installPopup = document.getElementById('pwa-install-popup');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+
+    // Check if app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        return; // App is already installed, don't show popup
+    }
+
+    // Listen for the beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+
+        // Show the install popup after a short delay
+        setTimeout(() => {
+            if (installPopup && !localStorage.getItem('pwa-install-dismissed')) {
+                installPopup.style.display = 'block';
+            }
+        }, 3000); // Show after 3 seconds
+    });
+
+    // Handle install button click
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the install prompt
+                deferredPrompt.prompt();
+
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+
+                // Reset the deferred prompt variable
+                deferredPrompt = null;
+
+                // Hide the popup
+                if (installPopup) {
+                    installPopup.style.display = 'none';
+                }
+
+                // Track the outcome
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+            }
+        });
+    }
+
+    // Handle close button click
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if (installPopup) {
+                installPopup.style.display = 'none';
+                // Remember that user dismissed the popup for this session
+                localStorage.setItem('pwa-install-dismissed', 'true');
+            }
+        });
+    }
+
+    // Listen for successful app installation
+    window.addEventListener('appinstalled', () => {
+        console.log('PWA was installed');
+        // Hide the popup if it's still visible
+        if (installPopup) {
+            installPopup.style.display = 'none';
+        }
+        // Clear the dismissal flag
+        localStorage.removeItem('pwa-install-dismissed');
+    });
 });
