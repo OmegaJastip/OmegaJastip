@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Register service worker
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js', { scope: '/sw.js' })
+        navigator.serviceWorker.register('/js/sw.js', { scope: '/js/sw.js' })
             .then(registration => {
                 console.log('Service Worker registered successfully:', registration);
             })
@@ -805,4 +805,5 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('pwa-install-dismissed');
     });
 });
+
 
