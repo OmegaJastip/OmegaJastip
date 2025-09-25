@@ -1,829 +1,807 @@
-// Restaurant page JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // Load restaurant data
-    loadRestaurants();
-});
+// Mobile Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
 
-// Function to get unique categories from restaurant data
-function getUniqueCategories(restaurants) {
-    const categories = new Set();
-
-    // Add "all" category for "Semua" button
-    categories.add('all');
-
-    // Extract unique categories from restaurant data
-    restaurants.forEach(restaurant => {
-        if (restaurant.category) {
-            // Split categories by comma and add each one
-            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim());
-            restaurantCategories.forEach(cat => {
-                if (cat) { // Only add non-empty categories
-                    categories.add(cat);
-                }
-            });
-        }
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        hamburger.innerHTML = navMenu.classList.contains('active')
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
     });
 
-    return Array.from(categories);
-}
-
-// Function to create filter buttons dynamically
-function createFilterButtons(categories) {
-    const filterContainer = document.querySelector('.filter-buttons');
-
-    // Clear existing buttons (except search box)
-    const existingButtons = filterContainer.querySelectorAll('.filter-btn');
-    existingButtons.forEach(button => button.remove());
-
-    // Create new filter buttons based on data
-    categories.forEach(category => {
-        const button = document.createElement('button');
-        button.className = 'filter-btn';
-        button.dataset.category = category;
-
-        // Set button text
-        if (category === 'all') {
-            button.textContent = 'Semua';
-            button.classList.add('active'); // Make "Semua" active by default
-        } else {
-            button.textContent = category;
-        }
-
-        filterContainer.appendChild(button);
-    });
-}
-
-async function loadRestaurants() {
-    try {
-        const response = await fetch('data/resto.json');
-        const restaurants = await response.json();
-
-        // Get unique categories and create filter buttons dynamically
-        const categories = getUniqueCategories(restaurants);
-        createFilterButtons(categories);
-
-        // Setup filter functionality after buttons are created
-        setupFilters();
-
-        // Setup search functionality
-        setupSearch();
-
-        // Display restaurants
-        displayRestaurants(restaurants);
-    } catch (error) {
-        console.error('Error loading restaurant data:', error);
-        displayErrorMessage();
-    }
-}
-
-function displayRestaurants(restaurants) {
-    const container = document.getElementById('restaurants-grid');
-
-    if (!restaurants || restaurants.length === 0) {
-        container.innerHTML = '<div class="no-results">Tidak ada restoran yang tersedia saat ini.</div>';
-        return;
-    }
-
-    const html = restaurants.map(restaurant => createRestaurantCard(restaurant)).join('');
-    container.innerHTML = html;
-}
-
-function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
-    const ratingStars = generateStars(restaurant.rating);
-    const services = restaurant.delivery_available && restaurant.pickup_available
-        ? '<span class="service-badge delivery">Delivery</span><span class="service-badge pickup">Pickup</span>'
-        : restaurant.delivery_available
-        ? '<span class="service-badge delivery">Delivery</span>'
-        : restaurant.pickup_available
-        ? '<span class="service-badge pickup">Pickup</span>'
-        : '';
-
-    return `
-        <div class="restaurant-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}">
-            <div class="restaurant-image">
-                <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='images/placeholder-resto.jpg'">
-                <div class="restaurant-overlay">
-                    <div class="services-badges">
-                        ${services}
-                    </div>
-                </div>
-            </div>
-            <div class="restaurant-info">
-                <div class="restaurant-header">
-                    <h3>${restaurant.name}</h3>
-                    <div class="rating">
-                        ${ratingStars}
-                        <span class="rating-number">${restaurant.rating}</span>
-                    </div>
-                </div>
-                <div class="restaurant-category">
-                    <i class="fas fa-tag"></i>
-                    <span>${restaurant.category}</span>
-                </div>
-                <p class="restaurant-description">${restaurant.description}</p>
-                <div class="restaurant-details">
-                    <div class="detail-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${restaurant.address}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-phone"></i>
-                        <span>${restaurant.phone}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-clock"></i>
-                        <span>${restaurant.operating_hours}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>${restaurant.price_range}</span>
-                    </div>
-                </div>
-                <div class="menu-preview">
-                    <h4>Menu Utama:</h4>
-                    <div class="menu-items">
-                        ${restaurant.menu && restaurant.menu.slice(0, 3).map(item => `<span class="menu-item">${item.name}</span>`).join('')}
-                        ${restaurant.menu && restaurant.menu.length > 3 ? `<span class="menu-more">+${restaurant.menu.length - 3} lainnya</span>` : ''}
-                    </div>
-                </div>
-                <div class="restaurant-actions">
-                    <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Pesan via WA
-                    </a>
-                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id}, '${currentCategoryFilter}')">
-                        <i class="fas fa-info-circle"></i> Detail
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function generateStars(rating) {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-    let stars = '';
-    for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star"></i>';
-    }
-    if (hasHalfStar) {
-        stars += '<i class="fas fa-star-half-alt"></i>';
-    }
-    for (let i = 0; i < emptyStars; i++) {
-        stars += '<i class="far fa-star"></i>';
-    }
-    return stars;
-}
-
-function setupSearch() {
-    const searchInput = document.getElementById('search-resto');
-
-    // Add clear button functionality
-    const clearBtn = document.createElement('button');
-    clearBtn.innerHTML = '<i class="fas fa-times"></i>';
-    clearBtn.className = 'search-clear-btn';
-    clearBtn.style.display = 'none';
-    clearBtn.setAttribute('aria-label', 'Clear search');
-    searchInput.parentNode.style.position = 'relative';
-    searchInput.parentNode.appendChild(clearBtn);
-
-    // Add debouncing for better performance
-    let searchTimeout;
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-
-        // Show/hide clear button
-        clearBtn.style.display = searchTerm ? 'block' : 'none';
-
-        // Clear previous timeout
-        clearTimeout(searchTimeout);
-
-        // Set new timeout for debounced search
-        searchTimeout = setTimeout(() => {
-            filterRestaurants(searchTerm);
-        }, 300); // Wait 300ms after user stops typing
-    });
-
-    // Clear search functionality
-    clearBtn.addEventListener('click', function() {
-        searchInput.value = '';
-        clearBtn.style.display = 'none';
-        filterRestaurants('');
-        searchInput.focus();
-    });
-
-    // Handle Enter key to search immediately
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            clearTimeout(searchTimeout);
-            const searchTerm = this.value.toLowerCase();
-            filterRestaurants(searchTerm);
-        }
-    });
-}
-
-function setupFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-
-            const category = this.dataset.category;
-            filterByCategory(category);
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
         });
     });
 }
 
-function filterRestaurants(searchTerm) {
-    const cards = document.querySelectorAll('.restaurant-card');
-    let visibleCount = 0;
+// Loading System
+class LoadingManager {
+    constructor() {
+        this.init();
+    }
 
-    cards.forEach(card => {
-        const name = card.dataset.name;
-        const category = card.dataset.category;
-        const description = card.querySelector('.restaurant-description')?.textContent.toLowerCase() || '';
-        const menuItems = Array.from(card.querySelectorAll('.menu-item')).map(item => item.textContent.toLowerCase());
+    init() {
+        this.createLoadingOverlay();
+        this.setupSectionNavigation();
+        this.setupPageNavigation();
+    }
 
-        // Split category by comma for search
-        const categoryList = category.split(',').map(cat => cat.trim().toLowerCase());
-
-        const matchesSearch = name.includes(searchTerm) ||
-                             categoryList.some(cat => cat.includes(searchTerm)) ||
-                             description.includes(searchTerm) ||
-                             menuItems.some(item => item.includes(searchTerm));
-
-        if (matchesSearch) {
-            card.style.display = 'block';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
+    createLoadingOverlay() {
+        // Create loading overlay if it doesn't exist
+        if (!document.getElementById('loading-overlay')) {
+            const overlay = document.createElement('div');
+            overlay.id = 'loading-overlay';
+            overlay.innerHTML = `
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Memuat...</div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
         }
-    });
+    }
 
-    // Show/hide no results message
-    const container = document.getElementById('restaurants-grid');
-    let noResultsMsg = container.querySelector('.no-results');
+    showLoading(duration = 800) {
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
 
-    if (visibleCount === 0) {
-        if (!noResultsMsg) {
-            noResultsMsg = document.createElement('div');
-            noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = searchTerm ?
-                'Tidak ada restoran yang sesuai dengan pencarian Anda.' :
-                'Tidak ada restoran yang tersedia saat ini.';
-            container.appendChild(noResultsMsg);
-        } else if (searchTerm) {
-            noResultsMsg.textContent = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
+            // Auto hide after duration
+            setTimeout(() => {
+                this.hideLoading();
+            }, duration);
         }
-    } else {
-        if (noResultsMsg) {
-            noResultsMsg.remove();
+    }
+
+    hideLoading() {
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
         }
+    }
+
+    setupSectionNavigation() {
+        // Handle smooth scrolling with loading for section navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                const href = anchor.getAttribute('href');
+                if (href === '#') return;
+
+                e.preventDefault();
+
+                // Show loading
+                this.showLoading(600);
+
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    // Scroll to target after a short delay
+                    setTimeout(() => {
+                        const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Update URL without jumping
+                        if (history.pushState) {
+                            history.pushState(null, null, href);
+                        }
+                    }, 300);
+                }
+            });
+        });
+    }
+
+    setupPageNavigation() {
+        // Handle page navigation with loading
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Only handle internal links (same domain)
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('//')) {
+                    e.preventDefault();
+
+                    // Show loading
+                    this.showLoading(1200);
+
+                    // Navigate after loading animation
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600);
+                }
+            });
+        });
     }
 }
 
-function filterByCategory(category) {
-    const cards = document.querySelectorAll('.restaurant-card');
-    let visibleCount = 0;
+// Initialize loading system when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    const loadingManager = new LoadingManager();
+});
 
-    cards.forEach(card => {
-        if (category === 'all') {
-            card.style.display = 'block';
-            visibleCount++;
-        } else {
-            // Split category by comma and check if selected category matches any
-            const categoryList = card.dataset.category.split(',').map(cat => cat.trim());
-            if (categoryList.includes(category)) {
+// Smooth scrolling for navigation links (backup method)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+    }
+});
+
+// Testimonials Story Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const storyDots = document.querySelectorAll('.story-dot');
+    const storyCards = document.querySelectorAll('.story-card');
+
+    if (storyDots.length > 0 && storyCards.length > 0) {
+        storyDots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                // Remove active class from all dots and cards
+                storyDots.forEach(d => d.classList.remove('active'));
+                storyCards.forEach(card => card.style.display = 'none');
+
+                // Add active class to clicked dot and show corresponding card
+                this.classList.add('active');
+                if (storyCards[index]) {
+                    storyCards[index].style.display = 'block';
+                    // Add animation when showing card
+                    storyCards[index].style.animation = 'fadeInScale 0.3s ease-out';
+                }
+            });
+        });
+
+        // Show first story by default
+        storyCards.forEach((card, index) => {
+            if (index === 0) {
                 card.style.display = 'block';
-                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
-        }
+        });
+    }
+
+    // Add click animation to story reactions
+    const reactions = document.querySelectorAll('.reaction');
+    reactions.forEach(reaction => {
+        reaction.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Add a temporary animation class
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+
+            // Simulate reaction count increase
+            const countText = this.textContent.match(/\d+/);
+            if (countText) {
+                const currentCount = parseInt(countText[0]);
+                this.innerHTML = this.innerHTML.replace(/\d+/, currentCount + 1);
+            }
+        });
     });
 
-    // Show/hide no results message
-    const container = document.getElementById('restaurants-grid');
-    let noResultsMsg = container.querySelector('.no-results');
-
-    if (visibleCount === 0) {
-        if (!noResultsMsg) {
-            noResultsMsg = document.createElement('div');
-            noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = 'Tidak ada restoran dalam kategori ini.';
-            container.appendChild(noResultsMsg);
+    // Auto-scroll through stories (optional)
+    let currentStory = 0;
+    const autoScrollInterval = setInterval(() => {
+        if (storyDots.length > 1) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory = (currentStory + 1) % storyDots.length;
+            storyDots[currentStory].classList.add('active');
         }
+    }, 5000); // Change story every 5 seconds
+
+    // Pause auto-scroll on hover
+    const storiesContainer = document.querySelector('.stories-container');
+    if (storiesContainer) {
+        storiesContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoScrollInterval);
+        });
+    }
+
+    // Add keyboard navigation for stories
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' && currentStory > 0) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory--;
+            storyDots[currentStory].classList.add('active');
+        } else if (e.key === 'ArrowRight' && currentStory < storyDots.length - 1) {
+            storyDots[currentStory].classList.remove('active');
+            currentStory++;
+            storyDots[currentStory].classList.add('active');
+        }
+    });
+});
+
+// Pricing Calculator
+const calculateBtn = document.getElementById('calculate-btn');
+const serviceType = document.getElementById('service-type');
+const distance = document.getElementById('distance');
+const weight = document.getElementById('weight');
+const resultPrice = document.getElementById('result-price');
+const resultDetails = document.getElementById('result-details');
+const calculatorResult = document.getElementById('calculator-result');
+
+// Function to toggle weight input visibility
+function toggleWeightInput() {
+    const weightContainer = document.querySelector('.weight-input-container');
+    const selectedService = serviceType.value;
+
+    // Show weight input for services that involve carrying goods
+    const servicesWithWeight = ['goods', 'shopping', 'gift', 'pickup'];
+
+    if (servicesWithWeight.includes(selectedService)) {
+        weightContainer.style.display = 'flex';
     } else {
-        if (noResultsMsg) {
-            noResultsMsg.remove();
-        }
+        weightContainer.style.display = 'none';
     }
 }
 
-function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
-    // Get restaurant data
-    fetch('data/resto.json')
-        .then(response => response.json())
-        .then(restaurants => {
-            const restaurant = restaurants.find(r => r.id === restaurantId);
-            if (restaurant) {
-                showRestaurantModal(restaurant, menuCategoryFilter);
-            } else {
-                alert('Data restoran tidak ditemukan!');
-            }
-        })
-        .catch(error => {
-            console.error('Error loading restaurant details:', error);
-            alert('Terjadi kesalahan saat memuat detail restoran.');
-        });
-}
+// Function to calculate and update price automatically
+function calculatePrice() {
+    // Base pricing
+    let basePrice = 10000; // 3 km pertama
+    let distanceValue = parseFloat(distance.textContent.replace(' km', '')) || 0;
+    let additionalDistance = Math.max(0, distanceValue - 3);
+    let distanceCost = basePrice + (additionalDistance * 2500);
 
+    // Additional costs
+    let weightCost = 0;
+    const selectedService = serviceType.value;
+    const servicesWithWeight = ['goods', 'shopping', 'gift', 'pickup'];
 
-function showRestaurantModal(restaurant, menuCategoryFilter = null) {
-    const ratingStars = generateStars(restaurant.rating);
-
-    // Group menu items by category
-    const menuByCategory = {};
-    if (restaurant.menu && restaurant.menu.length > 0) {
-        restaurant.menu.forEach(item => {
-            if (!menuByCategory[item.category]) {
-                menuByCategory[item.category] = [];
-            }
-            menuByCategory[item.category].push(item);
-        });
+    // Only calculate weight cost if service involves carrying goods
+    if (servicesWithWeight.includes(selectedService) && weight.value > 5) {
+        weightCost = (weight.value - 5) * 2000;
     }
 
-    // Get unique categories for category filter
-    const categories = Object.keys(menuByCategory);
+    let waitingCost = 0;
 
-    // Generate HTML for category filter buttons
-    let categoryFilterHtml = '<div class="modal-category-filters">';
-    categoryFilterHtml += '<button class="category-filter-btn active" data-category="all">Semua</button>';
-    categories.forEach(cat => {
-        categoryFilterHtml += `<button class="category-filter-btn" data-category="${cat}">${cat}</button>`;
+    // Service type multiplier
+    let serviceMultiplier = 1;
+    switch(selectedService) {
+        case 'food':
+            serviceMultiplier = 1;
+            break;
+        case 'goods':
+            serviceMultiplier = 1.2;
+            break;
+        case 'passenger':
+            serviceMultiplier = 1.5;
+            break;
+        case 'shopping':
+            serviceMultiplier = 1.8;
+            break;
+        case 'gift':
+            serviceMultiplier = 1.3;
+            break;
+        case 'pickup':
+            serviceMultiplier = 1.4;
+            break;
+    }
+
+    // Calculate total cost
+    let totalCost = (distanceCost + weightCost + waitingCost) * serviceMultiplier;
+
+    // Format to Rupiah
+    const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
     });
-    categoryFilterHtml += '</div>';
 
-    // Generate HTML for menu grouped by category
-    let menuHtml = '<div id="modal-menu-list">';
-    for (const category in menuByCategory) {
-        menuHtml += `<h4 class="menu-category" data-category="${category}">${category}</h4><div class="services-list">`;
-        menuByCategory[category].forEach(item => {
-            menuHtml += `
-                <div class="service-item-detail" data-name="${item.name.toLowerCase()}">
-                    <div class="service-header">
-                        <span class="service-name">${item.name}</span>
-                        <span class="service-price">${item.price}</span>
-                    </div>
-            `;
+    // Display result
+    resultPrice.textContent = formatter.format(totalCost);
 
-            // Add variants if they exist
-            if (item.variants && item.variants.length > 0) {
-                menuHtml += '<div class="service-variants">';
-                item.variants.forEach(variant => {
-                    menuHtml += `
-                        <div class="variant-item">
-                            <span class="variant-name">${variant.name}</span>
-                            <span class="variant-price">${variant.price}</span>
-                        </div>
-                    `;
-                });
-                menuHtml += '</div>';
-            }
-
-            menuHtml += '</div>';
-        });
-        menuHtml += '</div>';
-    }
-    menuHtml += '</div>';
-
-    const modal = document.createElement('div');
-    modal.className = 'detail-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>${restaurant.name}</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image">
-                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='images/placeholder-resto.jpg'">
-                </div>
-                <div class="modal-info">
-                    <div class="modal-rating">
-                        <div class="rating">
-                            ${ratingStars}
-                            <span class="rating-number">${restaurant.rating}</span>
-                        </div>
-                        <span class="category">${restaurant.category}</span>
-                    </div>
-
-                    <p class="description">${restaurant.description}</p>
-
-                    <div class="info-section">
-                        <h3>Informasi Kontak</h3>
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>${restaurant.address}</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-phone"></i>
-                            <span>${restaurant.phone}</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-clock"></i>
-                            <span>${restaurant.operating_hours}</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span>${restaurant.price_range}</span>
-                        </div>
-                    </div>
-
-                    <div class="info-section">
-                        <h3>Menu & Layanan (berdasarkan kategori menu)</h3>
-                        <input type="text" id="modal-menu-search" placeholder="Search menu..." />
-                        ${categoryFilterHtml}
-                        ${menuHtml}
-                    </div>
-
-                    <div class="info-section">
-                        <h3>Layanan Tersedia</h3>
-                        <div class="services-badges">
-                            ${restaurant.delivery_available && restaurant.pickup_available
-                                ? '<span class="service-badge delivery">Delivery</span><span class="service-badge pickup">Pickup</span>'
-                                : restaurant.delivery_available
-                                ? '<span class="service-badge delivery">Delivery</span>'
-                                : restaurant.pickup_available
-                                ? '<span class="service-badge pickup">Pickup</span>'
-                                : '<span class="service-badge">Tidak ada layanan</span>'}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
-                </a>
-                <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
-            </div>
-        </div>
+    // Display details with conditional weight info
+    let detailsHTML = `
+        <div>Jarak: ${distance.textContent}</div>
+        <div>Jenis layanan: ${serviceType.options[serviceType.selectedIndex].text}</div>
     `;
 
-    document.body.appendChild(modal);
-
-    // Add modal styles if not already added
-    if (!document.getElementById('modal-styles')) {
-        const styles = document.createElement('style');
-        styles.id = 'modal-styles';
-        styles.textContent = `
-            .detail-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-                animation: fadeIn 0.3s ease;
-            }
-
-            .modal-content {
-                background: white;
-                border-radius: 12px;
-                max-width: 600px;
-                max-height: 90vh;
-                width: 90%;
-                overflow-y: auto;
-                animation: slideIn 0.3s ease;
-            }
-
-            .modal-header {
-                padding: 20px;
-                border-bottom: 1px solid #eee;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .modal-header h2 {
-                margin: 0;
-                color: #333;
-                font-size: 1.5rem;
-            }
-
-            .close-btn {
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: #666;
-                padding: 0;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .close-btn:hover {
-                color: #333;
-            }
-
-            .modal-body {
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .modal-image {
-                width: 100%;
-                height: 200px;
-                overflow: hidden;
-                border-radius: 8px;
-                background: #f0f0f0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .modal-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-                display: block;
-                max-width: 100%;
-            }
-
-            .modal-info {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .modal-rating {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .modal-rating .rating {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-
-            .modal-rating .category {
-                background: #f0f0f0;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 0.9rem;
-                color: #666;
-            }
-
-            .info-section {
-                border-top: 1px solid #eee;
-                padding-top: 15px;
-            }
-
-            .info-section h3 {
-                margin: 0 0 10px 0;
-                color: #333;
-                font-size: 1.1rem;
-            }
-
-            .info-item {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 8px;
-                color: #666;
-            }
-
-            .info-item i {
-                width: 16px;
-                color: #EE4D2D;
-            }
-
-            .service-item-detail {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 8px 0;
-                border-bottom: 1px solid #f0f0f0;
-            }
-
-            .service-name {
-                font-weight: 500;
-            }
-
-            .service-price {
-                color: #EE4D2D;
-                font-weight: 600;
-            }
-
-            .services-badges {
-                display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-
-            .service-badge {
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 0.9rem;
-                font-weight: 500;
-            }
-
-            .service-badge.delivery {
-                background: #28a745;
-                color: white;
-            }
-
-            .service-badge.pickup {
-                background: #EE4D2D;
-                color: white;
-            }
-
-            .modal-footer {
-                padding: 20px;
-                border-top: 1px solid #eee;
-                display: flex;
-                gap: 15px;
-                justify-content: flex-end;
-            }
-
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-50px) scale(0.9);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                }
-            }
-
-            @media (max-width: 768px) {
-                .modal-content {
-                    width: 95%;
-                    margin: 10px;
-                }
-
-                .modal-footer {
-                    flex-direction: column;
-                }
-            }
-
-            .modal-category-filters {
-                margin-bottom: 10px;
-            }
-
-            .category-filter-btn {
-                background: #f0f0f0;
-                border: none;
-                border-radius: 20px;
-                padding: 6px 12px;
-                margin-right: 8px;
-                cursor: pointer;
-                font-size: 0.9rem;
-                transition: background-color 0.3s ease;
-            }
-
-            .category-filter-btn.active,
-            .category-filter-btn:hover {
-                background: #EE4D2D;
-                color: white;
-            }
-
-            #modal-menu-search {
-                width: 100%;
-                padding: 8px 12px;
-                margin-bottom: 10px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                font-size: 1rem;
-            }
-
-            .service-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-            }
-
-            .service-variants {
-                margin-left: 20px;
-                margin-top: 5px;
-                border-left: 2px solid #f0f0f0;
-                padding-left: 15px;
-            }
-
-            .variant-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 4px 0;
-                font-size: 0.9rem;
-            }
-
-            .variant-name {
-                color: #666;
-                font-style: italic;
-            }
-
-            .variant-price {
-                color: #EE4D2D;
-                font-weight: 500;
-                font-size: 0.85rem;
-            }
-        `;
-        document.head.appendChild(styles);
+    // Only show weight if service involves carrying goods
+    if (servicesWithWeight.includes(selectedService)) {
+        detailsHTML += `<div>Berat: ${weight.value} kg</div>`;
     }
 
-    // Add event listeners for search and category filter
-    const searchInput = document.getElementById('modal-menu-search');
-    const categoryButtons = modal.querySelectorAll('.category-filter-btn');
-    const menuList = modal.querySelector('#modal-menu-list');
+    resultDetails.innerHTML = detailsHTML;
+    calculatorResult.style.display = 'block';
+}
 
-    function filterMenu() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const activeCategoryBtn = modal.querySelector('.category-filter-btn.active');
-        const activeCategory = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'all';
+// Add event listeners for automatic calculation and weight visibility (only if elements exist)
+if (serviceType && weight) {
+    serviceType.addEventListener('change', function() {
+        toggleWeightInput();
+        calculatePrice();
+    });
+    weight.addEventListener('input', calculatePrice);
+}
 
-        const menuCategories = menuList.querySelectorAll('.menu-category');
-        menuCategories.forEach(categoryEl => {
-            const category = categoryEl.dataset.category;
-            const serviceItems = categoryEl.nextElementSibling.querySelectorAll('.service-item-detail');
+// Initialize weight input visibility on page load (only if elements exist)
+document.addEventListener('DOMContentLoaded', function() {
+    if (serviceType) {
+        toggleWeightInput();
+    }
+});
 
-            // Show/hide category based on active category filter
-            if (activeCategory !== 'all' && category !== activeCategory) {
-                categoryEl.style.display = 'none';
-                categoryEl.nextElementSibling.style.display = 'none';
-                return;
-            } else {
-                categoryEl.style.display = '';
-                categoryEl.nextElementSibling.style.display = '';
+// Manual calculation button (optional, in case user wants to recalculate)
+if (calculateBtn) {
+    calculateBtn.addEventListener('click', calculatePrice);
+}
+
+// Scroll Animation for Sections
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.services, .pricing-calculator, .how-it-works, .testimonials, .cta');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
             }
+        });
+    }, observerOptions);
 
-            // Filter service items by search term
-            serviceItems.forEach(item => {
-                const name = item.dataset.name;
-                if (name.includes(searchTerm)) {
-                    item.style.display = '';
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Display random visitor count
+    const visitorCountElement = document.getElementById('visitor-count');
+    if (visitorCountElement) {
+        const randomCount = Math.floor(Math.random() * 1000) + 1; // Random number between 1 and 1000
+        visitorCountElement.textContent = randomCount.toLocaleString();
+    }
+});
+
+// Map initialization and functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if map element exists before initializing
+    const mapElement = document.getElementById('map');
+    if (!mapElement) return; // Exit if map doesn't exist on this page
+
+    // Check if map is already initialized to prevent multiple initializations
+    if (mapElement._leaflet_id) {
+        console.log('Map already initialized, skipping...');
+        return;
+    }
+
+    // Koordinat default LubukLinggau
+    const defaultCoords = [-3.2966, 102.8618];
+
+    // Inisialisasi peta
+    const map = L.map('map').setView(defaultCoords, 13);
+
+    // Tambahkan tile layer dari OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Tambahkan marker untuk lokasi awal dan tujuan
+    let startMarker = null;
+    let endMarker = null;
+    let routeLine = null;
+
+    // Tambahkan pencarian alamat
+    const searchInput = document.getElementById('address-search');
+    const searchButton = document.getElementById('search-button');
+
+    // Add event listeners only if elements exist
+    if (searchButton && searchInput) {
+        searchButton.addEventListener('click', searchLocation);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchLocation();
+            }
+        });
+    }
+
+    function searchLocation() {
+        const query = searchInput.value;
+        if (!query) return;
+
+        // Gunakan Nominatim untuk geocoding
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', LubukLinggau')}&limit=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const result = data[0];
+                    const lat = parseFloat(result.lat);
+                    const lon = parseFloat(result.lon);
+
+                    // Pindahkan peta ke lokasi yang ditemukan
+                    map.setView([lat, lon], 15);
+
+                    // Tambahkan marker jika belum ada
+                    if (!startMarker) {
+                        startMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Awal"
+                        }).addTo(map);
+                        startMarker.bindPopup("Lokasi Awal").openPopup();
+                        updateStartLocationName(lat, lon);
+
+                        startMarker.on('dragend', function() {
+                            updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                            calculateRoute();
+                        });
+                    } else if (!endMarker) {
+                        endMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Tujuan"
+                        }).addTo(map);
+                        endMarker.bindPopup("Lokasi Tujuan").openPopup();
+                        updateEndLocationName(lat, lon);
+
+                        endMarker.on('dragend', function() {
+                            updateEndLocationName(endMarker.getLatLng().lat, endMarker.getLatLng().lng);
+                            calculateRoute();
+                        });
+
+                        calculateRoute();
+                    } else {
+                        // Reset markers jika kedua marker sudah ada
+                        map.removeLayer(startMarker);
+                        map.removeLayer(endMarker);
+                        if (routeLine) map.removeLayer(routeLine);
+
+                        startMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Awal"
+                        }).addTo(map);
+                        startMarker.bindPopup("Lokasi Awal").openPopup();
+                        updateStartLocationName(lat, lon);
+
+                        startMarker.on('dragend', function() {
+                            updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                            if (endMarker) calculateRoute();
+                        });
+
+                        endMarker = null;
+                        document.getElementById('end-location').textContent = "Belum dipilih";
+                        document.getElementById('estimated-time').textContent = "-";
+                        document.getElementById('distance').textContent = "-";
+                    }
                 } else {
-                    item.style.display = 'none';
+                    alert("Alamat tidak ditemukan. Silakan coba dengan kata kunci lainnya.");
                 }
+            })
+            .catch(error => {
+                console.error('Error searching location:', error);
+                alert("Terjadi kesalahan saat mencari alamat.");
+            });
+    }
+
+    // Tambahkan event listener untuk klik pada peta
+    map.on('click', function(e) {
+        if (!startMarker) {
+            startMarker = L.marker(e.latlng, {
+                draggable: true,
+                title: "Lokasi Awal"
+            }).addTo(map);
+            startMarker.bindPopup("Lokasi Awal").openPopup();
+            updateStartLocationName(e.latlng.lat, e.latlng.lng);
+
+            startMarker.on('dragend', function() {
+                updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                if (endMarker) calculateRoute();
+            });
+        } else if (!endMarker) {
+            endMarker = L.marker(e.latlng, {
+                draggable: true,
+                title: "Lokasi Tujuan"
+            }).addTo(map);
+            endMarker.bindPopup("Lokasi Tujuan").openPopup();
+            updateEndLocationName(e.latlng.lat, e.latlng.lng);
+
+            endMarker.on('dragend', function() {
+                updateEndLocationName(endMarker.getLatLng().lat, endMarker.getLatLng().lng);
+                calculateRoute();
             });
 
-            // If all items are hidden, hide the category as well
-            const visibleItems = Array.from(serviceItems).some(item => item.style.display !== 'none');
-            if (!visibleItems) {
-                categoryEl.style.display = 'none';
-                categoryEl.nextElementSibling.style.display = 'none';
+            calculateRoute();
+        } else {
+            // Reset markers jika kedua marker sudah ada
+            map.removeLayer(startMarker);
+            map.removeLayer(endMarker);
+            if (routeLine) map.removeLayer(routeLine);
+
+            startMarker = L.marker(e.latlng, {
+                draggable: true,
+                title: "Lokasi Awal"
+            }).addTo(map);
+            startMarker.bindPopup("Lokasi Awal").openPopup();
+            updateStartLocationName(e.latlng.lat, e.latlng.lng);
+
+            startMarker.on('dragend', function() {
+                updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                if (endMarker) calculateRoute();
+            });
+
+            endMarker = null;
+            document.getElementById('end-location').textContent = "Belum dipilih";
+            document.getElementById('estimated-time').textContent = "-";
+            document.getElementById('distance').textContent = "-";
+        }
+    });
+
+    // Fungsi untuk mendapatkan nama lokasi berdasarkan koordinat
+    function updateStartLocationName(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    const address = data.display_name;
+                    // Ambil bagian nama jalan atau area yang lebih spesifik
+                    const addressParts = address.split(',');
+                    const shortAddress = addressParts.slice(0, 3).join(',');
+                    document.getElementById('start-location').textContent = shortAddress;
+                }
+            })
+            .catch(error => {
+                console.error('Error getting location name:', error);
+                document.getElementById('start-location').textContent = "Lokasi dipilih";
+            });
+    }
+
+    function updateEndLocationName(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    const address = data.display_name;
+                    // Ambil bagian nama jalan atau area yang lebih spesifik
+                    const addressParts = address.split(',');
+                    const shortAddress = addressParts.slice(0, 3).join(',');
+                    document.getElementById('end-location').textContent = shortAddress;
+                }
+            })
+            .catch(error => {
+                console.error('Error getting location name:', error);
+                document.getElementById('end-location').textContent = "Lokasi dipilih";
+            });
+    }
+
+    // Fungsi untuk menghitung rute dan jarak
+    function calculateRoute() {
+        if (!startMarker || !endMarker) return;
+
+        const startLatLng = startMarker.getLatLng();
+        const endLatLng = endMarker.getLatLng();
+
+        // Gunakan OSRM untuk menghitung rute
+        fetch(`https://router.project-osrm.org/route/v1/driving/${startLatLng.lng},${startLatLng.lat};${endLatLng.lng},${endLatLng.lat}?overview=full&geometries=geojson`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.routes && data.routes.length > 0) {
+                    const route = data.routes[0];
+                    const distanceKm = (route.distance / 1000).toFixed(1);
+                    const durationMin = Math.ceil(route.duration / 60);
+
+                    // Update input jarak
+                    document.getElementById('distance').textContent = distanceKm + ' km';
+
+                    // Update estimasi waktu
+                    document.getElementById('estimated-time').textContent = `${durationMin} menit`;
+
+                    // Hapus rute sebelumnya jika ada
+                    if (routeLine) {
+                        map.removeLayer(routeLine);
+                    }
+
+                    // Gambar rute baru
+                    const routeCoordinates = L.geoJSON(route.geometry).getLayers()[0].getLatLngs();
+                    routeLine = L.polyline(routeCoordinates, {
+                        color: '#2563eb',
+                        weight: 5,
+                        opacity: 0.7
+                    }).addTo(map);
+
+                    // Sesuaikan zoom peta untuk menampilkan seluruh rute
+                    map.fitBounds(routeLine.getBounds());
+                }
+            })
+            .catch(error => {
+                console.error('Error calculating route:', error);
+                alert("Terjadi kesalahan saat menghitung rute.");
+            });
+    }
+});
+});
+
+// Add smooth scroll to top button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    if (scrollToTopBtn) {
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        );
+
+        // Show button when scrolling down
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+    }
+});
+
+// PWA Install Prompt
+document.addEventListener('DOMContentLoaded', function() {
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../sw.js', { scope: '/omegajastip/' })
+            .then(registration => {
+                console.log('Service Worker registered successfully:', registration);
+            })
+            .catch(error => {
+                console.log('Service Worker registration failed:', error);
+            });
+    }
+
+    let deferredPrompt;
+    const installPopup = document.getElementById('pwa-install-popup');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+
+    // Create progress bar and success message elements
+    const progressContainer = document.createElement('div');
+    progressContainer.id = 'install-progress-container';
+    progressContainer.style.display = 'none';
+    progressContainer.style.textAlign = 'center';
+    progressContainer.style.padding = '20px';
+    progressContainer.innerHTML = `
+        <div class="install-progress-bar" style="width: 100%; height: 20px; background-color: #e0e0e0; border-radius: 10px; margin: 10px 0; position: relative; overflow: hidden;">
+            <div class="install-progress-fill" id="install-progress-fill" style="width: 0%; height: 100%; background-color: #2563eb; border-radius: 10px; transition: width 0.1s ease;"></div>
+            <div class="install-progress-text" id="install-progress-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333; font-weight: bold;">0%</div>
+        </div>
+        <div class="install-loading-text" style="margin-top: 10px; color: #666;">Menginstall aplikasi...</div>
+    `;
+
+    const successMessage = document.createElement('div');
+    successMessage.id = 'install-success-message';
+    successMessage.style.display = 'none';
+    successMessage.style.textAlign = 'center';
+    successMessage.style.padding = '20px';
+    successMessage.innerHTML = `
+        <div class="success-icon" style="font-size: 48px; color: #28a745; margin-bottom: 10px;">✓</div>
+        <div class="success-text" style="font-size: 18px; color: #333; margin-bottom: 20px;">Aplikasi berhasil diinstall!</div>
+        <button id="success-close-btn" class="success-close-btn" style="background-color: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Tutup</button>
+    `;
+
+    if (installPopup) {
+        installPopup.appendChild(progressContainer);
+        installPopup.appendChild(successMessage);
+    }
+
+    // Handle success close button click
+    const successCloseBtn = document.getElementById('success-close-btn');
+    if (successCloseBtn) {
+        successCloseBtn.addEventListener('click', () => {
+            if (installPopup) {
+                installPopup.style.display = 'none';
+                // Clear the dismissal flag
+                localStorage.removeItem('pwa-install-dismissed');
             }
         });
     }
 
-    searchInput.addEventListener('input', filterMenu);
-
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            filterMenu();
-        });
-    });
-}
-
-function closeModal() {
-    const modal = document.querySelector('.detail-modal');
-    if (modal) {
-        modal.style.animation = 'fadeOut 0.3s ease forwards';
-        setTimeout(() => {
-            modal.remove();
-        }, 300);
+    // Check if app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        return; // App is already installed, don't show popup
     }
-}
 
-function displayErrorMessage() {
-    const container = document.getElementById('restaurants-grid');
-    container.innerHTML = '<div class="error-message">Maaf, terjadi kesalahan saat memuat data restoran. Silakan coba lagi nanti.</div>';
-}
+    // Listen for the beforeinstallprompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+
+        // Show the install popup after a short delay
+        setTimeout(() => {
+            if (installPopup && !localStorage.getItem('pwa-install-dismissed')) {
+                installPopup.style.display = 'block';
+            }
+        }, 3000); // Show after 3 seconds
+    });
+
+    // Handle install button click
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Hide install and close buttons
+                installBtn.style.display = 'none';
+                if (closeBtn) closeBtn.style.display = 'none';
+
+                // Show progress bar
+                progressContainer.style.display = 'block';
+
+                // Animate progress bar
+                const progressFill = document.getElementById('install-progress-fill');
+                const progressText = document.getElementById('install-progress-text');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2; // Increase by 2% every 50ms for 2.5 seconds
+                    if (progressFill) progressFill.style.width = progress + '%';
+                    if (progressText) progressText.textContent = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        // Show the install prompt after animation
+                        deferredPrompt.prompt();
+
+                        // Wait for the user to respond to the prompt
+                        deferredPrompt.userChoice.then(({ outcome }) => {
+                            // Reset the deferred prompt variable
+                            deferredPrompt = null;
+
+                            if (outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                                // Hide progress and show success message
+                                progressContainer.style.display = 'none';
+                                successMessage.style.display = 'block';
+                            } else {
+                                console.log('User dismissed the install prompt');
+                                // Hide popup
+                                if (installPopup) {
+                                    installPopup.style.display = 'none';
+                                }
+                            }
+                        });
+                    }
+                }, 50);
+            }
+        });
+    }
+
+    // Handle close button click
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if (installPopup) {
+                installPopup.style.display = 'none';
+                // Remember that user dismissed the popup for this session
+                localStorage.setItem('pwa-install-dismissed', 'true');
+            }
+        });
+    }
+
+    // Listen for successful app installation
+    window.addEventListener('appinstalled', () => {
+        console.log('PWA was installed');
+        // Hide the popup if it's still visible
+        if (installPopup) {
+            installPopup.style.display = 'none';
+        }
+        // Clear the dismissal flag
+        localStorage.removeItem('pwa-install-dismissed');
+    });
+});
