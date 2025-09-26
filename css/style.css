@@ -2016,6 +2016,8 @@ html.pwa-mode {
     padding-bottom: 0; /* Adjust for enhanced bottom nav */
     font-size: 1.05em; /* Slightly larger text for app feel */
     background: linear-gradient(135deg, #f9fafb 0%, #e8f4fd 100%); /* Subtle app-like background */
+    overflow-y: auto; /* Ensure body can scroll in PWA */
+    height: auto; /* Allow body to expand */
 }
 
 .pwa-installed header {
