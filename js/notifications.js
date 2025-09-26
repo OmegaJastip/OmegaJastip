@@ -65,7 +65,7 @@ async function getFCMToken() {
 function sendToServer(token) {
   // Store token in localStorage for demo purposes
   localStorage.setItem('fcm_token', token);
-  console.log('FCM Token stored locally:', token);
+
   
   // Example implementation for actual server call (uncomment if backend available):
   /*
