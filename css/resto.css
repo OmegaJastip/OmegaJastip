@@ -70,21 +70,25 @@
 }
 
         .filter-buttons {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 10px;
-            justify-content: center;
             margin: 20px 0;
         }
         .filter-btn {
             background: white;
             border: 2px solid #ddd;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 8px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: #555555;
+            text-align: center;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .filter-btn:hover,
         .filter-btn.active {
@@ -438,7 +442,16 @@
     }
 
     .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
         justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .filter-btn {
+        flex: 0 0 auto;
+        min-width: 100px;
+        max-width: 150px;
     }
 
     .restaurants-grid {

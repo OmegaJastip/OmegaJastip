@@ -15,16 +15,25 @@ function getUniqueCategories(restaurants) {
     restaurants.forEach(restaurant => {
         if (restaurant.category) {
             // Split categories by comma and add each one
-            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim());
+            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim().toLowerCase());
             restaurantCategories.forEach(cat => {
                 if (cat) { // Only add non-empty categories
-                    categories.add(cat);
+                    // Normalize to title case
+                    const normalized = cat.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                    categories.add(normalized);
                 }
             });
         }
     });
 
-    return Array.from(categories);
+    // Convert to array and sort alphabetically, with 'all' first
+    const sortedCategories = Array.from(categories).sort((a, b) => {
+        if (a === 'all') return -1;
+        if (b === 'all') return 1;
+        return a.localeCompare(b);
+    });
+
+    return sortedCategories;
 }
 
 // Function to create filter buttons dynamically
@@ -726,10 +735,77 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 .modal-content {
                     width: 95%;
                     margin: 10px;
+                    max-height: 90vh;
+                }
+
+                .modal-header h2 {
+                    font-size: 1.4rem;
+                }
+
+                .modal-body {
+                    padding: 16px;
+                    gap: 16px;
+                }
+
+                .modal-image {
+                    height: 150px;
+                }
+
+                .modal-info {
+                    gap: 12px;
+                }
+
+                .info-section h3 {
+                    font-size: 1rem;
                 }
 
                 .modal-footer {
                     flex-direction: column;
+                    padding: 16px;
+                }
+
+                .modal-footer .btn {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .modal-content {
+                    width: 98%;
+                    margin: 5px;
+                }
+
+                .modal-header {
+                    padding: 16px 15px;
+                }
+
+                .modal-header h2 {
+                    font-size: 1.2rem;
+                }
+
+                .modal-body {
+                    padding: 12px;
+                }
+
+                .modal-image {
+                    height: 120px;
+                }
+
+                .info-item {
+                    font-size: 0.85rem;
+                }
+
+                .description {
+                    font-size: 0.9rem;
+                }
+
+                .service-name {
+                    font-size: 0.95rem;
+                }
+
+                .service-price {
+                    font-size: 1rem;
                 }
             }
 
