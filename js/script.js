@@ -55,6 +55,10 @@ class LoadingManager {
 
                 e.preventDefault();
 
+                // Play move sound
+                moveAudio.currentTime = 0;
+                moveAudio.play().catch(e => console.log('Move audio play failed:', e));
+
                 // Show loading
                 this.showLoading(600);
 
@@ -88,6 +92,10 @@ class LoadingManager {
                 const href = link.getAttribute('href');
                 if (href && !href.startsWith('http') && !href.startsWith('//')) {
                     e.preventDefault();
+
+                    // Play move sound
+                    moveAudio.currentTime = 0;
+                    moveAudio.play().catch(e => console.log('Move audio play failed:', e));
 
                     // Show loading
                     this.showLoading(1200);
@@ -644,6 +652,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Preload move sound
+    const moveAudio = new Audio('sound/move.mp3');
+    moveAudio.load();
+
     let deferredPrompt;
     const installPopup = document.getElementById('pwa-install-popup');
     const installBtn = document.getElementById('pwa-install-btn');
@@ -742,6 +754,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             if (outcome === 'accepted') {
                                 console.log('User accepted the install prompt');
+                                // Play success sound
+                                const successAudio = new Audio('sound/success.mp3');
+                                successAudio.play().catch(e => console.log('Success audio play failed:', e));
                                 // Hide progress and show success message
                                 progressContainer.style.display = 'none';
                                 successMessage.style.display = 'block';

@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Preload alert sound
+    const alertAudio = new Audio('sound/alert.mp3');
+    alertAudio.load();
+
     // Rate limiting function
     function shouldShowAlert(actionType, maxAttempts = 3, timeWindow = 10000) {
         const now = Date.now();
@@ -36,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.warn('🔒 ' + message);
             protectionState.warningsShown++;
 
-            // Play alert sound
-            const audio = new Audio('sound/alert.mp3');
-            audio.play().catch(e => console.log('Audio play failed:', e));
+            // Play preloaded alert sound
+            alertAudio.currentTime = 0; // Reset to start
+            alertAudio.play().catch(e => console.log('Audio play failed:', e));
 
             // Show subtle notification instead of alert
             const notification = document.createElement('div');
