@@ -143,29 +143,21 @@ function showNotificationPrompt() {
     </div>
   `;
 
-  // Enhanced styles with responsiveness and animation
+  // Enhanced styles with desktop/mobile responsiveness
+  const isDesktop = window.innerWidth > 768;
   prompt.style.cssText = `
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    left: 20px;
-    max-width: 350px;
-    margin: 0 auto;
+    ${isDesktop ? 'right: 20px; left: auto; max-width: 380px; margin: 0;' : 'left: 20px; right: 20px; max-width: 350px; margin: 0 auto;'}
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    padding: 24px;
+    padding: ${isDesktop ? '24px' : '20px'};
     z-index: 10000;
     font-family: 'Poppins', sans-serif;
     transform: translateY(100%);
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     opacity: 0;
-    @media (max-width: 480px) {
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      max-width: none;
-    }
   `;
 
   // Button styles
@@ -289,35 +281,36 @@ function showNotificationPrompt() {
   });
 }
 
-// Show success message
-function showSuccessMessage() {
-  const message = document.createElement('div');
-  message.innerHTML = `
-    <div style="
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #10b981;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 10000;
-      font-family: 'Poppins', sans-serif;
-    ">
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <span>✅</span>
-        <span>Notifikasi diaktifkan!</span>
+  // Show success message
+  function showSuccessMessage() {
+    const isDesktop = window.innerWidth > 768;
+    const message = document.createElement('div');
+    message.innerHTML = `
+      <div style="
+        position: fixed;
+        bottom: 20px;
+        ${isDesktop ? 'right: 20px;' : 'left: 20px; right: 20px; margin: 0 auto; max-width: 300px; text-align: center;'}
+        background: #10b981;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-family: 'Poppins', sans-serif;
+      ">
+        <div style="display: flex; align-items: center; justify-content: ${isDesktop ? 'flex-start' : 'center'}; gap: 10px;">
+          <span>✅</span>
+          <span>Notifikasi diaktifkan!</span>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  document.body.appendChild(message);
+    document.body.appendChild(message);
 
-  setTimeout(() => {
-    message.remove();
-  }, 3000);
-}
+    setTimeout(() => {
+      message.remove();
+    }, 3000);
+  }
 
 // Test notification function
 function showTestNotification() {
