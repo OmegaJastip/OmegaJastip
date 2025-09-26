@@ -1,2 +1,1404 @@
 [
+    {
+        "id": 1758459244769,
+        "name": "Singkong Meledak",
+        "category": "Jajanan,Resto",
+        "description": "Singkong meledak adalah jajanan yang viral di Palembang dan Medan, berupa singkong goreng dengan tekstur empuk di dalam dan garing di luar, yang dinamakan \"meledak\" karena teksturnya akan merekah atau mengembang saat dimasak. Jajanan ini biasanya dijual dalam beberapa pilihan rasa modern seperti balado, BBQ, atau jagung manis, seharga sekitar Rp15.000 per porsi",
+        "address": "Jl. Yos Sudarso No.76, Jawa Kanan, Kec. Lubuk Linggau Tim. I, Kota Lubuklinggau, Sumatera Selatan 31613",
+        "phone": "-",
+        "price_range": "Rp 15.000 ",
+        "rating": 5,
+        "image": "images\/singkong-meledak.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "13:00 - 22:00",
+        "menu": [
+            {
+                "name": "Balado",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Balado Pedas Manis",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "BBQ",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Jagung Manis",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Original",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "MIX",
+                "category": "singkong meledak",
+                "price": "Rp 15.000",
+                "variants": []
+            }
+        ]
+    },
+    {
+        "id": 1758461450822,
+        "name": "Mango Queen",
+        "category": "Jajanan,Resto,thailand",
+        "description": "Jajanan Mango Queen adalah stand atau kafe yang menjual smoothies Thailand dan pancong lumer di Lubuklinggau, menjual berbagai macam minuman dengan harga mulai dari Rp15.000,- dan sering menjadi rekomendasi jajan populer di sana. Jajanan ini dikenal karena whipcream dan kejunya yang melimpah serta rasanya yang enak",
+        "address": "Jl.Yos sudarso jawa kanan (samping seafood 21 ,sebrang tomoro coffe)",
+        "phone": "-",
+        "price_range": "Rp 5.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/mango-queen.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "10:00-21:00",
+        "menu": [
+            {
+                "name": "ori",
+                "category": "Pancong Lumer",
+                "price": "Rp 8.000",
+                "variants": []
+            },
+            {
+                "name": "Coklat",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Greentea",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Tiramisu",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Taro",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "White Choco",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Strawberry",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Keju",
+                "category": "Pancong Lumer",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Capucino",
+                "category": "Pancong Lumer",
+                "price": "Rp 11.000",
+                "variants": []
+            },
+            {
+                "name": "Choco crunch",
+                "category": "Pancong Cruncy",
+                "price": "Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Tiramisu Crunch",
+                "category": "Pancong Cruncy",
+                "price": "Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Grentea Crunchy",
+                "category": "Pancong Cruncy",
+                "price": "Rp 13.000",
+                "variants": []
+            },
+            {
+                "name": "Jumbo Free 3 Toping + 3 Ex Toping",
+                "category": "Pancong Cruncy",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Air Mineral",
+                "category": "Jus",
+                "price": "Rp 5.000",
+                "variants": []
+            },
+            {
+                "name": "Manga",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000",
+                "variants": []
+            },
+            {
+                "name": "Alpukat",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Strawberry",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000",
+                "variants": []
+            },
+            {
+                "name": "Kurma",
+                "category": "Jus",
+                "price": "Rp 11.000 - Rp 13.000",
+                "variants": []
+            },
+            {
+                "name": "Buah Naga",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Coklat",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Ubi Ungu",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Durian",
+                "category": "Jus",
+                "price": "Rp 12.000 - Rp 14.000",
+                "variants": []
+            },
+            {
+                "name": "Melon",
+                "category": "Jus",
+                "price": "Rp 10.000 - Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Mix Rasa",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "Keju",
+                "category": "Extra Toping",
+                "price": "Rp 1.000 - Rp 3.000",
+                "variants": []
+            },
+            {
+                "name": "Koko krunch",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "Crumb Black",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "c.GreenTea",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "c.Red Velvet",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "Whipecream",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "Marsmellow",
+                "category": "Extra Toping",
+                "price": "Rp 2.000",
+                "variants": []
+            },
+            {
+                "name": "Salad Buah",
+                "category": "Snack",
+                "price": "Rp 15.000 - Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Ketahuan(TASO)",
+                "category": "Snack",
+                "price": "Rp 10.000 - Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Basreng",
+                "category": "Snack",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Fruit Sando",
+                "category": "Snack",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "French Fries",
+                "category": "Snack",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "French Fries & Sausages",
+                "category": "Snack",
+                "price": "Rp 18.000",
+                "variants": []
+            },
+            {
+                "name": "Mango Thai",
+                "category": "Smothies",
+                "price": "Rp 16.000",
+                "variants": []
+            },
+            {
+                "name": "Alpukat Thai",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Strawberry Thai",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Ubi Ungu",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Choco Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Dragon Fruit",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Kurma Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Melon Smooth",
+                "category": "Smothies",
+                "price": "Rp 15.000",
+                "variants": []
+            }
+        ]
+    },
+    {
+        "id": 1758506621196,
+        "name": "DImsum Mamita",
+        "category": "Cafe,DimSum",
+        "description": "Merupakan salah satu restoran dimsum di Kota Lubuklinggau. Untuk informasi lainnya Anda bisa menghubungi kontak telepon yang tersedia",
+        "address": "Jln. Patimura Kel.Sukajadi Barat I Kota Lubuklinggau",
+        "phone": "+62 851-8981-7353",
+        "price_range": "-",
+        "rating": 5,
+        "image": "images\/mamita-dimsum.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "09.00 s\/d 21.00 Setiap Hari",
+        "menu": [
+            {
+                "name": "Tekwan Ori",
+                "category": "Rebusan",
+                "price": "Rp 17.000",
+                "variants": []
+            },
+            {
+                "name": "Tekwan Syuki",
+                "category": "Rebusan",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Tekwan cuanky",
+                "category": "Rebusan",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Tekwan Indomie",
+                "category": "Rebusan",
+                "price": "Rp 22.000",
+                "variants": []
+            },
+            {
+                "name": "Mie Syuki",
+                "category": "Rebusan",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "MIe Ramyun",
+                "category": "Rebusan",
+                "price": "Rp 22.000",
+                "variants": []
+            },
+            {
+                "name": "Seblak Mamita",
+                "category": "Rebusan",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Indome Goreng",
+                "category": "Rebusan",
+                "price": "Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Indomie Soto",
+                "category": "Rebusan",
+                "price": "Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Indomie Kari Ayam",
+                "category": "Rebusan",
+                "price": "Rp 12.000",
+                "variants": []
+            },
+            {
+                "name": "Bihun Goreng",
+                "category": "Goreng",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ayam",
+                        "price": "Rp 23.000"
+                    },
+                    {
+                        "name": "Seafood",
+                        "price": "Rp 27.000"
+                    }
+                ]
+            },
+            {
+                "name": "Nasi Goreng Manis",
+                "category": "Goreng",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ayam",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Seafood",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Nasi Goreng Kampung",
+                "category": "Goreng",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ayam",
+                        "price": "Rp 22.000"
+                    },
+                    {
+                        "name": "Seafood",
+                        "price": "Rp 27.000"
+                    }
+                ]
+            },
+            {
+                "name": "Nasi Goreng Teri",
+                "category": "Goreng",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Cabe Ijo",
+                        "price": "Rp 23.000"
+                    }
+                ]
+            },
+            {
+                "name": "Chiken Katsu",
+                "category": "Goreng",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Ayam",
+                "category": "Goreng\/Bakar",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Goreng",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Bakar",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Nasi Ayam",
+                "category": "Goreng\/Bakar",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Goreng",
+                        "price": "Rp 30.000"
+                    },
+                    {
+                        "name": "Bakar",
+                        "price": "Rp 30.000"
+                    }
+                ]
+            },
+            {
+                "name": "Sate Taichan",
+                "category": "Sate",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Ikan",
+                "category": "Goreng\/Bakar",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Goreng",
+                        "price": "Rp 28.000"
+                    }
+                ]
+            },
+            {
+                "name": "Nasi Ikan",
+                "category": "Goreng\/Bakar",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Goreng",
+                        "price": "Rp 33.000"
+                    },
+                    {
+                        "name": "Bakar",
+                        "price": "Rp 33.000"
+                    }
+                ]
+            },
+            {
+                "name": "Es Kosong",
+                "category": "Minuman Dingin",
+                "price": "Rp 3.000",
+                "variants": []
+            },
+            {
+                "name": "Air Mineral",
+                "category": "Minuman Dingin",
+                "price": "Rp 5.000",
+                "variants": []
+            },
+            {
+                "name": "Infused Water",
+                "category": "Minuman Dingin",
+                "price": "Rp 7.000",
+                "variants": []
+            },
+            {
+                "name": "Tea",
+                "category": "Minuman Dingin",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ice",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Lychee",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Lemon",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Lemonade",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Thai Tea",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "GreenTea",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Teh Tarik",
+                        "price": "Rp 15.000"
+                    }
+                ]
+            },
+            {
+                "name": "Orange Ice",
+                "category": "Minuman Dingin",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Chocolate Ice",
+                "category": "Minuman Dingin",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Milo Ice",
+                "category": "Minuman Dingin",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Coffe",
+                "category": "Minuman Dingin",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Cappucino Ice",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Coffe Caramel",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Coffe Mamita",
+                        "price": "Rp 18.000"
+                    }
+                ]
+            },
+            {
+                "name": "Teh",
+                "category": "Minuman Hangat",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Tawar",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Manis",
+                        "price": "Rp 7.000"
+                    }
+                ]
+            },
+            {
+                "name": "Kopi",
+                "category": "Minuman Hangat",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Hiram",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Susu",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Cappucino",
+                        "price": "Rp 10.000"
+                    }
+                ]
+            },
+            {
+                "name": "LemonTea",
+                "category": "Minuman Hangat",
+                "price": "Rp 10.000",
+                "variants": []
+            },
+            {
+                "name": "Dimsum Saos Ori",
+                "category": "Best Seller",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Dimsum Mentai",
+                "category": "Best Seller",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Dimsum Goreng",
+                "category": "Best Seller",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Dimsum Nori",
+                "category": "Best Seller",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Dimsum Kuncit",
+                "category": "Best Seller",
+                "price": "Rp 17.000 - Rp 30.000",
+                "variants": []
+            },
+            {
+                "name": "DImsum Nori",
+                "category": "Best Seller",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Wonton Chilioil",
+                "category": "Best Seller",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Crispy Nori",
+                "category": "Best Crispy",
+                "price": "Rp 30.000",
+                "variants": []
+            },
+            {
+                "name": "SpringRolls",
+                "category": "Best Crispy",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ukuran S",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ukuran M",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Ukuran L",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Pangsit Goreng",
+                "category": "Best Crispy",
+                "price": "Rp 15.000 - Rp 30.000",
+                "variants": []
+            },
+            {
+                "name": "French Fires",
+                "category": "Snack",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "French Fires Mix",
+                "category": "Snack",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Onion Ring",
+                "category": "Snack",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Chiken Crispy",
+                "category": "Snack",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Cireng Rujak",
+                "category": "Snack",
+                "price": "Rp 18.000",
+                "variants": []
+            },
+            {
+                "name": "Pemepek Kulit",
+                "category": "Snack",
+                "price": "Rp 15.000",
+                "variants": []
+            },
+            {
+                "name": "Chiken Wings Mentai",
+                "category": "Snack",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Chiken Wings Crispy",
+                "category": "Snack",
+                "price": "Rp 25.000",
+                "variants": []
+            },
+            {
+                "name": "Cheeserolls",
+                "category": "Sweet",
+                "price": "Rp 20.000",
+                "variants": []
+            },
+            {
+                "name": "Pisang",
+                "category": "Sweet",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Bakar",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Goreng",
+                        "price": "Rp 20.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758512911372,
+        "name": "AYAM BAWANG ESHALBIEYAN",
+        "category": "Ayam,Lele,Makan siang",
+        "description": "Menyediakan Ayam,lele dan makan siang untuk anda ",
+        "address": "Jl. Garuda Merah No.252a, Bandung Kanan, Kec. Lubuk Linggau Bar. II, Kota Lubuklinggau, Sumatera Selatan 31613",
+        "phone": "0812 7209 8739",
+        "price_range": "Rp 7.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/AYAM-BAWANG-ESHALBIEYAN.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "10:00 - 20:00",
+        "menu": [
+            {
+                "name": "Ayam",
+                "category": "Goreng Bawang",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ori",
+                        "price": "Rp 12.000"
+                    },
+                    {
+                        "name": "+ telur",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "+ Ati Ampela",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Doubel",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "+ Pete",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Komplit",
+                        "price": "Rp 20.000"
+                    }
+                ]
+            },
+            {
+                "name": "Lele",
+                "category": "Goreng Bawang",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Ori",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "+ telur",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "+ Ati Ampela",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Doubel",
+                        "price": "Rp 23.000"
+                    },
+                    {
+                        "name": "+ Pete",
+                        "price": "Rp 17.000"
+                    },
+                    {
+                        "name": "Komplit",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Tumis",
+                "category": "Sayur",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "CahKangkung",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Toge",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Genjer",
+                        "price": "Ro 7.000"
+                    },
+                    {
+                        "name": "Selada",
+                        "price": "Ro 7.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758513470453,
+        "name": "Bakso Len 2 Rian",
+        "category": "Bakso,Makan Siang",
+        "description": "Bakso Terenak Di lubuklinggau ",
+        "address": "jl.Puyuh (Belakang Masjid Agung Assalam)",
+        "phone": "-",
+        "price_range": "Rp 15.000 - Rp 25.000",
+        "rating": 5,
+        "image": "images\/bakso-len-2-rian.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "09.30-20.15",
+        "menu": [
+            {
+                "name": "Bakso Biasa",
+                "category": "Bakso",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Urat",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "Mercon",
+                        "price": "Rp 18.000"
+                    },
+                    {
+                        "name": "Isi Daging",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Telur",
+                        "price": "Rp 15.000"
+                    }
+                ]
+            },
+            {
+                "name": "Bakso Spesial",
+                "category": "Bakso",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Daging + Urat",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Daging + Mercon",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Daging + Telur",
+                        "price": "Rp 25.000"
+                    }
+                ]
+            },
+            {
+                "name": "Tambahan",
+                "category": "Toping",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Tahu \/ porsi",
+                        "price": "Rp 3.000"
+                    },
+                    {
+                        "name": "Tetelan \/ porsi",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Kuah Dower \/ porsi",
+                        "price": "Rp 3.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758515083821,
+        "name": "Dapur Umi Widia",
+        "category": "Jajanan,Cireng,Lumpia",
+        "description": "Nikmat Rasanya Bikin Bahagia",
+        "address": "Masjid Al Arif bandung kiri",
+        "phone": "-",
+        "price_range": "-",
+        "rating": 5,
+        "image": "images\/dapurumiwid.jpg",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "-",
+        "menu": [
+            {
+                "name": "Cireng",
+                "category": "Gorengan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Bumbu Kacang",
+                        "price": "Rp -"
+                    },
+                    {
+                        "name": "Chili oil Mix Bumbu Kacang",
+                        "price": "Rp -"
+                    }
+                ]
+            },
+            {
+                "name": "Lumpia",
+                "category": "Gorengan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Isi ayam Mix",
+                        "price": "Rp -"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758516437517,
+        "name": "Sate Padang Pak War",
+        "category": "Sate,Padang,Kacang",
+        "description": "Adalah sebuah tempat makan Sate yang berada di dekat kantor JNE",
+        "address": "Jl. Garuda, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31614",
+        "phone": "-",
+        "price_range": "Rp 25.000 – RP 50.000",
+        "rating": 5,
+        "image": "images\/Sate-Pak-war.webp",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": "9:30  – 21:30 Jumat Libur",
+        "menu": [
+            {
+                "name": "Sate",
+                "category": "Makanan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Padang 1 Porsi",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Padang 1\/2 Porsi",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Kacang 1 Porsi",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Padang 1\/2 Porsi",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Indome Goreng",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Indome Rebus",
+                        "price": "Rp 10.000"
+                    }
+                ]
+            },
+            {
+                "name": "Minuman",
+                "category": "Panas",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Teh",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Jeruk",
+                        "price": "Rp 6.000"
+                    },
+                    {
+                        "name": "Kopi",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            },
+            {
+                "name": "Minuman",
+                "category": "Dingin",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Teh",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Jeruk",
+                        "price": "Rp 6.000"
+                    },
+                    {
+                        "name": "Jus Aplukat",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "jus Naga",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Just Mangga",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Jus Melon",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Es Kosong",
+                        "price": "Rp 2.000"
+                    }
+                ]
+            },
+            {
+                "name": "Kerupuk",
+                "category": "Cemilan",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Jangek",
+                        "price": "Rp 3.000"
+                    },
+                    {
+                        "name": "Pedas",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Udang",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758516884611,
+        "name": "Martabak Telor Jakarta Di Depan Kantor Pos ",
+        "category": "Martabak,Telor,Jakarta",
+        "description": "Menjual Martabak Telor Dan Martabak Manis",
+        "address": "Jl. Garuda Di Depan Kantor Pos, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31615",
+        "phone": "-",
+        "price_range": "Rp 20.000 - Rp 50.000",
+        "rating": 5,
+        "image": "images\/toko.png",
+        "delivery_available": true,
+        "pickup_available": false,
+        "operating_hours": " 16:00 - 23:00",
+        "menu": [
+            {
+                "name": "Martabak",
+                "category": "Telor",
+                "price": "-",
+                "variants": [
+                    {
+                        "name": "Biasa 🥚",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Spesial 🥚🥚",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Istimewa🥚🥚🥚",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Jumbo 🥚🥚🥚🥚",
+                        "price": "Rp 40.000"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 1758781189979,
+        "name": "Pindang Bik muk",
+        "category": "Pindang,Resto,Palembang",
+        "description": "Selamat datang di Restoran Pindang Bikmuk, sebuah destinasi kuliner legendaris yang mengangkat kelezatan otentik hidangan khas Palembang, terutama Pindang. Nama \"Bikmuk\" sendiri telah menjadi simbol cita rasa turun-temurun yang terjaga, menghadirkan pengalaman makan yang tidak hanya memuaskan lidah tetapi juga menghangatkan hati.",
+        "address": "Jalan Depati Said Di Dekat Bidan Tuning",
+        "phone": "-",
+        "price_range": "Rp 15.000 - Rp 50.000",
+        "rating": 5,
+        "image": "images\/IMG-20250925-WA0024.jpg",
+        "delivery_available": true,
+        "pickup_available": true,
+        "operating_hours": "-",
+        "menu": [
+            {
+                "name": "Pindang",
+                "category": "Patin",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Tulang",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Sungai Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Pegangan Patin Sungai Badan",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Pegangan Baung",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Penganan Tapa Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Pegangan Tapa Badan",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Makanan",
+                "category": "Makanan",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Lele Goreng\/Bakar",
+                        "price": "Rp 10.000"
+                    },
+                    {
+                        "name": "Nila Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ayam Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Ayam Kampung Goreng\/bakar",
+                        "price": "Rp 25.000"
+                    },
+                    {
+                        "name": "Bebek Goreng\/Bakar",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Puyuh Goreng\/Bakar",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Telur Dadar",
+                        "price": "Rp 5.000"
+                    },
+                    {
+                        "name": "Ikan Seluang Goreng",
+                        "price": "Rp 20.000"
+                    },
+                    {
+                        "name": "Nasi Putih",
+                        "price": "Rp 5.000"
+                    }
+                ]
+            },
+            {
+                "name": "Gulai",
+                "category": "Tempoyak",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Patin Sungai Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Patin Sungai Badan",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Baung",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Tapa Kepala\/Ekor",
+                        "price": "Rp 50.000"
+                    },
+                    {
+                        "name": "Tapa Badan",
+                        "price": "Rp 35.000"
+                    }
+                ]
+            },
+            {
+                "name": "Brengkes",
+                "category": "Pepes",
+                "price": "",
+                "description": "",
+                "variants": [
+                    {
+                        "name": "Patin Biasa",
+                        "price": "Rp 15.000"
+                    },
+                    {
+                        "name": "Sungai",
+                        "price": "Rp 35.000"
+                    },
+                    {
+                        "name": "Nila",
+                        "price": "Rp 20.000"
+                    }
+                ]
+            }
+        ]
+    }
 ]
