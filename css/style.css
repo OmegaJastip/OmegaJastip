@@ -2008,7 +2008,8 @@ footer {
 html.pwa-mode {
     /* Full viewport utilization in standalone mode */
     height: 100vh;
-    overflow: hidden; /* Prevent body scroll issues */
+    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .pwa-installed body {
