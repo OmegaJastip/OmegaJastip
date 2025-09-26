@@ -37,7 +37,11 @@ async function getFCMToken() {
     let registration;
 
     if ('serviceWorker' in navigator) {
-      registration = await navigator.serviceWorker.register('firebase-messaging-sw.js');
+      // Use the main service worker for FCM
+      registration = await navigator.serviceWorker.getRegistration('/');
+      if (!registration) {
+        registration = await navigator.serviceWorker.register('/sw.js');
+      }
     }
 
     const token = await fcmMessaging.getToken({
@@ -59,21 +63,22 @@ async function getFCMToken() {
 
 // Function to send token to server (implement based on your backend)
 function sendToServer(token) {
-  // Example implementation - replace with your server endpoint
-  // For now, just log it. In production, send to your backend API
-
-  // Uncomment and modify for actual server call:
+  // Store token in localStorage for demo purposes
+  localStorage.setItem('fcm_token', token);
+  console.log('FCM Token stored locally:', token);
+  
+  // Example implementation for actual server call (uncomment if backend available):
   /*
   fetch('/api/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ token: token, userId: 'user_id_here' })
+    body: JSON.stringify({ token: token, userId: getUserId() }) // Implement getUserId() as needed
   })
   .then(response => response.json())
-  .then(data => {})
-  .catch(error => {});
+  .then(data => console.log('Token sent to server:', data))
+  .catch(error => console.error('Error sending token:', error));
   */
 }
 
@@ -99,17 +104,16 @@ fcmMessaging.onMessage((payload) => {
 
 // Initialize notifications
 function initNotifications() {
-  // Register service worker first
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('firebase-messaging-sw.js')
-      .then((registration) => {
-      })
-      .catch((error) => {
-      });
-  }
+  // Service worker is registered in script.js, no need to register again here
 
   // Check if user has already granted permission
   if (Notification.permission === 'default') {
+    // Check if user has previously denied and it's been less than 24 hours
+    const deniedTime = localStorage.getItem('notification-denied');
+    if (deniedTime && (Date.now() - parseInt(deniedTime)) < 24 * 60 * 60 * 1000) {
+      // Don't show prompt again for 24 hours
+      return;
+    }
     // Show notification prompt after a delay
     setTimeout(() => {
       showNotificationPrompt();
@@ -201,10 +205,35 @@ function showSuccessMessage() {
   }, 3000);
 }
 
+// Test notification function
+function showTestNotification() {
+  if (Notification.permission === 'granted') {
+    const notification = new Notification('Test Notifikasi Omega Jastip', {
+      body: 'Ini adalah notifikasi test untuk memastikan sistem notifikasi berfungsi dengan baik.',
+      icon: '/images/logo.png',
+      badge: '/images/favicon-32x32.png',
+      tag: 'test-notification'
+    });
+
+    notification.onclick = () => {
+      window.focus();
+      notification.close();
+    };
+
+    // Auto close after 5 seconds
+    setTimeout(() => {
+      notification.close();
+    }, 5000);
+  } else {
+    alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+  }
+}
+
 // Export functions
 window.NotificationManager = {
   init: initNotifications,
   requestPermission: requestNotificationPermission,
-  getToken: getFCMToken
+  getToken: getFCMToken,
+  testNotification: showTestNotification
 };
 
