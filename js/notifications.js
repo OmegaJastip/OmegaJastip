@@ -37,7 +37,7 @@ async function getFCMToken() {
     let registration;
 
     if ('serviceWorker' in navigator) {
-      registration = await navigator.serviceWorker.register('/omegajastip/firebase-messaging-sw.js');
+      registration = await navigator.serviceWorker.register('firebase-messaging-sw.js');
     }
 
     const token = await fcmMessaging.getToken({
@@ -101,7 +101,7 @@ fcmMessaging.onMessage((payload) => {
 function initNotifications() {
   // Register service worker first
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/omegajastip/firebase-messaging-sw.js')
+    navigator.serviceWorker.register('firebase-messaging-sw.js')
       .then((registration) => {
       })
       .catch((error) => {
@@ -207,3 +207,4 @@ window.NotificationManager = {
   requestPermission: requestNotificationPermission,
   getToken: getFCMToken
 };
+
