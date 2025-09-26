@@ -708,10 +708,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
-        // App is installed as PWA, apply PWA styling
-        document.body.classList.add('pwa-installed');
-        document.documentElement.classList.add('pwa-mode');
-        return; // Don't show popup
+        return; // App is already installed, don't show popup
     }
 
     // Listen for the beforeinstallprompt event
@@ -801,51 +798,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear the dismissal flag
         localStorage.removeItem('pwa-install-dismissed');
     });
-});
-
-// Offline Status Indicator for PWA
-document.addEventListener('DOMContentLoaded', function() {
-    // Only show offline indicator in PWA mode
-    if (!document.body.classList.contains('pwa-installed')) {
-        return;
-    }
-
-    // Create offline indicator element if it doesn't exist
-    let offlineIndicator = document.querySelector('.offline-indicator');
-    if (!offlineIndicator) {
-        offlineIndicator = document.createElement('div');
-        offlineIndicator.className = 'offline-indicator';
-        offlineIndicator.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <span style="font-size: 1.1rem;">⚠️</span>
-                <span>Anda sedang offline</span>
-            </div>
-        `;
-        document.body.appendChild(offlineIndicator);
-    }
-
-    // Function to update online/offline status
-    function updateOnlineStatus() {
-        if (navigator.onLine) {
-            // Online
-            offlineIndicator.classList.remove('show');
-            console.log('Connection restored');
-        } else {
-            // Offline
-            offlineIndicator.classList.add('show');
-            console.log('Connection lost');
-        }
-    }
-
-    // Initial check
-    updateOnlineStatus();
-
-    // Listen for online/offline events
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-
-    // Also check periodically (useful for detecting connection changes)
-    setInterval(() => {
-        updateOnlineStatus();
-    }, 30000); // Check every 30 seconds
 });

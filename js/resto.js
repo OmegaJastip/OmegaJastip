@@ -15,25 +15,16 @@ function getUniqueCategories(restaurants) {
     restaurants.forEach(restaurant => {
         if (restaurant.category) {
             // Split categories by comma and add each one
-            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim().toLowerCase());
+            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim());
             restaurantCategories.forEach(cat => {
                 if (cat) { // Only add non-empty categories
-                    // Normalize to title case
-                    const normalized = cat.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                    categories.add(normalized);
+                    categories.add(cat);
                 }
             });
         }
     });
 
-    // Convert to array and sort alphabetically, with 'all' first
-    const sortedCategories = Array.from(categories).sort((a, b) => {
-        if (a === 'all') return -1;
-        if (b === 'all') return 1;
-        return a.localeCompare(b);
-    });
-
-    return sortedCategories;
+    return Array.from(categories);
 }
 
 // Function to create filter buttons dynamically
@@ -424,7 +415,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             </div>
             <div class="modal-body">
                 <div class="modal-image">
-                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC4zNWVtIiBmaWxsPSIjOUI5QkE0IiBmb250LXNpemU9IjE0Ij5ObyBJbWFnZTwvdGV4dD4KPHN2Zz4='">
+                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='images/placeholder-resto.jpg'">
                 </div>
                 <div class="modal-info">
                     <div class="modal-rating">
@@ -735,77 +726,10 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 .modal-content {
                     width: 95%;
                     margin: 10px;
-                    max-height: 90vh;
-                }
-
-                .modal-header h2 {
-                    font-size: 1.4rem;
-                }
-
-                .modal-body {
-                    padding: 16px;
-                    gap: 16px;
-                }
-
-                .modal-image {
-                    height: 150px;
-                }
-
-                .modal-info {
-                    gap: 12px;
-                }
-
-                .info-section h3 {
-                    font-size: 1rem;
                 }
 
                 .modal-footer {
                     flex-direction: column;
-                    padding: 16px;
-                }
-
-                .modal-footer .btn {
-                    width: 100%;
-                    justify-content: center;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .modal-content {
-                    width: 98%;
-                    margin: 5px;
-                }
-
-                .modal-header {
-                    padding: 16px 15px;
-                }
-
-                .modal-header h2 {
-                    font-size: 1.2rem;
-                }
-
-                .modal-body {
-                    padding: 12px;
-                }
-
-                .modal-image {
-                    height: 120px;
-                }
-
-                .info-item {
-                    font-size: 0.85rem;
-                }
-
-                .description {
-                    font-size: 0.9rem;
-                }
-
-                .service-name {
-                    font-size: 0.95rem;
-                }
-
-                .service-price {
-                    font-size: 1rem;
                 }
             }
 
