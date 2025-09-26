@@ -53,3 +53,65 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
+// Handle push notifications
+self.addEventListener('push', event => {
+  console.log('Push message received:', event);
+
+  let data = {};
+  if (event.data) {
+    data = event.data.json();
+  }
+
+  const options = {
+    body: data.body || 'Ada update baru dari Omega Jastip!',
+    icon: '/images/logo.png',
+    badge: '/images/favicon-32x32.png',
+    vibrate: [200, 100, 200],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    },
+    actions: [
+      {
+        action: 'explore',
+        title: 'Lihat',
+        icon: '/images/favicon-16x16.png'
+      },
+      {
+        action: 'close',
+        title: 'Tutup'
+      }
+    ]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'Omega Jastip', options)
+  );
+});
+
+// Handle notification clicks
+self.addEventListener('notificationclick', event => {
+  console.log('Notification click received:', event);
+
+  event.notification.close();
+
+  if (event.action === 'explore') {
+    // Open the app
+    event.waitUntil(
+      clients.openWindow('/')
+    );
+  } else {
+    // Default action: open the app
+    event.waitUntil(
+      clients.matchAll().then(clients => {
+        const client = clients.find(c => c.visibilityState === 'visible');
+        if (client) {
+          client.focus();
+        } else {
+          clients.openWindow('/');
+        }
+      })
+    );
+  }
+});
