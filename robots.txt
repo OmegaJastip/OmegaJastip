@@ -4,8 +4,9 @@ Allow: /
 # Sitemap location
 Sitemap: https://omegajastip.online/sitemap.xml
 
-# Block access to data folder
+# Block access to sensitive folders
 Disallow: /data/
+Disallow: /js/
 
 # Allow access to main pages
 Allow: /
