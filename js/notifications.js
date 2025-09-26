@@ -143,21 +143,120 @@ function showNotificationPrompt() {
     </div>
   `;
 
-  // Add styles
+  // Enhanced styles with responsiveness and animation
   prompt.style.cssText = `
     position: fixed;
     bottom: 20px;
     right: 20px;
+    left: 20px;
+    max-width: 350px;
+    margin: 0 auto;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    padding: 20px;
-    max-width: 300px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    padding: 24px;
     z-index: 10000;
     font-family: 'Poppins', sans-serif;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+    @media (max-width: 480px) {
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      max-width: none;
+    }
   `;
 
+  // Button styles
+  const allowBtn = prompt.querySelector('#allow-notifications');
+  const denyBtn = prompt.querySelector('#deny-notifications');
+  if (allowBtn) {
+    allowBtn.style.cssText = `
+      background: #ee4d2d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 8px;
+      transition: background 0.2s ease;
+    `;
+    allowBtn.addEventListener('mouseenter', () => { allowBtn.style.background = '#d43c1e'; });
+    allowBtn.addEventListener('mouseleave', () => { allowBtn.style.background = '#ee4d2d'; });
+  }
+  if (denyBtn) {
+    denyBtn.style.cssText = `
+      background: #f3f4f6;
+      color: #6b7280;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    `;
+    denyBtn.addEventListener('mouseenter', () => { denyBtn.style.background = '#e5e7eb'; });
+    denyBtn.addEventListener('mouseleave', () => { denyBtn.style.background = '#f3f4f6'; });
+  }
+
+  // Content styles
+  const content = prompt.querySelector('.notification-prompt-content');
+  if (content) {
+    content.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    `;
+  }
+  const icon = prompt.querySelector('.prompt-icon');
+  if (icon) {
+    icon.style.cssText = `
+      font-size: 24px;
+      flex-shrink: 0;
+    `;
+  }
+  const text = prompt.querySelector('.prompt-text');
+  if (text) {
+    text.style.cssText = `
+      flex: 1;
+    `;
+  }
+  const buttons = prompt.querySelector('.prompt-buttons');
+  if (buttons) {
+    buttons.style.cssText = `
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    `;
+  }
+  const h4 = prompt.querySelector('h4');
+  if (h4) {
+    h4.style.cssText = `
+      margin: 0 0 4px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    `;
+  }
+  const p = prompt.querySelector('p');
+  if (p) {
+    p.style.cssText = `
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.4;
+    `;
+  }
+
   document.body.appendChild(prompt);
+
+  // Animate in
+  setTimeout(() => {
+    prompt.style.opacity = '1';
+    prompt.style.transform = 'translateY(0)';
+  }, 100);
 
   // Handle buttons
   document.getElementById('allow-notifications').addEventListener('click', async () => {
@@ -165,13 +264,28 @@ function showNotificationPrompt() {
     if (token) {
       showSuccessMessage();
     }
-    prompt.remove();
+    // Animate out
+    prompt.style.opacity = '0';
+    prompt.style.transform = 'translateY(100%)';
+    setTimeout(() => prompt.remove(), 300);
   });
 
   document.getElementById('deny-notifications').addEventListener('click', () => {
-    prompt.remove();
-    // Remember choice for 24 hours
-    localStorage.setItem('notification-denied', Date.now().toString());
+    // Animate out
+    prompt.style.opacity = '0';
+    prompt.style.transform = 'translateY(100%)';
+    setTimeout(() => {
+      prompt.remove();
+      // Remember choice for 24 hours
+      localStorage.setItem('notification-denied', Date.now().toString());
+    }, 300);
+  });
+
+  // Close on outside click (optional)
+  prompt.addEventListener('click', (e) => {
+    if (e.target === prompt) {
+      document.getElementById('deny-notifications').click();
+    }
   });
 }
 
