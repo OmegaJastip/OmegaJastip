@@ -1,3 +1,6 @@
+const moveAudio = new Audio('sound/move.mp3');
+moveAudio.preload = 'auto'; // Preload for faster playback
+
 // Loading System
 class LoadingManager {
     constructor() {
