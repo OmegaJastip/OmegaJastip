@@ -27,29 +27,35 @@ function getUniqueCategories(restaurants) {
     return Array.from(categories);
 }
 
-// Function to create filter buttons dynamically
-function createFilterButtons(categories) {
-    const filterContainer = document.querySelector('.filter-buttons');
+// Function to create filter checkboxes dynamically
+function createFilterCheckboxes(categories) {
+    const dropdownMenu = document.getElementById('dropdown-menu');
 
-    // Clear existing buttons (except search box)
-    const existingButtons = filterContainer.querySelectorAll('.filter-btn');
-    existingButtons.forEach(button => button.remove());
+    // Clear existing checkboxes
+    dropdownMenu.innerHTML = '';
 
-    // Create new filter buttons based on data
+    // Create checkboxes for each category
     categories.forEach(category => {
-        const button = document.createElement('button');
-        button.className = 'filter-btn';
-        button.dataset.category = category;
+        const label = document.createElement('label');
+        label.className = 'filter-checkbox-label';
 
-        // Set button text
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'filter-checkbox';
+        checkbox.dataset.category = category;
+        checkbox.value = category;
+
+        // Check "all" by default
         if (category === 'all') {
-            button.textContent = 'Semua';
-            button.classList.add('active'); // Make "Semua" active by default
-        } else {
-            button.textContent = category;
+            checkbox.checked = true;
         }
 
-        filterContainer.appendChild(button);
+        const span = document.createElement('span');
+        span.textContent = category === 'all' ? 'Semua' : category;
+
+        label.appendChild(checkbox);
+        label.appendChild(span);
+        dropdownMenu.appendChild(label);
     });
 }
 
@@ -58,9 +64,9 @@ async function loadRestaurants() {
         const response = await fetch('data/resto.json');
         const restaurants = await response.json();
 
-        // Get unique categories and create filter buttons dynamically
+        // Get unique categories and create filter checkboxes dynamically
         const categories = getUniqueCategories(restaurants);
-        createFilterButtons(categories);
+        createFilterCheckboxes(categories);
 
         // Setup filter functionality after buttons are created
         setupFilters();
@@ -202,7 +208,8 @@ function setupSearch() {
 
         // Set new timeout for debounced search
         searchTimeout = setTimeout(() => {
-            filterRestaurants(searchTerm);
+            currentSearchTerm = searchTerm;
+            unifiedFilter();
         }, 300); // Wait 300ms after user stops typing
     });
 
@@ -210,7 +217,8 @@ function setupSearch() {
     clearBtn.addEventListener('click', function() {
         searchInput.value = '';
         clearBtn.style.display = 'none';
-        filterRestaurants('');
+        currentSearchTerm = '';
+        unifiedFilter();
         searchInput.focus();
     });
 
@@ -219,29 +227,87 @@ function setupSearch() {
         if (e.key === 'Enter') {
             e.preventDefault();
             clearTimeout(searchTimeout);
-            const searchTerm = this.value.toLowerCase();
-            filterRestaurants(searchTerm);
+            currentSearchTerm = this.value.toLowerCase();
+            unifiedFilter();
         }
     });
 }
 
+let currentSearchTerm = '';
+let currentSelectedCategories = ['all'];
+
+// Function to toggle dropdown menu
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+
+    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+        dropdownMenu.style.display = 'block';
+        hamburgerBtn.classList.add('active');
+    } else {
+        dropdownMenu.style.display = 'none';
+        hamburgerBtn.classList.remove('active');
+    }
+}
+
 function setupFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const checkboxes = document.querySelectorAll('.filter-checkbox');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
+    // Toggle dropdown on hamburger button click
+    hamburgerBtn.addEventListener('click', toggleDropdown);
 
-            const category = this.dataset.category;
-            filterByCategory(category);
+    // Handle checkbox changes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const isAll = this.dataset.category === 'all';
+            const isChecked = this.checked;
+
+            if (isAll) {
+                if (isChecked) {
+                    // If "all" is checked, uncheck all others
+                    checkboxes.forEach(cb => {
+                        if (cb.dataset.category !== 'all') {
+                            cb.checked = false;
+                        }
+                    });
+                    currentSelectedCategories = ['all'];
+                } else {
+                    // If "all" is unchecked, do nothing (shouldn't happen normally)
+                    currentSelectedCategories = [];
+                }
+            } else {
+                if (isChecked) {
+                    // If a category is checked, uncheck "all" if it was checked
+                    const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
+                    if (allCheckbox && allCheckbox.checked) {
+                        allCheckbox.checked = false;
+                    }
+                }
+
+                // Update selected categories
+                const selectedCategories = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.dataset.category);
+
+                if (selectedCategories.length === 0) {
+                    // If no categories selected, check "all"
+                    const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
+                    if (allCheckbox) {
+                        allCheckbox.checked = true;
+                        currentSelectedCategories = ['all'];
+                    }
+                } else {
+                    currentSelectedCategories = selectedCategories;
+                }
+            }
+
+            unifiedFilter();
         });
     });
 }
 
-function filterRestaurants(searchTerm) {
+function unifiedFilter() {
     const cards = document.querySelectorAll('.restaurant-card');
     let visibleCount = 0;
 
@@ -254,12 +320,25 @@ function filterRestaurants(searchTerm) {
         // Split category by comma for search
         const categoryList = category.split(',').map(cat => cat.trim().toLowerCase());
 
-        const matchesSearch = name.includes(searchTerm) ||
-                             categoryList.some(cat => cat.includes(searchTerm)) ||
-                             description.includes(searchTerm) ||
-                             menuItems.some(item => item.includes(searchTerm));
+        // First, check category filter
+        let passesCategory = false;
+        if (currentSelectedCategories.includes('all')) {
+            passesCategory = true;
+        } else {
+            const cardCategoryList = category.split(',').map(cat => cat.trim());
+            passesCategory = currentSelectedCategories.some(selectedCat => cardCategoryList.includes(selectedCat));
+        }
 
-        if (matchesSearch) {
+        // Then, check search if category passes
+        let passesSearch = true;
+        if (currentSearchTerm && passesCategory) {
+            passesSearch = name.includes(currentSearchTerm) ||
+                           categoryList.some(cat => cat.includes(currentSearchTerm)) ||
+                           description.includes(currentSearchTerm) ||
+                           menuItems.some(item => item.includes(currentSearchTerm));
+        }
+
+        if (passesCategory && passesSearch) {
             card.style.display = 'block';
             visibleCount++;
         } else {
@@ -275,50 +354,22 @@ function filterRestaurants(searchTerm) {
         if (!noResultsMsg) {
             noResultsMsg = document.createElement('div');
             noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = searchTerm ?
-                'Tidak ada restoran yang sesuai dengan pencarian Anda.' :
-                'Tidak ada restoran yang tersedia saat ini.';
-            container.appendChild(noResultsMsg);
-        } else if (searchTerm) {
-            noResultsMsg.textContent = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
-        }
-    } else {
-        if (noResultsMsg) {
-            noResultsMsg.remove();
-        }
-    }
-}
-
-function filterByCategory(category) {
-    const cards = document.querySelectorAll('.restaurant-card');
-    let visibleCount = 0;
-
-    cards.forEach(card => {
-        if (category === 'all') {
-            card.style.display = 'block';
-            visibleCount++;
-        } else {
-            // Split category by comma and check if selected category matches any
-            const categoryList = card.dataset.category.split(',').map(cat => cat.trim());
-            if (categoryList.includes(category)) {
-                card.style.display = 'block';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
+            let message = 'Tidak ada restoran yang tersedia saat ini.';
+            if (currentSearchTerm) {
+                message = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
+            } else if (currentSelectedCategories.length > 0 && !currentSelectedCategories.includes('all')) {
+                message = 'Tidak ada restoran dalam kategori yang dipilih.';
             }
-        }
-    });
-
-    // Show/hide no results message
-    const container = document.getElementById('restaurants-grid');
-    let noResultsMsg = container.querySelector('.no-results');
-
-    if (visibleCount === 0) {
-        if (!noResultsMsg) {
-            noResultsMsg = document.createElement('div');
-            noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = 'Tidak ada restoran dalam kategori ini.';
+            noResultsMsg.textContent = message;
             container.appendChild(noResultsMsg);
+        } else {
+            let message = 'Tidak ada restoran yang tersedia saat ini.';
+            if (currentSearchTerm) {
+                message = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
+            } else if (currentSelectedCategories.length > 0 && !currentSelectedCategories.includes('all')) {
+                message = 'Tidak ada restoran dalam kategori yang dipilih.';
+            }
+            noResultsMsg.textContent = message;
         }
     } else {
         if (noResultsMsg) {
@@ -326,6 +377,8 @@ function filterByCategory(category) {
         }
     }
 }
+
+
 
 function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
     // Get restaurant data
@@ -553,6 +606,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 flex-direction: column;
                 gap: 24px;
                 background: #fafafa;
+            }
 
             .modal-image {
                 width: 100%;
@@ -801,6 +855,80 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 font-size: 0.9rem;
                 color: #666;
                 font-style: italic;
+            }
+
+            .services-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            #modal-menu-list {
+                max-height: 400px;
+                overflow-y: auto;
+                padding-right: 10px;
+            }
+
+            #modal-menu-list::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            #modal-menu-list::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+
+            #modal-menu-list::-webkit-scrollbar-thumb {
+                background: #c1c1c1;
+                border-radius: 3px;
+            }
+
+            #modal-menu-list::-webkit-scrollbar-thumb:hover {
+                background: #a8a8a8;
+            }
+
+            .menu-category {
+                margin: 20px 0 10px 0;
+                color: #333;
+                font-size: 1.2rem;
+                font-weight: 600;
+                border-bottom: 2px solid #ee4d2d;
+                padding-bottom: 5px;
+            }
+
+            .info-section {
+                border-top: 1px solid #eee;
+                padding-top: 15px;
+                margin-bottom: 20px;
+            }
+
+            .description {
+                font-size: 1rem;
+                line-height: 1.6;
+                color: #555;
+                margin-bottom: 20px;
+                background: #f9f9f9;
+                padding: 15px;
+                border-radius: 8px;
+                border-left: 4px solid #ee4d2d;
+            }
+
+            @media (min-width: 769px) {
+                .modal-body {
+                    flex-direction: row;
+                    gap: 30px;
+                }
+
+                .modal-image {
+                    flex: 0 0 300px;
+                    height: auto;
+                    max-height: 400px;
+                }
+
+                .modal-info {
+                    flex: 1;
+                }
             }
         `;
         document.head.appendChild(styles);

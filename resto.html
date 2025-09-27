@@ -92,8 +92,13 @@
                     <input type="text" id="search-resto" placeholder="Cari restoran...">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="filter-buttons">
-                    <!-- Filter buttons akan dibuat secara dinamis oleh JavaScript berdasarkan data di resto.json -->
+                <div class="filter-dropdown">
+                    <button class="hamburger-btn" id="hamburger-btn">
+                        <i class="fas fa-bars"></i> Filter Kategori
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu" style="display: none;">
+                        <!-- Checkboxes will be populated here by JS -->
+                    </div>
                 </div>
             </div>
 
