@@ -119,10 +119,12 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(request).then(response => {
         return response || fetch(request).then(networkResponse => {
-          const responseClone = networkResponse.clone();
-          caches.open(STATIC_CACHE).then(cache => {
-            cache.put(request, responseClone);
-          });
+          if (networkResponse.ok) {
+            const responseClone = networkResponse.clone();
+            caches.open(STATIC_CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
           return networkResponse;
         });
       })
@@ -132,10 +134,12 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(request).then(cachedResponse => {
         const fetchPromise = fetch(request).then(networkResponse => {
-          const responseClone = networkResponse.clone();
-          caches.open(STATIC_CACHE).then(cache => {
-            cache.put(request, responseClone);
-          });
+          if (networkResponse.ok) {
+            const responseClone = networkResponse.clone();
+            caches.open(STATIC_CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
           return networkResponse;
         });
 
