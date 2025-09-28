@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee4d2d">
+    <title>Offline - Omega Jastip Lubuklinggau</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ee4d2d 0%, #ff6b4a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .offline-container {
+            max-width: 400px;
+            padding: 40px 20px;
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .retry-btn {
+            background: white;
+            color: #ee4d2d;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .services-preview {
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        .services-preview h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .service-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .service-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            <i class="fas fa-wifi-slash"></i>
+        </div>
+        <h1>Koneksi Terputus</h1>
+        <p>Sepertinya Anda sedang offline. Silakan periksa koneksi internet Anda dan coba lagi.</p>
+        <button class="retry-btn" onclick="window.location.reload()">
+            <i class="fas fa-redo"></i> Coba Lagi
+        </button>
+
+        <div class="services-preview">
+            <h3>Layanan Yang Tersedia</h3>
+            <div class="service-list">
+                <div class="service-item">Antar Makanan</div>
+                <div class="service-item">Antar Barang</div>
+                <div class="service-item">Antar Penumpang</div>
+                <div class="service-item">Jasa Belanja</div>
+                <div class="service-item">Kirim Hadiah</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-retry when connection is restored
+        window.addEventListener('online', function() {
+            window.location.reload();
+        });
+
+        // Check connection periodically
+        setInterval(function() {
+            if (navigator.onLine) {
+                window.location.reload();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

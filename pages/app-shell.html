@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee4d2d">
+    <title>Omega Jastip Lubuklinggau</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .app-shell-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ee4d2d 0%, #ff6b4a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .app-shell-loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .shell-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .shell-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .shell-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        /* Basic shell structure */
+        .app-shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .shell-header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .shell-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .shell-logo-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ee4d2d;
+        }
+
+        .shell-content {
+            flex: 1;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .shell-placeholder {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .shell-skeleton {
+            height: 20px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .shell-skeleton:last-child {
+            width: 60%;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .shell-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .shell-nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .shell-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px 10px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .shell-nav-item.active {
+            color: #ee4d2d;
+        }
+
+        .shell-nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="app-shell-loading" class="app-shell-loading">
+        <div class="shell-logo">
+            <img src="images/logo.png" alt="Omega Jastip" width="50" height="50">
+        </div>
+        <div class="shell-spinner"></div>
+        <div class="shell-text">Memuat Omega Jastip...</div>
+    </div>
+
+    <!-- App Shell -->
+    <div class="app-shell" id="app-shell" style="display: none;">
+        <!-- Header -->
+        <header class="shell-header">
+            <nav class="shell-nav">
+                <div class="shell-logo-text">Omega <span>Jastip</span></div>
+                <div class="shell-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="shell-content">
+            <div class="shell-placeholder">
+                <div class="shell-skeleton"></div>
+                <div class="shell-skeleton"></div>
+                <div class="shell-skeleton"></div>
+            </div>
+            <div class="shell-placeholder">
+                <div class="shell-skeleton"></div>
+                <div class="shell-skeleton"></div>
+            </div>
+            <div class="shell-placeholder">
+                <div class="shell-skeleton"></div>
+                <div class="shell-skeleton"></div>
+                <div class="shell-skeleton"></div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="shell-bottom-nav">
+            <div class="shell-nav-items">
+                <a href="#home" class="shell-nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="#services" class="shell-nav-item">
+                    <i class="fas fa-concierge-bell"></i>
+                    <span>Layanan</span>
+                </a>
+                <a href="pages/resto.html" class="shell-nav-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Restoran</span>
+                </a>
+                <a href="pages/toko.html" class="shell-nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Toko</span>
+                </a>
+                <a href="#calculator" class="shell-nav-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>Tarif</span>
+                </a>
+                <a href="#contact" class="shell-nav-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Kontak</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Hide loading and show shell after a short delay
+        setTimeout(() => {
+            const loading = document.getElementById('app-shell-loading');
+            const shell = document.getElementById('app-shell');
+
+            loading.classList.add('hide');
+            setTimeout(() => {
+                loading.style.display = 'none';
+                shell.style.display = 'flex';
+
+                // Load the actual content
+                window.location.href = 'index.html';
+            }, 300);
+        }, 1500);
+    </script>
+</body>
+</html>

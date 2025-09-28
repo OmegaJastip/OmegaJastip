@@ -1,4 +1,7 @@
-const moveAudio = new Audio('sound/move.mp3');
+// Determine correct path for sound files based on current location
+const isInPages = window.location.pathname.includes('/pages/');
+const soundPath = isInPages ? '../sound/' : 'sound/';
+const moveAudio = new Audio(soundPath + 'move.mp3');
 moveAudio.preload = 'auto'; // Preload for faster playback
 
 // Loading System
@@ -89,7 +92,7 @@ class LoadingManager {
 
     setupPageNavigation() {
         // Handle page navigation with loading
-        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+        document.querySelectorAll('a[href*=".html"]').forEach(link => {
             link.addEventListener('click', (e) => {
                 // Only handle internal links (same domain)
                 const href = link.getAttribute('href');
@@ -107,6 +110,26 @@ class LoadingManager {
                     setTimeout(() => {
                         window.location.href = href;
                     }, 600);
+                }
+            });
+        });
+
+        // Handle bottom navigation links with sound
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(navItem => {
+            navItem.addEventListener('click', (e) => {
+                const href = navItem.getAttribute('href');
+
+                // Only play sound for non-.html links (hash links, etc.)
+                // .html links are handled by the page navigation handler above
+                if (href && !href.includes('.html')) {
+                    // Play move sound
+                    moveAudio.currentTime = 0;
+                    moveAudio.play().catch(e => console.log('Move audio play failed:', e));
+
+                    // For hash links, show loading briefly
+                    if (href.startsWith('#')) {
+                        this.showLoading(600);
+                    }
                 }
             });
         });
@@ -656,7 +679,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Preload move sound
-    const moveAudio = new Audio('sound/move.mp3');
+    const moveAudio = new Audio(soundPath + 'move.mp3');
     moveAudio.load();
 
     let deferredPrompt;
@@ -758,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (outcome === 'accepted') {
                                 console.log('User accepted the install prompt');
                                 // Play success sound
-                                const successAudio = new Audio('sound/success.mp3');
+                                const successAudio = new Audio(soundPath + 'success.mp3');
                                 successAudio.play().catch(e => console.log('Success audio play failed:', e));
                                 // Hide progress and show success message
                                 progressContainer.style.display = 'none';

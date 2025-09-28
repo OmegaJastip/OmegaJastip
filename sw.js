@@ -36,45 +36,136 @@ messaging.onBackgroundMessage((payload) => {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-const CACHE_NAME = 'omega-jastip-v1';
+const CACHE_NAME = 'omega-jastip-v2';
+const STATIC_CACHE = 'omega-jastip-static-v2';
+const DYNAMIC_CACHE = 'omega-jastip-dynamic-v2';
+const API_CACHE = 'omega-jastip-api-v2';
+
 const urlsToCache = [
   '/',
   '/index.html',
-  '/resto.html',
-  '/toko.html',
+  '/pages/resto.html',
+  '/pages/toko.html',
+  '/pages/services.html',
+  '/pages/calculator.html',
+  '/pages/app-shell.html',
+  '/pages/offline.html',
   '/manifest.json',
   '/css/style.css',
-  '/css/resto.css',
-  '/css/toko.css',
   '/js/script.js',
   '/js/resto.js',
   '/js/toko.js',
+  '/js/notifications.js',
+  '/js/protection.js',
   '/images/logo.png',
   '/images/android-chrome-192x192.png',
   '/images/android-chrome-512x512.png',
   '/images/favicon-32x32.png',
   '/images/favicon-16x16.png',
   '/images/favicon.ico',
-  '/images/apple-touch-icon.png'
+  '/images/apple-touch-icon.png',
+  '/images/hero-background.jpg',
+  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        return cache.addAll(urlsToCache);
+        // Cache resources individually to handle failures gracefully
+        const cachePromises = urlsToCache.map(url => {
+          return cache.add(url).catch(error => {
+            console.warn(`Failed to cache ${url}:`, error);
+            // Continue with other resources even if one fails
+          });
+        });
+        return Promise.allSettled(cachePromises);
       })
   );
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Only handle GET requests and http/https schemes
+  if (request.method !== 'GET' || !url.protocol.startsWith('http')) {
+    return;
+  }
+
+  // Handle different caching strategies
+  if (url.pathname.startsWith('/api/')) {
+    // API requests - Network first with cache fallback
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          // Cache successful API responses
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(API_CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // Return cached API response if network fails
+          return caches.match(request);
+        })
+    );
+  } else if (request.destination === 'image' || request.destination === 'font') {
+    // Images and fonts - Cache first
+    event.respondWith(
+      caches.match(request).then(response => {
+        return response || fetch(request).then(networkResponse => {
+          const responseClone = networkResponse.clone();
+          caches.open(STATIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return networkResponse;
+        });
       })
-  );
+    );
+  } else if (request.url.includes('.html') || request.url.includes('.js') || request.url.includes('.css')) {
+    // HTML, JS, CSS - Stale while revalidate
+    event.respondWith(
+      caches.match(request).then(cachedResponse => {
+        const fetchPromise = fetch(request).then(networkResponse => {
+          const responseClone = networkResponse.clone();
+          caches.open(STATIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return networkResponse;
+        });
+
+        return cachedResponse || fetchPromise;
+      })
+    );
+  } else {
+    // Default - Cache first with network fallback
+    event.respondWith(
+      caches.match(request).then(response => {
+        return response || fetch(request).then(networkResponse => {
+          // Don't cache external requests
+          if (!url.hostname.includes('omegajastip.online')) {
+            return networkResponse;
+          }
+
+          const responseClone = networkResponse.clone();
+          caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return networkResponse;
+        }).catch(() => {
+          // Return offline page for navigation requests
+          if (request.mode === 'navigate') {
+            return caches.match('/pages/offline.html');
+          }
+        });
+      })
+    );
+  }
 });
 
 self.addEventListener('activate', event => {
@@ -82,7 +173,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
+          if (cacheName !== CACHE_NAME && cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE && cacheName !== API_CACHE) {
             return caches.delete(cacheName);
           }
         })

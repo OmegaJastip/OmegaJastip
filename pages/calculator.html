@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee4d2d">
+    <meta name="google-adsense-account" content="ca-pub-9683887369443910">
+    <meta name="description" content="Kalkulator Tarif Omega Jastip Lubuklinggau - Hitung estimasi biaya layanan jastip berdasarkan jarak dan kebutuhan Anda.">
+    <meta name="keywords" content="kalkulator tarif jastip lubuklinggau, hitung biaya antar jemput lubuk linggau, omega jastip tarif">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omegajastip.online/pages/calculator.html">
+    <meta property="og:title" content="Kalkulator Tarif - Omega Jastip Lubuklinggau">
+    <meta property="og:description" content="Hitung estimasi biaya layanan jastip berdasarkan jarak dan kebutuhan Anda di Lubuk Linggau.">
+    <meta property="og:url" content="https://omegajastip.online/pages/calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omegajastip.online/images/logo.png">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kalkulator Tarif - Omega Jastip Lubuklinggau">
+    <meta name="twitter:description" content="Hitung estimasi biaya layanan jastip berdasarkan jarak dan kebutuhan Anda di Lubuk Linggau.">
+    <meta name="twitter:image" content="https://omegajastip.online/images/logo.png">
+    <title>Kalkulator Tarif - Omega Jastip Lubuklinggau</title>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Google Search Console Verification - Ganti dengan kode Anda -->
+    <meta name="google-site-verification" content="sd71q3L_4g7bQSz_XJoA4NUd1KeFc_PyZN6uJ6kS" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKX5NKXFH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QZKX5NKXFH');
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
+    <script>
+      // Firebase config - REPLACE WITH YOUR VALUES
+      const firebaseConfig = {
+        apiKey: "AIzaSyDgk_2BLj-p2bbCNleQZFbI1dzsMH5omzo",
+        authDomain: "botwa-99954.firebaseapp.com",
+        databaseURL: "https://botwa-99954-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "botwa-99954",
+        storageBucket: "botwa-99954.firebasestorage.app",
+        messagingSenderId: "1003488855126",
+        appId: "1:1003488855126:web:31a4b0938244e11d3c27f7",
+        measurementId: "G-4LFXCXK7YG"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const messaging = firebase.messaging();
+
+      // Make messaging available globally
+      window.firebaseMessaging = messaging;
+    </script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Omega Jastip Lubuklinggau",
+      "description": "Layanan jasa titip dan antar jemput terpercaya di Lubuk Linggau",
+      "url": "https://omegajastip.online",
+      "telephone": "+62895700341213",
+      "email": "Jastipomega@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jalan Teladan RT 1 no 08 Sebelum Kantor Lurah, Bandung Kiri",
+        "addressLocality": "Lubuk Linggau",
+        "addressRegion": "Sumatera Selatan",
+        "postalCode": "31611",
+        "addressCountry": "ID"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "-3.2945",
+        "longitude": "102.8614"
+      },
+      "openingHours": "Mo-Su 07:00-21:00",
+      "priceRange": "Rp 10.000 - Rp 50.000",
+      "image": "https://omegajastip.online/images/logo.png",
+      "serviceType": "Delivery service",
+      "areaServed": "Lubuk Linggau dan sekitarnya",
+      "sameAs": [
+        "https://www.instagram.com/omega_jastip_lubuklinggau/",
+        "https://wa.me/62895700341213",
+        "https://www.tiktok.com/@jastipomega"
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo.png" alt="Omega Jastip Lubuklinggau Logo - Layanan Jasa Titip Terpercaya" width="40" height="40">
+                </div>
+                <div class="logo-text">Omega <span>Jastip</span> LubukLinggau</div>
+            </a>
+        </div>
+    </header>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <ul>
+            <li><a href="../index.html#home" class="nav-item"><i class="fas fa-home"></i><span>Beranda</span></a></li>
+            <li><a href="services.html" class="nav-item"><i class="fas fa-concierge-bell"></i><span>Layanan</span></a></li>
+            <li><a href="resto.html" class="nav-item"><i class="fas fa-utensils"></i><span>Restoran</span></a></li>
+            <li><a href="toko.html" class="nav-item"><i class="fas fa-store"></i><span>Toko</span></a></li>
+            <li><a href="#calculator" class="nav-item active"><i class="fas fa-calculator"></i><span>Tarif</span></a></li>
+            <li><a href="../index.html#contact" class="nav-item"><i class="fas fa-whatsapp"></i><span>Kontak</span></a></li>
+        </ul>
+    </nav>
+    
+    <!-- Pricing Calculator Section -->
+    <section class="pricing-calculator" id="calculator">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kalkulator Tarif Jastip Lubuklinggau</h2>
+                <p>Hitung estimasi biaya layanan jastip berdasarkan jarak dan kebutuhan Anda</p>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="service-type">Jenis Layanan</label>
+                        <select id="service-type">
+                            <option value="food">Antar Makanan</option>
+                            <option value="goods">Antar Barang</option>
+                            <option value="passenger">Antar Penumpang</option>
+                            <option value="shopping">Jasa Belanja</option>
+                            <option value="gift">Kirim Hadiah</option>
+                            <option value="pickup">Pickup Barang</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Peta dan Pencarian -->
+                <div class="search-container">
+                    <input type="text" id="address-search" class="search-input" placeholder="Cari alamat di Lubuk Linggau...">
+                    <button class="search-button" id="search-button" aria-label="Cari alamat">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+                
+                <div class="map-info">
+                    <div class="map-info-item">
+                        <span>Lokasi Awal:</span>
+                        <span id="start-location">Belum dipilih</span>
+                    </div>
+                    <div class="map-info-item">
+                        <span>Lokasi Tujuan:</span>
+                        <span id="end-location">Belum dipilih</span>
+                    </div>
+                    <div class="map-info-item">
+                        <span>Jarak (km):</span>
+                        <span id="distance">-</span>
+                    </div>
+                    <div class="map-info-item">
+                        <span>Estimasi Waktu:</span>
+                        <span id="estimated-time">-</span>
+                    </div>
+                    <div class="weight-input-container">
+                        <label for="weight">Berat Barang (kg):</label>
+                        <input type="number" id="weight" min="1" value="1" class="weight-input">
+                    </div>
+                </div>
+                
+                <button class="btn" id="calculate-btn">Hitung Tarif</button>
+                
+                <div class="calculator-result" id="calculator-result">
+                    <div class="result-title">Estimasi Biaya</div>
+                    <div class="result-price" id="result-price">Rp 0</div>
+                    <div class="result-details" id="result-details">
+                        Pilih layanan dan masukkan detail untuk menghitung biaya
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tarif-info">
+                <h3 class="tarif-title">Info Tarif Dasar</h3>
+                <div class="tarif-grid">
+                    <div>
+                        <h4>Tarif Dasar per KM</h4>
+                        <ul>
+                            <li>3 km pertama: Rp 10.000</li>
+                            <li>Per km berikutnya: Rp 2.500</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Biaya Tambahan</h4>
+                        <ul>
+                            <li>Barang berat (>5kg): Rp 2.000/kg</li>
+                            <li>Waktu tunggu: Rp 5.000/15 menit</li>
+                            <li>Layanan prioritas: +Rp 10.000</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Layanan Khusus</h4>
+                        <ul>
+                            <li>Jasa belanja: +Rp 15.000</li>
+                            <li>Antar penumpang: +Rp 5.000</li>
+                            <li>Layanan malam (22.00-06.00): +Rp 10.000</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="tarif-note">* Harga dapat berubah sesuai dengan kondisi lalu lintas dan jarak tempuh</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Siap Menggunakan Jastip Lubuklinggau?</h2>
+            <p>Hubungi kami sekarang untuk pemesanan atau informasi lebih lanjut tentang layanan antar jemput di Lubuk Linggau</p>
+            <a href="https://wa.me/62895700341213" class="btn cta-link" aria-label="Hubungi via WhatsApp"><i class="fab fa-whatsapp"></i> Hubungi via WhatsApp</a>
+            <p class="cta-phone">Atau telepon: <a href="tel:+62895700341213" style="color: #fff; text-decoration: underline;">0895-7003-41213</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Omega Jastip Lubuklinggau</h3>
+                    <p>Layanan jasa titip antar jemput terpercaya di Lubuk Linggau untuk kebutuhan harian Anda.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/omega_jastip_lubuklinggau/" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/62895700341213" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@jastipomega" aria-label="TikTok" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="services.html">Antar Makanan</a></li>
+                        <li><a href="services.html">Antar Barang</a></li>
+                        <li><a href="services.html">Antar Penumpang</a></li>
+                        <li><a href="services.html">Jasa Belanja</a></li>
+                        <li><a href="services.html">Kirim Hadiah</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="../index.html#home">Beranda</a></li>
+                        <li><a href="services.html">Layanan</a></li>
+                        <li><a href="#calculator">Kalkulator Tarif</a></li>
+                        <li><a href="../index.html#how-it-works">Cara Kerja</a></li>
+                        <li><a href="../index.html#testimonials">Testimoni</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jalan Teladan RT 1 no 08 Sebelum Kantor Lurah, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31611</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+62895700341213">+62 895 7003 41213</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:Jastipomega@gmail.com">Jastipomega@gmail.com</a></li>
+                        <li><i class="fas fa-clock"></i> Senin - Minggu: 07.00 - 21.00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Omega Jastip Lubuklinggau. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp CTA -->
+    <a href="https://wa.me/62895700341213" class="floating-cta" aria-label="Hubungi via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/notifications.js"></script>
+    <script src="../js/protection.js"></script>
+
+    <!-- Initialize notifications -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.NotificationManager) {
+          window.NotificationManager.init();
+        }
+      });
+    </script>
+
+    <!-- PWA Install Popup -->
+    <div id="pwa-install-popup" class="pwa-install-popup">
+        <div class="pwa-popup-content">
+            <div class="pwa-popup-icon">
+                <img src="../images/logo.png" alt="Omega Jastip Logo" width="40" height="40">
+            </div>
+            <div class="pwa-popup-text">
+                <h4>Install Omega Jastip</h4>
+                <p>Install aplikasi untuk akses lebih cepat dan offline</p>
+            </div>
+            <div class="pwa-popup-buttons">
+                <button id="pwa-install-btn" class="pwa-btn-install">Install</button>
+                <button id="pwa-close-btn" class="pwa-btn-close">Nanti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Apa itu jasa titip (jastip)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jasa titip (jastip) adalah layanan dimana kami membantu Anda mengantar, menjemput, atau membelikan sesuatu atas nama Anda. Layanan ini sangat membantu bagi yang tidak memiliki waktu untuk melakukan sendiri."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Area mana saja yang dilayani Omega Jastip?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kami melayani seluruh area Kota Lubuk Linggau dan sekitarnya, termasuk Lubuk Linggau Barat I, Lubuk Linggau Timur I, Lubuk Linggau Selatan I, dan Lubuk Linggau Utara I."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Bagaimana cara memesan layanan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Anda dapat menghubungi kami melalui WhatsApp di 0895-7003-41213, telepon, atau melalui website. Jelaskan kebutuhan Anda, dan kami akan memberikan konfirmasi serta estimasi biaya."
+        }
+      }]
+    }
+    </script>
+</body>
+</html>

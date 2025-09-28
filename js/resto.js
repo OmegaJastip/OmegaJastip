@@ -61,7 +61,7 @@ function createFilterCheckboxes(categories) {
 
 async function loadRestaurants() {
     try {
-        const response = await fetch('data/resto.json');
+        const response = await fetch('../data/resto.json');
         const restaurants = await response.json();
 
         // Get unique categories and create filter checkboxes dynamically
@@ -107,7 +107,7 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
     return `
         <div class="restaurant-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}">
             <div class="restaurant-image">
-                <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='images/placeholder-resto.jpg'">
+                <img src="../${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/placeholder-resto.jpg'">
                 <div class="restaurant-overlay">
                     <div class="services-badges">
                         ${services}
@@ -126,7 +126,6 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
                     <i class="fas fa-tag"></i>
                     <span>${restaurant.category}</span>
                 </div>
-                <p class="restaurant-description">${restaurant.description}</p>
                 <div class="restaurant-details">
                     <div class="detail-item">
                         <i class="fas fa-map-marker-alt"></i>
@@ -143,13 +142,6 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
                     <div class="detail-item">
                         <i class="fas fa-money-bill-wave"></i>
                         <span>${restaurant.price_range}</span>
-                    </div>
-                </div>
-                <div class="menu-preview">
-                    <h4>Menu Utama:</h4>
-                    <div class="menu-items">
-                        ${restaurant.menu && restaurant.menu.slice(0, 3).map(item => `<span class="menu-item">${item.name}</span>`).join('')}
-                        ${restaurant.menu && restaurant.menu.length > 3 ? `<span class="menu-more">+${restaurant.menu.length - 3} lainnya</span>` : ''}
                     </div>
                 </div>
                 <div class="restaurant-actions">
@@ -314,8 +306,6 @@ function unifiedFilter() {
     cards.forEach(card => {
         const name = card.dataset.name;
         const category = card.dataset.category;
-        const description = card.querySelector('.restaurant-description')?.textContent.toLowerCase() || '';
-        const menuItems = Array.from(card.querySelectorAll('.menu-item')).map(item => item.textContent.toLowerCase());
 
         // Split category by comma for search
         const categoryList = category.split(',').map(cat => cat.trim().toLowerCase());
@@ -333,9 +323,7 @@ function unifiedFilter() {
         let passesSearch = true;
         if (currentSearchTerm && passesCategory) {
             passesSearch = name.includes(currentSearchTerm) ||
-                           categoryList.some(cat => cat.includes(currentSearchTerm)) ||
-                           description.includes(currentSearchTerm) ||
-                           menuItems.some(item => item.includes(currentSearchTerm));
+                           categoryList.some(cat => cat.includes(currentSearchTerm));
         }
 
         if (passesCategory && passesSearch) {
@@ -382,7 +370,7 @@ function unifiedFilter() {
 
 function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
     // Get restaurant data
-    fetch('data/resto.json')
+    fetch('../data/resto.json')
         .then(response => response.json())
         .then(restaurants => {
             const restaurant = restaurants.find(r => r.id === restaurantId);
@@ -468,7 +456,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             </div>
             <div class="modal-body">
                 <div class="modal-image">
-                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='images/placeholder-resto.jpg'">
+                    <img src="../${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/placeholder-resto.jpg'">
                 </div>
                 <div class="modal-info">
                     <div class="modal-rating">
