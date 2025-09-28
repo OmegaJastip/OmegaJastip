@@ -156,10 +156,12 @@ self.addEventListener('fetch', event => {
             return networkResponse;
           }
 
-          const responseClone = networkResponse.clone();
-          caches.open(DYNAMIC_CACHE).then(cache => {
-            cache.put(request, responseClone);
-          });
+          if (networkResponse.ok) {
+            const responseClone = networkResponse.clone();
+            caches.open(DYNAMIC_CACHE).then(cache => {
+              cache.put(request, responseClone);
+            });
+          }
           return networkResponse;
         }).catch(() => {
           // Return offline page for navigation requests
