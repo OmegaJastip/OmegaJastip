@@ -336,11 +336,257 @@ function showTestNotification() {
   }
 }
 
+// Scheduled notifications system
+class ScheduledNotificationManager {
+  constructor() {
+    this.scheduledNotifications = this.loadScheduledNotifications();
+    this.initScheduledNotifications();
+  }
+
+  // Load scheduled notifications from localStorage
+  loadScheduledNotifications() {
+    try {
+      const stored = localStorage.getItem('scheduled-notifications');
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('Error loading scheduled notifications:', error);
+      return [];
+    }
+  }
+
+  // Save scheduled notifications to localStorage
+  saveScheduledNotifications() {
+    try {
+      localStorage.setItem('scheduled-notifications', JSON.stringify(this.scheduledNotifications));
+    } catch (error) {
+      console.error('Error saving scheduled notifications:', error);
+    }
+  }
+
+  // Schedule a notification
+  scheduleNotification(title, options, delayMs, id = null) {
+    if (!('Notification' in window) || Notification.permission !== 'granted') {
+      console.warn('Notifications not supported or permission not granted');
+      return null;
+    }
+
+    const notificationId = id || `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const scheduledTime = Date.now() + delayMs;
+
+    const scheduledNotification = {
+      id: notificationId,
+      title,
+      options: {
+        ...options,
+        icon: options.icon || '/images/logo.png',
+        badge: options.badge || '/images/favicon-32x32.png',
+        tag: options.tag || notificationId
+      },
+      scheduledTime,
+      delayMs
+    };
+
+    this.scheduledNotifications.push(scheduledNotification);
+    this.saveScheduledNotifications();
+
+    // Schedule the notification
+    this.scheduleNotificationTimeout(scheduledNotification);
+
+    return notificationId;
+  }
+
+  // Schedule notification timeout
+  scheduleNotificationTimeout(notification) {
+    const delay = notification.scheduledTime - Date.now();
+
+    if (delay > 0) {
+      // Schedule in main thread
+      setTimeout(() => {
+        this.showScheduledNotification(notification);
+      }, delay);
+
+      // Also send to service worker for background scheduling
+      this.sendToServiceWorker(notification);
+    } else {
+      // If delay is negative (past due), show immediately
+      this.showScheduledNotification(notification);
+    }
+  }
+
+  // Send scheduled notification to service worker
+  sendToServiceWorker(notification) {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'SCHEDULE_NOTIFICATION',
+        title: notification.title,
+        options: notification.options,
+        delayMs: notification.delayMs,
+        id: notification.id
+      });
+    }
+  }
+
+  // Show scheduled notification
+  showScheduledNotification(notification) {
+    try {
+      const n = new Notification(notification.title, notification.options);
+
+      n.onclick = () => {
+        window.focus();
+        n.close();
+      };
+
+      // Remove from scheduled list after showing
+      this.removeScheduledNotification(notification.id);
+
+      // Auto close after 10 seconds
+      setTimeout(() => {
+        n.close();
+      }, 10000);
+    } catch (error) {
+      console.error('Error showing scheduled notification:', error);
+    }
+  }
+
+  // Remove scheduled notification
+  removeScheduledNotification(id) {
+    this.scheduledNotifications = this.scheduledNotifications.filter(n => n.id !== id);
+    this.saveScheduledNotifications();
+  }
+
+  // Load scheduled notifications from JSON file
+  async loadScheduledNotificationsFromJSON() {
+    try {
+      const response = await fetch('../data/notifications.json');
+      if (!response.ok) {
+        console.warn('Failed to load notifications.json:', response.status);
+        return;
+      }
+      const notificationsData = await response.json();
+
+      notificationsData.forEach(notificationData => {
+        // Check if notification with this ID already exists
+        const existingNotification = this.scheduledNotifications.find(n => n.id === notificationData.id);
+        if (!existingNotification) {
+          // Schedule the notification from JSON
+          this.scheduleNotification(
+            notificationData.title,
+            notificationData.options || {},
+            notificationData.delayMs,
+            notificationData.id
+          );
+        }
+      });
+    } catch (error) {
+      console.error('Error loading scheduled notifications from JSON:', error);
+    }
+  }
+
+  // Initialize scheduled notifications on page load
+  async initScheduledNotifications() {
+    // Reschedule all pending notifications
+    this.scheduledNotifications.forEach(notification => {
+      this.scheduleNotificationTimeout(notification);
+    });
+
+    // Load and schedule notifications from JSON file
+    await this.loadScheduledNotificationsFromJSON();
+
+    // Schedule default notifications if none exist
+    if (this.scheduledNotifications.length === 0) {
+      this.scheduleDefaultNotifications();
+    }
+  }
+
+  // Schedule default notifications
+  scheduleDefaultNotifications() {
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    // Schedule daily reminder at 9 AM
+    if (currentHour < 9) {
+      const delayTo9AM = (9 - currentHour) * 60 * 60 * 1000;
+      this.scheduleNotification(
+        'Selamat Pagi! 🌅',
+        {
+          body: 'Jangan lupa gunakan layanan jastip Omega untuk kebutuhan harian Anda hari ini!',
+          icon: '/images/logo.png',
+          badge: '/images/favicon-32x32.png'
+        },
+        delayTo9AM,
+        'daily-reminder-9am'
+      );
+    }
+
+    // Schedule evening reminder at 6 PM
+    if (currentHour < 18) {
+      const delayTo6PM = (18 - currentHour) * 60 * 60 * 1000;
+      this.scheduleNotification(
+        'Selamat Sore! 🌇',
+        {
+          body: 'Butuh antar makanan atau barang? Omega Jastip siap melayani Anda!',
+          icon: '/images/logo.png',
+          badge: '/images/favicon-32x32.png'
+        },
+        delayTo6PM,
+        'daily-reminder-6pm'
+      );
+    }
+
+    // Schedule promotional notification in 1 hour
+    this.scheduleNotification(
+      'Promo Spesial! 🎉',
+      {
+        body: 'Diskon 10% untuk layanan antar pertama kali hari ini. Segera pesan!',
+        icon: '/images/logo.png',
+        badge: '/images/favicon-32x32.png'
+      },
+      60 * 60 * 1000, // 1 hour
+      'promo-notification'
+    );
+
+    // Schedule weekend reminder (if it's Friday)
+    if (now.getDay() === 5 && currentHour < 20) { // Friday
+      const delayTo8PM = (20 - currentHour) * 60 * 60 * 1000;
+      this.scheduleNotification(
+        'Weekend Special! 🎊',
+        {
+          body: 'Layanan weekend dengan tarif spesial. Pesan sekarang untuk pengiriman cepat!',
+          icon: '/images/logo.png',
+          badge: '/images/favicon-32x32.png'
+        },
+        delayTo8PM,
+        'weekend-reminder'
+      );
+    }
+  }
+
+  // Get all scheduled notifications
+  getScheduledNotifications() {
+    return this.scheduledNotifications;
+  }
+
+  // Clear all scheduled notifications
+  clearAllScheduledNotifications() {
+    this.scheduledNotifications = [];
+    this.saveScheduledNotifications();
+  }
+}
+
+// Initialize scheduled notification manager
+const scheduledNotificationManager = new ScheduledNotificationManager();
+
 // Export functions
 window.NotificationManager = {
   init: initNotifications,
   requestPermission: requestNotificationPermission,
   getToken: getFCMToken,
-  testNotification: showTestNotification
+  testNotification: showTestNotification,
+
+  // Scheduled notification functions
+  scheduleNotification: (title, options, delayMs, id) => scheduledNotificationManager.scheduleNotification(title, options, delayMs, id),
+  getScheduledNotifications: () => scheduledNotificationManager.getScheduledNotifications(),
+  clearAllScheduledNotifications: () => scheduledNotificationManager.clearAllScheduledNotifications(),
+  removeScheduledNotification: (id) => scheduledNotificationManager.removeScheduledNotification(id)
 };
 

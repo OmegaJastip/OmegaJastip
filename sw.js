@@ -263,3 +263,35 @@ self.addEventListener('notificationclick', event => {
     );
   }
 });
+
+// Handle messages from main thread for scheduled notifications
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SCHEDULE_NOTIFICATION') {
+    const { title, options, delayMs, id } = event.data;
+
+    // Store scheduled notification in IndexedDB or similar
+    // For simplicity, we'll use a basic approach with setTimeout
+    // Note: setTimeout in service worker will only work while the service worker is active
+    setTimeout(() => {
+      self.registration.showNotification(title, {
+        ...options,
+        icon: options.icon || '/images/logo.png',
+        badge: options.badge || '/images/favicon-32x32.png',
+        tag: options.tag || id,
+        data: { scheduled: true, id }
+      });
+    }, delayMs);
+  }
+});
+
+// Periodic check for scheduled notifications (fallback for when app is closed)
+// This runs every 5 minutes when service worker is active
+setInterval(() => {
+  checkScheduledNotifications();
+}, 5 * 60 * 1000); // 5 minutes
+
+function checkScheduledNotifications() {
+  // In a real implementation, you'd check IndexedDB or a server for scheduled notifications
+  // For this demo, we'll skip this as the main thread handles scheduling
+  // when the app is open
+}

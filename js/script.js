@@ -773,6 +773,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // PWA Install Prompt
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize notifications
+    if (window.NotificationManager) {
+        window.NotificationManager.init();
+    }
+
     // Register service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js', { scope: '/' })
@@ -794,11 +799,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Check for manifest updates
     checkManifestUpdate();
+});
 
-    // Preload move sound
-    const moveAudio = new Audio(soundPath + 'move.mp3');
-    moveAudio.load();
+// Function to check for manifest updates
+function checkManifestUpdate() {
+    // Simple manifest update check - in a real implementation,
+    // you might fetch the manifest and compare versions
+    if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+            // Check if manifest cache exists and is up to date
+            const manifestCache = cacheNames.find(name => name.includes('manifest'));
+            if (!manifestCache) {
+                console.log('Manifest cache not found');
+            }
+        });
+    }
+}
 
+// PWA Install Prompt
+document.addEventListener('DOMContentLoaded', function() {
     let deferredPrompt;
     const installPopup = document.getElementById('pwa-install-popup');
     const installBtn = document.getElementById('pwa-install-btn');
