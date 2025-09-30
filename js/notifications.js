@@ -83,24 +83,26 @@ function sendToServer(token) {
 }
 
 // Handle foreground messages (when app is open)
-fcmMessaging.onMessage((payload) => {
+if (fcmMessaging) {
+  fcmMessaging.onMessage((payload) => {
 
-  // Show notification even when app is open
-  if (Notification.permission === 'granted') {
-    const notification = new Notification(payload.notification.title, {
-      body: payload.notification.body,
-      icon: '/images/logo.png',
-      badge: '/images/favicon-32x32.png',
-      data: payload.data
-    });
+    // Show notification even when app is open
+    if (Notification.permission === 'granted') {
+      const notification = new Notification(payload.notification.title, {
+        body: payload.notification.body,
+        icon: '/images/logo.png',
+        badge: '/images/favicon-32x32.png',
+        data: payload.data
+      });
 
-    notification.onclick = () => {
-      // Focus the app window
-      window.focus();
-      notification.close();
-    };
-  }
-});
+      notification.onclick = () => {
+        // Focus the app window
+        window.focus();
+        notification.close();
+      };
+    }
+  });
+}
 
 // Initialize notifications
 function initNotifications() {
