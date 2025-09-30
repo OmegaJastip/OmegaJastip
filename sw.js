@@ -119,7 +119,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(request).then(response => {
         return response || fetch(request).then(networkResponse => {
-          if (networkResponse.ok) {
+          if (networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(STATIC_CACHE).then(cache => {
               cache.put(request, responseClone);
@@ -134,7 +134,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(request).then(cachedResponse => {
         const fetchPromise = fetch(request).then(networkResponse => {
-          if (networkResponse.ok) {
+          if (networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(STATIC_CACHE).then(cache => {
               cache.put(request, responseClone);
@@ -156,7 +156,7 @@ self.addEventListener('fetch', event => {
             return networkResponse;
           }
 
-          if (networkResponse.ok) {
+          if (networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(DYNAMIC_CACHE).then(cache => {
               cache.put(request, responseClone);

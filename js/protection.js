@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Preload alert sound
-    const alertAudio = new Audio('sound/alert.mp3');
+    const alertAudio = new Audio('/sound/alert.mp3');
     alertAudio.load();
 
     // Rate limiting function
