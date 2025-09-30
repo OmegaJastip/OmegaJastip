@@ -62,7 +62,7 @@ const urlsToCache = [
   '/images/android-chrome-512x512.png',
   '/images/favicon-32x32.png',
   '/images/favicon-16x16.png',
-  '/images/favicon.ico',
+  '/favicon.ico',
   '/images/apple-touch-icon.png',
   '/images/hero-background.jpg',
   'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
