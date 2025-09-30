@@ -3055,7 +3055,7 @@ footer {
 
 /* Blog Hero Section */
 .blog-hero {
-    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(../images/blog-hero.jpg);
+    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(../images/hero-background.jpg);
     background-size: cover;
     background-position: center;
     height: 400px;

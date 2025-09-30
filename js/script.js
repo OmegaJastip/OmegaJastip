@@ -1,6 +1,7 @@
 // Determine correct path for sound files based on current location
-const isInPages = window.location.pathname.includes('/pages/');
-const soundPath = isInPages ? '../sound/' : 'sound/';
+const pathname = window.location.pathname;
+const depth = (pathname.match(/\//g) || []).length - 1;
+const soundPath = '../'.repeat(depth) + 'sound/';
 const moveAudio = new Audio(soundPath + 'move.mp3');
 moveAudio.preload = 'auto'; // Preload for faster playback
 
