@@ -561,6 +561,109 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Tambahkan event listener untuk tombol lokasi sekarang
+    const currentLocationBtn = document.getElementById('current-location-btn');
+    if (currentLocationBtn) {
+        currentLocationBtn.addEventListener('click', function() {
+            if (navigator.geolocation) {
+                // Tampilkan loading pada tombol
+                currentLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mendapatkan lokasi...';
+                currentLocationBtn.disabled = true;
+
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    // Reset tombol
+                    currentLocationBtn.innerHTML = '<i class="fas fa-crosshairs"></i> Gunakan Lokasi Sekarang';
+                    currentLocationBtn.disabled = false;
+
+                    // Set lokasi berdasarkan state marker saat ini
+                    if (!startMarker) {
+                        // Set sebagai lokasi awal
+                        startMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Awal"
+                        }).addTo(map);
+                        startMarker.bindPopup("Lokasi Awal").openPopup();
+                        updateStartLocationName(lat, lon);
+
+                        startMarker.on('dragend', function() {
+                            updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                            if (endMarker) calculateRoute();
+                        });
+                    } else if (!endMarker) {
+                        // Set sebagai lokasi tujuan
+                        endMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Tujuan"
+                        }).addTo(map);
+                        endMarker.bindPopup("Lokasi Tujuan").openPopup();
+                        updateEndLocationName(lat, lon);
+
+                        endMarker.on('dragend', function() {
+                            updateEndLocationName(endMarker.getLatLng().lat, endMarker.getLatLng().lng);
+                            calculateRoute();
+                        });
+
+                        calculateRoute();
+                    } else {
+                        // Reset dan set sebagai lokasi awal
+                        map.removeLayer(startMarker);
+                        map.removeLayer(endMarker);
+                        if (routeLine) map.removeLayer(routeLine);
+
+                        startMarker = L.marker([lat, lon], {
+                            draggable: true,
+                            title: "Lokasi Awal"
+                        }).addTo(map);
+                        startMarker.bindPopup("Lokasi Awal").openPopup();
+                        updateStartLocationName(lat, lon);
+
+                        startMarker.on('dragend', function() {
+                            updateStartLocationName(startMarker.getLatLng().lat, startMarker.getLatLng().lng);
+                            if (endMarker) calculateRoute();
+                        });
+
+                        endMarker = null;
+                        document.getElementById('end-location').textContent = "Belum dipilih";
+                        document.getElementById('estimated-time').textContent = "-";
+                        document.getElementById('distance').textContent = "-";
+                    }
+
+                    // Zoom ke lokasi
+                    map.setView([lat, lon], 15);
+
+                }, function(error) {
+                    // Reset tombol
+                    currentLocationBtn.innerHTML = '<i class="fas fa-crosshairs"></i> Gunakan Lokasi Sekarang';
+                    currentLocationBtn.disabled = false;
+
+                    let errorMessage = "Tidak dapat mengakses lokasi.";
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "Izin akses lokasi ditolak. Harap izinkan akses lokasi di browser Anda.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "Informasi lokasi tidak tersedia.";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "Waktu permintaan lokasi habis.";
+                            break;
+                    }
+                    alert(errorMessage);
+                    console.error('Geolocation error:', error);
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000 // 5 menit cache
+                });
+            } else {
+                alert("Browser Anda tidak mendukung geolocation.");
+            }
+        });
+    }
+
     // Fungsi untuk mendapatkan nama lokasi berdasarkan koordinat
     function updateStartLocationName(lat, lng) {
         fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
