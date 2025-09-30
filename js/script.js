@@ -674,10 +674,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js', { scope: '/' })
             .then(registration => {
+                // Check for service worker updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // New version available, show update prompt
+                            showUpdatePrompt();
+                        }
+                    });
+                });
             })
             .catch(error => {
             });
     }
+
+    // Check for manifest updates
+    checkManifestUpdate();
 
     // Preload move sound
     const moveAudio = new Audio(soundPath + 'move.mp3');

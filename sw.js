@@ -70,6 +70,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Force the new service worker to activate immediately
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -186,6 +187,7 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  self.clients.claim(); // Take control of all clients immediately
 });
 
 // Handle push notifications

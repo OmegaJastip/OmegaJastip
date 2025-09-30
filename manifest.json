@@ -2,6 +2,7 @@
   "name": "Omega Jastip Lubuklinggau",
   "short_name": "Omega Jastip",
   "description": "Layanan jasa titip terpercaya di Lubuk Linggau untuk antar makanan, barang, penumpang, dan jasa belanja.",
+  "version": "1.0.0",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
