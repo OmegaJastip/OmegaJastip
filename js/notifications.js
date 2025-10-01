@@ -6,6 +6,8 @@ async function requestNotificationPermission() {
   try {
     // Check if notifications are supported
     if (!('Notification' in window)) {
+      console.warn('Notifications not supported in this browser.');
+      alert('Notifikasi tidak didukung oleh browser Anda.');
       return null;
     }
 
@@ -15,6 +17,8 @@ async function requestNotificationPermission() {
     }
 
     if (Notification.permission === 'denied') {
+      console.warn('Notification permission was previously denied.');
+      alert('Anda telah menolak izin notifikasi. Silakan izinkan notifikasi di pengaturan browser Anda untuk menerima update.');
       return null;
     }
 
@@ -23,10 +27,16 @@ async function requestNotificationPermission() {
 
     if (permission === 'granted') {
       return await getFCMToken();
+    } else if (permission === 'denied') {
+      console.warn('Notification permission denied by user.');
+      alert('Anda menolak izin notifikasi. Anda tidak akan menerima update notifikasi.');
+      return null;
     } else {
+      console.warn('Notification permission request dismissed.');
       return null;
     }
   } catch (error) {
+    console.error('Error requesting notification permission:', error);
     return null;
   }
 }
@@ -367,8 +377,12 @@ class ScheduledNotificationManager {
 
   // Schedule a notification
   scheduleNotification(title, options, delayMs, id = null) {
-    if (!('Notification' in window) || Notification.permission !== 'granted') {
-      console.warn('Notifications not supported or permission not granted');
+    if (!('Notification' in window)) {
+      console.warn('Notifications not supported in this browser');
+      return null;
+    }
+    if (Notification.permission !== 'granted') {
+      console.warn('Notification permission not granted');
       return null;
     }
 
