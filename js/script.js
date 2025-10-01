@@ -958,3 +958,11 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('pwa-install-dismissed');
     });
 });
+
+// Fix for back/forward cache to always update content
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from bfcache, force reload to ensure updated content
+        window.location.reload();
+    }
+});
