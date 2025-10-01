@@ -138,157 +138,168 @@ function initNotifications() {
 
 // Show custom notification prompt UI
 function showNotificationPrompt() {
-  // Create prompt element
-  const prompt = document.createElement('div');
-  prompt.id = 'notification-prompt';
-  prompt.innerHTML = `
-    <div class="notification-prompt-content">
-      <div class="prompt-icon">🔔</div>
-      <div class="prompt-text">
-        <h4>Dapatkan Notifikasi</h4>
-        <p>Dapatkan update terbaru tentang layanan jastip dan promo menarik!</p>
+  let prompt = document.getElementById('notification-prompt');
+
+  if (!prompt) {
+    // Create prompt element if it doesn't exist
+    prompt = document.createElement('div');
+    prompt.id = 'notification-prompt';
+    prompt.innerHTML = `
+      <div class="notification-prompt-content">
+        <div class="prompt-icon">🔔</div>
+        <div class="prompt-text">
+          <h4>Dapatkan Notifikasi</h4>
+          <p>Dapatkan update terbaru tentang layanan jastip dan promo menarik!</p>
+        </div>
+        <div class="prompt-buttons">
+          <button id="allow-notifications" class="btn-prompt">Izinkan</button>
+          <button id="deny-notifications" class="btn-prompt btn-secondary">Nanti</button>
+        </div>
       </div>
-      <div class="prompt-buttons">
-        <button id="allow-notifications" class="btn-prompt">Izinkan</button>
-        <button id="deny-notifications" class="btn-prompt btn-secondary">Nanti</button>
-      </div>
-    </div>
-  `;
+    `;
 
-  // Enhanced styles with desktop/mobile responsiveness
-  const isDesktop = window.innerWidth > 768;
-  prompt.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    ${isDesktop ? 'right: 20px; left: auto; max-width: 380px; margin: 0;' : 'left: 20px; right: 20px; max-width: 350px; margin: 0 auto;'}
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    padding: ${isDesktop ? '24px' : '20px'};
-    z-index: 10000;
-    font-family: 'Poppins', sans-serif;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    opacity: 0;
-  `;
+    // Enhanced styles with desktop/mobile responsiveness
+    const isDesktop = window.innerWidth > 768;
+    prompt.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      ${isDesktop ? 'right: 20px; left: auto; max-width: 380px; margin: 0;' : 'left: 20px; right: 20px; max-width: 350px; margin: 0 auto;'}
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      padding: ${isDesktop ? '24px' : '20px'};
+      z-index: 10000;
+      font-family: 'Poppins', sans-serif;
+      transform: translateY(100%);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+    `;
 
-  // Button styles
-  const allowBtn = prompt.querySelector('#allow-notifications');
-  const denyBtn = prompt.querySelector('#deny-notifications');
-  if (allowBtn) {
-    allowBtn.style.cssText = `
-      background: #ee4d2d;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-right: 8px;
-      transition: background 0.2s ease;
-    `;
-    allowBtn.addEventListener('mouseenter', () => { allowBtn.style.background = '#d43c1e'; });
-    allowBtn.addEventListener('mouseleave', () => { allowBtn.style.background = '#ee4d2d'; });
-  }
-  if (denyBtn) {
-    denyBtn.style.cssText = `
-      background: #f3f4f6;
-      color: #6b7280;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    `;
-    denyBtn.addEventListener('mouseenter', () => { denyBtn.style.background = '#e5e7eb'; });
-    denyBtn.addEventListener('mouseleave', () => { denyBtn.style.background = '#f3f4f6'; });
-  }
-
-  // Content styles
-  const content = prompt.querySelector('.notification-prompt-content');
-  if (content) {
-    content.style.cssText = `
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    `;
-  }
-  const icon = prompt.querySelector('.prompt-icon');
-  if (icon) {
-    icon.style.cssText = `
-      font-size: 24px;
-      flex-shrink: 0;
-    `;
-  }
-  const text = prompt.querySelector('.prompt-text');
-  if (text) {
-    text.style.cssText = `
-      flex: 1;
-    `;
-  }
-  const buttons = prompt.querySelector('.prompt-buttons');
-  if (buttons) {
-    buttons.style.cssText = `
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    `;
-  }
-  const h4 = prompt.querySelector('h4');
-  if (h4) {
-    h4.style.cssText = `
-      margin: 0 0 4px 0;
-      font-size: 18px;
-      font-weight: 600;
-      color: #1f2937;
-    `;
-  }
-  const p = prompt.querySelector('p');
-  if (p) {
-    p.style.cssText = `
-      margin: 0;
-      font-size: 14px;
-      color: #6b7280;
-      line-height: 1.4;
-    `;
-  }
-
-  document.body.appendChild(prompt);
-
-  // Animate in
-  setTimeout(() => {
-    prompt.style.opacity = '1';
-    prompt.style.transform = 'translateY(0)';
-  }, 100);
-
-  // Handle buttons
-  document.getElementById('allow-notifications').addEventListener('click', async () => {
-    const token = await requestNotificationPermission();
-    if (token) {
-      showSuccessMessage();
+    // Button styles
+    const allowBtn = prompt.querySelector('#allow-notifications');
+    const denyBtn = prompt.querySelector('#deny-notifications');
+    if (allowBtn) {
+      allowBtn.style.cssText = `
+        background: #ee4d2d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 8px;
+        transition: background 0.2s ease;
+      `;
+      allowBtn.addEventListener('mouseenter', () => { allowBtn.style.background = '#d43c1e'; });
+      allowBtn.addEventListener('mouseleave', () => { allowBtn.style.background = '#ee4d2d'; });
     }
-    // Animate out
-    prompt.style.opacity = '0';
-    prompt.style.transform = 'translateY(100%)';
-    setTimeout(() => prompt.remove(), 300);
-  });
+    if (denyBtn) {
+      denyBtn.style.cssText = `
+        background: #f3f4f6;
+        color: #6b7280;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      `;
+      denyBtn.addEventListener('mouseenter', () => { denyBtn.style.background = '#e5e7eb'; });
+      denyBtn.addEventListener('mouseleave', () => { denyBtn.style.background = '#f3f4f6'; });
+    }
 
-  document.getElementById('deny-notifications').addEventListener('click', () => {
-    // Animate out
-    prompt.style.opacity = '0';
-    prompt.style.transform = 'translateY(100%)';
+    // Content styles
+    const content = prompt.querySelector('.notification-prompt-content');
+    if (content) {
+      content.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      `;
+    }
+    const icon = prompt.querySelector('.prompt-icon');
+    if (icon) {
+      icon.style.cssText = `
+        font-size: 24px;
+        flex-shrink: 0;
+      `;
+    }
+    const text = prompt.querySelector('.prompt-text');
+    if (text) {
+      text.style.cssText = `
+        flex: 1;
+      `;
+    }
+    const buttons = prompt.querySelector('.prompt-buttons');
+    if (buttons) {
+      buttons.style.cssText = `
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      `;
+    }
+    const h4 = prompt.querySelector('h4');
+    if (h4) {
+      h4.style.cssText = `
+        margin: 0 0 4px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+      `;
+    }
+    const p = prompt.querySelector('p');
+    if (p) {
+      p.style.cssText = `
+        margin: 0;
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.4;
+      `;
+    }
+
+    document.body.appendChild(prompt);
+
+    // Animate in
     setTimeout(() => {
-      prompt.remove();
-      // Remember choice for 24 hours
-      localStorage.setItem('notification-denied', Date.now().toString());
-    }, 300);
-  });
+      prompt.style.opacity = '1';
+      prompt.style.transform = 'translateY(0)';
+    }, 100);
+  }
+
+  // Handle buttons (attach listeners whether created or existing)
+  const allowBtn = document.getElementById('allow-notifications');
+  const denyBtn = document.getElementById('deny-notifications');
+
+  if (allowBtn) {
+    allowBtn.addEventListener('click', async () => {
+      const token = await requestNotificationPermission();
+      if (token) {
+        showSuccessMessage();
+      }
+      // Animate out
+      prompt.style.opacity = '0';
+      prompt.style.transform = 'translateY(100%)';
+      setTimeout(() => prompt.remove(), 300);
+    });
+  }
+
+  if (denyBtn) {
+    denyBtn.addEventListener('click', () => {
+      // Animate out
+      prompt.style.opacity = '0';
+      prompt.style.transform = 'translateY(100%)';
+      setTimeout(() => {
+        prompt.remove();
+        // Remember choice for 24 hours
+        localStorage.setItem('notification-denied', Date.now().toString());
+      }, 300);
+    });
+  }
 
   // Close on outside click (optional)
   prompt.addEventListener('click', (e) => {
     if (e.target === prompt) {
-      document.getElementById('deny-notifications').click();
+      denyBtn && denyBtn.click();
     }
   });
 }
