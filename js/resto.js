@@ -96,23 +96,11 @@ function displayRestaurants(restaurants) {
 
 function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
     const ratingStars = generateStars(restaurant.rating);
-    const services = restaurant.delivery_available && restaurant.pickup_available
-        ? '<span class="service-badge delivery">Delivery</span><span class="service-badge pickup">Pickup</span>'
-        : restaurant.delivery_available
-        ? '<span class="service-badge delivery">Delivery</span>'
-        : restaurant.pickup_available
-        ? '<span class="service-badge pickup">Pickup</span>'
-        : '';
 
     return `
-        <div class="restaurant-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}">
+        <div class="restaurant-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}" style="cursor: pointer;" onclick="window.location.href='menu.html?id=${restaurant.id}'">
             <div class="restaurant-image">
                 <img src="../${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/placeholder-resto.jpg'">
-                <div class="restaurant-overlay">
-                    <div class="services-badges">
-                        ${services}
-                    </div>
-                </div>
             </div>
             <div class="restaurant-info">
                 <div class="restaurant-header">
@@ -132,10 +120,6 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
                         <span>${restaurant.address}</span>
                     </div>
                     <div class="detail-item">
-                        <i class="fas fa-phone"></i>
-                        <span>${restaurant.phone}</span>
-                    </div>
-                    <div class="detail-item">
                         <i class="fas fa-clock"></i>
                         <span>${restaurant.operating_hours}</span>
                     </div>
@@ -143,14 +127,6 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
                         <i class="fas fa-money-bill-wave"></i>
                         <span>${restaurant.price_range}</span>
                     </div>
-                </div>
-                <div class="restaurant-actions">
-                    <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Pesan via WA
-                    </a>
-                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id}, '${currentCategoryFilter}')">
-                        <i class="fas fa-info-circle"></i> Detail
-                    </button>
                 </div>
             </div>
         </div>

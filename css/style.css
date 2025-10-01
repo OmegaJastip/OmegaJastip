@@ -990,32 +990,46 @@ footer {
 /* Small Mobile Responsive */
 @media (max-width: 480px) {
     .bottom-nav {
-        height: 70px; /* Larger touch target */
+        height: 80px; /* Increased height for better spacing */
     }
 
     .bottom-nav ul {
-        height: 70px;
+        height: 80px;
+        padding: 0 5px; /* Reduced padding */
+        justify-content: space-evenly; /* Better distribution */
     }
 
     .bottom-nav .nav-item {
-        padding: 8px;
-        font-size: 0.75rem;
+        padding: 6px 2px; /* Reduced padding */
+        font-size: 0.7rem;
+        min-width: 0; /* Allow shrinking */
+        flex: 0 0 auto; /* Don't grow, but allow shrinking */
     }
 
     .bottom-nav .nav-item i {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 2px;
     }
 
     .bottom-nav .nav-item span {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
+        line-height: 1;
+    }
+
+    /* Hide less important nav items on very small screens */
+    .bottom-nav .nav-item:nth-child(4), /* Toko */
+    .bottom-nav .nav-item:nth-child(5), /* Blog */
+    .bottom-nav .nav-item:nth-child(6)  /* Tarif */
+    {
+        display: none;
     }
 
     body {
-        padding-bottom: 70px;
+        padding-bottom: 80px;
     }
 
     .floating-cta {
-        bottom: 100px;
+        bottom: 110px;
     }
 }
 
