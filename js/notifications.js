@@ -71,24 +71,25 @@ async function getFCMToken() {
   }
 }
 
-// Function to send token to server
+// Function to send token to server (implement based on your backend)
 function sendToServer(token) {
+  // Store token in localStorage for demo purposes
+  localStorage.setItem('fcm_token', token);
+
+  
+  // Example implementation for actual server call (uncomment if backend available):
+  /*
   fetch('/api/subscribe', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ token: token, userId: getUserId() })
+    body: JSON.stringify({ token: token, userId: getUserId() }) // Implement getUserId() as needed
   })
   .then(response => response.json())
   .then(data => console.log('Token sent to server:', data))
   .catch(error => console.error('Error sending token:', error));
-}
-
-// Helper function to get user ID (you can implement based on your auth system)
-function getUserId() {
-  // For demo purposes, use a random ID or implement proper user identification
-  return localStorage.getItem('user_id') || 'anonymous-' + Date.now();
+  */
 }
 
 // Handle foreground messages (when app is open)
