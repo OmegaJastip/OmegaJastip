@@ -5,6 +5,16 @@ const soundPath = '../'.repeat(depth) + 'sound/';
 const moveAudio = new Audio(soundPath + 'move.mp3');
 moveAudio.preload = 'auto'; // Preload for faster playback
 
+// Proper escaping function to avoid DOM-based XSS
+function escapeHTML(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Loading System
 class LoadingManager {
     constructor() {
@@ -326,13 +336,13 @@ function calculatePrice() {
 
     // Display details with conditional weight info
     let detailsHTML = `
-        <div>Jarak: ${distance.textContent}</div>
-        <div>Jenis layanan: ${serviceType.options[serviceType.selectedIndex].text}</div>
+        <div>Jarak: ${escapeHTML(distance.textContent)}</div>
+        <div>Jenis layanan: ${escapeHTML(serviceType.options[serviceType.selectedIndex].text)}</div>
     `;
 
     // Only show weight if service involves carrying goods
     if (servicesWithWeight.includes(selectedService)) {
-        detailsHTML += `<div>Berat: ${weight.value} kg</div>`;
+        detailsHTML += `<div>Berat: ${escapeHTML(weight.value)} kg</div>`;
     }
 
     resultDetails.innerHTML = detailsHTML;
