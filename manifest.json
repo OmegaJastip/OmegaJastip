@@ -13,6 +13,7 @@
   "dir": "ltr",
   "scope": "/",
   "prefer_related_applications": false,
+  "gcm_sender_id": "1003488855126",
   "icons": [
     {
       "src": "images/android-chrome-192x192.png",
