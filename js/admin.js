@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadRestaurants();
     setupRatingSystem();
     setupMapsLinkExtraction();
+    setupPriceFormatting();
 });
 
 // Load restaurants from localStorage
@@ -302,6 +303,67 @@ function extractLatLngFromMapsLink(link) {
     } else {
         return Promise.reject(new Error('Coordinates not found in URL. Please provide the full Google Maps URL containing @lat,lng.'));
     }
+}
+
+// Setup price formatting for inputs
+function setupPriceFormatting() {
+    // Format price range input (e.g., "15000-35000" -> "Rp 15.000 - Rp 35.000")
+    const priceRangeInput = document.getElementById('restaurant-price-range');
+    if (priceRangeInput) {
+        priceRangeInput.addEventListener('input', formatPriceRange);
+        priceRangeInput.addEventListener('blur', formatPriceRange);
+    }
+
+    // Format service price inputs (e.g., "25000" -> "Rp 25.000")
+    // Use event delegation for dynamically added service price inputs
+    const servicesContainer = document.getElementById('services-container');
+    if (servicesContainer) {
+        servicesContainer.addEventListener('input', function(e) {
+            if (e.target.classList.contains('service-price')) {
+                formatServicePrice(e.target);
+            }
+        });
+        servicesContainer.addEventListener('blur', function(e) {
+            if (e.target.classList.contains('service-price')) {
+                formatServicePrice(e.target);
+            }
+        });
+    }
+}
+
+// Format price range input
+function formatPriceRange(e) {
+    const input = e.target;
+    let value = input.value.replace(/[^\d\-]/g, ''); // Remove non-digits except dash
+
+    if (value) {
+        const parts = value.split('-');
+        if (parts.length === 2) {
+            const minPrice = parts[0].replace(/\D/g, '');
+            const maxPrice = parts[1].replace(/\D/g, '');
+            if (minPrice && maxPrice) {
+                input.value = `Rp ${formatNumber(minPrice)} - Rp ${formatNumber(maxPrice)}`;
+            }
+        } else if (parts.length === 1) {
+            const price = parts[0].replace(/\D/g, '');
+            if (price) {
+                input.value = `Rp ${formatNumber(price)}`;
+            }
+        }
+    }
+}
+
+// Format service price input
+function formatServicePrice(input) {
+    let value = input.value.replace(/[^\d]/g, ''); // Remove non-digits
+    if (value) {
+        input.value = `Rp ${formatNumber(value)}`;
+    }
+}
+
+// Format number with thousand separators (Indonesian style)
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 // Close modal when clicking outside
