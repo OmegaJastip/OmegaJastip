@@ -95,84 +95,32 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Handle different caching strategies
-  if (url.pathname.startsWith('/api/')) {
-    // API requests - Network first with cache fallback
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          // Cache successful API responses
-          if (response.status === 200) {
-            const responseClone = response.clone();
-            caches.open(API_CACHE).then(cache => {
-              cache.put(request, responseClone);
-            });
-          }
-          return response;
-        })
-        .catch(() => {
-          // Return cached API response if network fails
-          return caches.match(request);
-        })
-    );
-  } else if (request.destination === 'image' || request.destination === 'font') {
-    // Images and fonts - Cache first
-    event.respondWith(
-      caches.match(request).then(response => {
-        return response || fetch(request).then(networkResponse => {
-          if (networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(STATIC_CACHE).then(cache => {
-              cache.put(request, responseClone);
-            });
-          }
-          return networkResponse;
-        });
+  // Network First strategy: Always try network first, cache for offline use
+  event.respondWith(
+    fetch(request)
+      .then(response => {
+        // Cache successful responses for offline use
+        if (response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+        }
+        return response;
       })
-    );
-  } else if (request.url.includes('.html') || request.url.includes('.js') || request.url.includes('.css')) {
-    // HTML, JS, CSS - Stale while revalidate
-    event.respondWith(
-      caches.match(request).then(cachedResponse => {
-        const fetchPromise = fetch(request).then(networkResponse => {
-          if (networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(STATIC_CACHE).then(cache => {
-              cache.put(request, responseClone);
-            });
+      .catch(() => {
+        // Network failed, try cache
+        return caches.match(request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
           }
-          return networkResponse;
-        });
-
-        return cachedResponse || fetchPromise;
-      })
-    );
-  } else {
-    // Default - Cache first with network fallback
-    event.respondWith(
-      caches.match(request).then(response => {
-        return response || fetch(request).then(networkResponse => {
-          // Don't cache external requests
-          if (!url.hostname.includes('omegajastip.online')) {
-            return networkResponse;
-          }
-
-          if (networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(DYNAMIC_CACHE).then(cache => {
-              cache.put(request, responseClone);
-            });
-          }
-          return networkResponse;
-        }).catch(() => {
-          // Return offline page for navigation requests
+          // If no cache and navigation request, show offline page
           if (request.mode === 'navigate') {
             return caches.match('/pages/offline.html');
           }
         });
       })
-    );
-  }
+  );
 });
 
 self.addEventListener('activate', event => {
