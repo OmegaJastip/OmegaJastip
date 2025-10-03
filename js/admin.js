@@ -294,35 +294,12 @@ function setupMapsLinkExtraction() {
 
 // Extract latitude and longitude from Google Maps link
 function extractLatLngFromMapsLink(link) {
-    // First, try to resolve short link if it's goo.gl
-    if (link.includes('goo.gl')) {
-        return fetch(link)
-            .then(response => response.url)
-            .then(finalUrl => {
-                const match = finalUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-                if (match) {
-                    return { lat: parseFloat(match[1]), lng: parseFloat(match[2]) };
-                } else {
-                    throw new Error('Coordinates not found in URL');
-                }
-            })
-            .catch(err => {
-                // If fetch fails, try direct regex on the link
-                const match = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-                if (match) {
-                    return { lat: parseFloat(match[1]), lng: parseFloat(match[2]) };
-                } else {
-                    throw new Error('Unable to extract coordinates. Please paste the full Google Maps URL with @lat,lng in it.');
-                }
-            });
+    // Directly parse the provided link for coordinates using regex
+    const match = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (match) {
+        return Promise.resolve({ lat: parseFloat(match[1]), lng: parseFloat(match[2]) });
     } else {
-        // For full URLs, parse directly
-        const match = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-        if (match) {
-            return Promise.resolve({ lat: parseFloat(match[1]), lng: parseFloat(match[2]) });
-        } else {
-            return Promise.reject(new Error('Coordinates not found in URL. Please ensure the URL contains @lat,lng.'));
-        }
+        return Promise.reject(new Error('Coordinates not found in URL. Please provide the full Google Maps URL containing @lat,lng.'));
     }
 }
 
