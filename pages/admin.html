@@ -168,7 +168,14 @@
                 <div class="services-section">
                     <h3>Services</h3>
                     <div id="services-container">
-                        <!-- Services will be added here -->
+                        <div class="service-item">
+                            <input type="text" class="service-category" placeholder="Category" value="" required>
+                            <input type="text" class="service-name" placeholder="Service name" value="" required>
+                            <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="" required>
+                            <button type="button" class="btn-remove-service" onclick="removeService(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="button" class="btn-add-service" onclick="addService()">
                         <i class="fas fa-plus"></i> Add Service

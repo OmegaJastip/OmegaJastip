@@ -79,7 +79,6 @@ function openAddModal() {
     document.getElementById('restaurant-modal').style.display = 'block';
 }
 
-// Edit restaurant
 function editRestaurant(id) {
     const restaurant = restaurants.find(r => r.id === id);
     if (!restaurant) return;
@@ -108,7 +107,7 @@ function editRestaurant(id) {
     // Load services
     document.getElementById('services-container').innerHTML = '';
     restaurant.services.forEach(service => {
-        addService(service.name, service.price);
+        addService(service.category || '', service.name, service.price);
     });
 
     document.getElementById('restaurant-modal').style.display = 'block';
@@ -177,11 +176,13 @@ function getServicesFromForm() {
     const serviceItems = document.querySelectorAll('.service-item');
 
     serviceItems.forEach(item => {
+        const categoryInput = item.querySelector('.service-category');
         const nameInput = item.querySelector('.service-name');
         const priceInput = item.querySelector('.service-price');
 
-        if (nameInput.value.trim() && priceInput.value.trim()) {
+        if (categoryInput.value.trim() && nameInput.value.trim() && priceInput.value.trim()) {
             services.push({
+                category: categoryInput.value.trim(),
                 name: nameInput.value.trim(),
                 price: priceInput.value.trim()
             });
@@ -191,12 +192,12 @@ function getServicesFromForm() {
     return services;
 }
 
-// Add service input fields
-function addService(name = '', price = '') {
+function addService(category = '', name = '', price = '') {
     const container = document.getElementById('services-container');
     const serviceDiv = document.createElement('div');
     serviceDiv.className = 'service-item';
     serviceDiv.innerHTML = `
+        <input type="text" class="service-category" placeholder="Category" value="${category}" required>
         <input type="text" class="service-name" placeholder="Service name" value="${name}" required>
         <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="${price}" required>
         <button type="button" class="btn-remove-service" onclick="removeService(this)">

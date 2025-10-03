@@ -678,28 +678,22 @@ function setDestinationFromMap(lat, lng) {
         updateMarkerPosition(position.lat, position.lng);
     });
 
-    // Reverse geocode to get address (using CORS proxy for localhost)
-    const reverseGeocodeUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)}`;
+    // Reverse geocode to get address
+    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
 
-    fetch(reverseGeocodeUrl)
+    fetch(reverseGeocodeUrl, {
+        headers: {
+            'User-Agent': 'OmegaJastip/1.0 (https://github.com/yourusername/OmegaJastip)'
+        }
+    })
         .then(response => response.json())
-        .then(proxyData => {
-            // Extract the actual API response from the proxy
-            const data = proxyData.contents ? JSON.parse(proxyData.contents) : proxyData;
+        .then(data => {
 
             let address = 'Unknown location';
             if (data && data.display_name) {
-                // Extract relevant address parts
-                const addressParts = [];
-                if (data.address) {
-                    if (data.address.road) addressParts.push(data.address.road);
-                    if (data.address.suburb) addressParts.push(data.address.suburb);
-                    if (data.address.city) addressParts.push(data.address.city);
-                    else if (data.address.town) addressParts.push(data.address.town);
-                    else if (data.address.village) addressParts.push(data.address.village);
-                }
-                if (addressParts.length > 0) {
-                    address = addressParts.join(', ');
+                // Use only the street name (nama jalan)
+                if (data.address && data.address.road) {
+                    address = data.address.road;
                 } else {
                     address = data.display_name.split(',')[0]; // Fallback to first part
                 }
@@ -736,28 +730,22 @@ function updateMarkerPosition(lat, lng) {
     // Use the first restaurant from cart for shipping calculation
     const selectedRestaurant = cartRestaurants[0];
 
-    // Reverse geocode to get address (using CORS proxy for localhost)
-    const reverseGeocodeUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)}`;
+    // Reverse geocode to get address
+    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
 
-    fetch(reverseGeocodeUrl)
+    fetch(reverseGeocodeUrl, {
+        headers: {
+            'User-Agent': 'OmegaJastip/1.0 (https://github.com/yourusername/OmegaJastip)'
+        }
+    })
         .then(response => response.json())
-        .then(proxyData => {
-            // Extract the actual API response from the proxy
-            const data = proxyData.contents ? JSON.parse(proxyData.contents) : proxyData;
+        .then(data => {
 
             let address = 'Unknown location';
             if (data && data.display_name) {
-                // Extract relevant address parts
-                const addressParts = [];
-                if (data.address) {
-                    if (data.address.road) addressParts.push(data.address.road);
-                    if (data.address.suburb) addressParts.push(data.address.suburb);
-                    if (data.address.city) addressParts.push(data.address.city);
-                    else if (data.address.town) addressParts.push(data.address.town);
-                    else if (data.address.village) addressParts.push(data.address.village);
-                }
-                if (addressParts.length > 0) {
-                    address = addressParts.join(', ');
+                // Use only the street name (nama jalan)
+                if (data.address && data.address.road) {
+                    address = data.address.road;
                 } else {
                     address = data.display_name.split(',')[0]; // Fallback to first part
                 }
