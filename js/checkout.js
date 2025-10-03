@@ -291,6 +291,15 @@ function setupFormSubmission() {
             return;
         }
 
+        // Update cart items to include restaurantName if missing (for backward compatibility)
+        cart.forEach(item => {
+            if (!item.restaurantName) {
+                const restaurant = restaurants.find(r => r.services.some(s => s.name === item.name));
+                item.restaurantName = restaurant ? restaurant.name : 'Restoran Tidak Diketahui';
+            }
+        });
+        saveCart(cart); // Save updated cart
+
         const formData = new FormData(form);
         const name = formData.get('name');
         const phone = formData.get('phone');
@@ -328,12 +337,30 @@ function setupFormSubmission() {
         message += `Metode Pembayaran: ${payment === 'cod' ? 'COD' : 'Transfer Bank'}\n\n`;
 
         message += `DETAIL PESANAN:\n`;
+
+        // Group items by restaurant
+        const itemsByRestaurant = {};
         cart.forEach((item, index) => {
-            message += `${index + 1}. ${item.name}`;
-            if (item.variant) {
-                message += ` (${item.variant})`;
+            const restaurantName = item.restaurantName || 'Restoran Tidak Diketahui';
+            if (!itemsByRestaurant[restaurantName]) {
+                itemsByRestaurant[restaurantName] = [];
             }
-            message += ` - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
+            itemsByRestaurant[restaurantName].push({ item, index });
+        });
+
+        // Display items grouped by restaurant
+        Object.keys(itemsByRestaurant).forEach(restaurantName => {
+            message += `Nama Resto: ${restaurantName}\n`;
+            let itemCounter = 1;
+            itemsByRestaurant[restaurantName].forEach(({ item, index }) => {
+                message += `${itemCounter}. ${item.name}`;
+                if (item.variant) {
+                    message += ` (${item.variant})`;
+                }
+                message += ` - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
+                itemCounter++;
+            });
+            message += '\n';
         });
 
         message += `\n\nRINCIAN BIAYA:\n`;

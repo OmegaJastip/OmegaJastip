@@ -169,11 +169,24 @@
                     <h3>Services</h3>
                     <div id="services-container">
                         <div class="service-item">
-                            <input type="text" class="service-category" placeholder="Category" value="" required>
-                            <input type="text" class="service-name" placeholder="Service name" value="" required>
-                            <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="" required>
-                            <button type="button" class="btn-remove-service" onclick="removeService(this)">
-                                <i class="fas fa-times"></i>
+                            <div class="service-header">
+                                <input type="text" class="service-category" placeholder="Category" value="" required>
+                                <input type="text" class="service-name" placeholder="Service name" value="" required>
+                                <button type="button" class="btn-remove-service" onclick="removeService(this)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="variants-container">
+                                <div class="variant-item">
+                                    <input type="text" class="service-variant" placeholder="Variant (e.g., Small)" value="">
+                                    <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="" required>
+                                    <button type="button" class="btn-remove-variant" onclick="removeVariant(this)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-add-variant" onclick="addVariant(this)">
+                                <i class="fas fa-plus"></i> Add Variant
                             </button>
                         </div>
                     </div>

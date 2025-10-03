@@ -4024,6 +4024,82 @@ footer {
     margin-top: 10px;
 }
 
+/* Service Item Details Styles */
+.service-item-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.service-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.service-name {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.service-price {
+    color: #ff4000;
+    font-weight: 700;
+}
+
+.btn-add-cart {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-cart:hover {
+    background-color: #218838;
+}
+
+.btn-add-cart i {
+    font-size: 16px;
+}
+
+/* Search Input Styles */
+#modal-menu-search {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+#modal-menu-search:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+}
+
+/* Container for menu items */
+.services-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Highlight matched search text */
+.highlight {
+    background-color: yellow;
+}
+
 .payment-method {
     display: flex;
     align-items: center;

@@ -108,7 +108,15 @@ function editRestaurant(id) {
     // Load services
     document.getElementById('services-container').innerHTML = '';
     restaurant.services.forEach(service => {
-        addService(service.category || '', service.name, service.price);
+        // Handle both old and new data structures
+        if (service.variants && Array.isArray(service.variants)) {
+            // New structure with variants array
+            addService(service.category || '', service.name, service.variants);
+        } else {
+            // Old structure with single variant/price
+            const variants = service.price ? [{ variant: service.variant || '', price: service.price }] : [];
+            addService(service.category || '', service.name, variants);
+        }
     });
 
     document.getElementById('restaurant-modal').style.display = 'block';
@@ -179,30 +187,78 @@ function getServicesFromForm() {
     serviceItems.forEach(item => {
         const categoryInput = item.querySelector('.service-category');
         const nameInput = item.querySelector('.service-name');
-        const priceInput = item.querySelector('.service-price');
+        const variantItems = item.querySelectorAll('.variant-item');
 
-        if (categoryInput.value.trim() && nameInput.value.trim() && priceInput.value.trim()) {
-            services.push({
-                category: categoryInput.value.trim(),
-                name: nameInput.value.trim(),
-                price: priceInput.value.trim()
+        if (categoryInput.value.trim() && nameInput.value.trim()) {
+            const variants = [];
+            variantItems.forEach(variantItem => {
+                const variantInput = variantItem.querySelector('.service-variant');
+                const priceInput = variantItem.querySelector('.service-price');
+
+                if (priceInput.value.trim()) {
+                    variants.push({
+                        variant: variantInput.value.trim(),
+                        price: priceInput.value.trim()
+                    });
+                }
             });
+
+            if (variants.length > 0) {
+                services.push({
+                    category: categoryInput.value.trim(),
+                    name: nameInput.value.trim(),
+                    variants: variants
+                });
+            }
         }
     });
 
     return services;
 }
 
-function addService(category = '', name = '', price = '') {
+function addService(category = '', name = '', variants = []) {
     const container = document.getElementById('services-container');
     const serviceDiv = document.createElement('div');
     serviceDiv.className = 'service-item';
+
+    let variantsHtml = '';
+    if (variants.length > 0) {
+        variants.forEach(variant => {
+            variantsHtml += `
+                <div class="variant-item">
+                    <input type="text" class="service-variant" placeholder="Variant (e.g., Small)" value="${variant.variant || ''}">
+                    <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="${variant.price || ''}" required>
+                    <button type="button" class="btn-remove-variant" onclick="removeVariant(this)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            `;
+        });
+    } else {
+        variantsHtml = `
+            <div class="variant-item">
+                <input type="text" class="service-variant" placeholder="Variant (e.g., Small)" value="">
+                <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="" required>
+                <button type="button" class="btn-remove-variant" onclick="removeVariant(this)">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        `;
+    }
+
     serviceDiv.innerHTML = `
-        <input type="text" class="service-category" placeholder="Category" value="${category}" required>
-        <input type="text" class="service-name" placeholder="Service name" value="${name}" required>
-        <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="${price}" required>
-        <button type="button" class="btn-remove-service" onclick="removeService(this)">
-            <i class="fas fa-times"></i>
+        <div class="service-header">
+            <input type="text" class="service-category" placeholder="Category" value="${category}" required>
+            <input type="text" class="service-name" placeholder="Service name" value="${name}" required>
+            <button type="button" class="btn-remove-service" onclick="removeService(this)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="variants-container">
+            ${variantsHtml}
+        </div>
+        <button type="button" class="btn-add-variant" onclick="addVariant(this)">
+            <i class="fas fa-plus"></i> Add Variant
         </button>
     `;
     container.appendChild(serviceDiv);
@@ -210,7 +266,37 @@ function addService(category = '', name = '', price = '') {
 
 // Remove service
 function removeService(button) {
-    button.parentElement.remove();
+    button.parentElement.parentElement.remove();
+}
+
+// Add variant to a service
+function addVariant(button) {
+    const serviceItem = button.parentElement;
+    const variantsContainer = serviceItem.querySelector('.variants-container');
+
+    const variantDiv = document.createElement('div');
+    variantDiv.className = 'variant-item';
+    variantDiv.innerHTML = `
+        <input type="text" class="service-variant" placeholder="Variant (e.g., Small)" value="">
+        <input type="text" class="service-price" placeholder="Price (e.g., Rp 25.000)" value="" required>
+        <button type="button" class="btn-remove-variant" onclick="removeVariant(this)">
+            <i class="fas fa-minus"></i>
+        </button>
+    `;
+    variantsContainer.appendChild(variantDiv);
+}
+
+// Remove variant
+function removeVariant(button) {
+    const variantsContainer = button.parentElement.parentElement;
+    const variantItems = variantsContainer.querySelectorAll('.variant-item');
+
+    // Keep at least one variant
+    if (variantItems.length > 1) {
+        button.parentElement.remove();
+    } else {
+        alert('At least one variant is required.');
+    }
 }
 
 // Setup rating system

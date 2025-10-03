@@ -17,47 +17,500 @@
       {
         "category": "Pancong",
         "name": "Ori",
-        "price": "Rp 8.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 8.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Coklat",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Greentea",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Tiramisu",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Taro",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "White choco",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Strawberry",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Keju",
-        "price": "Rp 10.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
       },
       {
         "category": "Pancong",
         "name": "Capucino",
-        "price": "Rp 11.000"
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 11.000"
+          }
+        ]
+      },
+      {
+        "category": "Pancong cruncy",
+        "name": "Choco crunch",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Pancong cruncy",
+        "name": "Tiramisu Crunch",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Pancong cruncy",
+        "name": "Grentea Crunchy",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 13.000"
+          }
+        ]
+      },
+      {
+        "category": "Pancong cruncy",
+        "name": "Pancong Jumbo (Free 3 top + 3 ex top)",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Mix Rasa",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Keju",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 1.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 3.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Koko krunch",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Crumb black",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Crumb greantea",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Crumb red velvet",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Whipecream",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Extra Topping",
+        "name": "Marsmellow",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 3.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Air Mineral",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 5.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Mangga",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 11.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 13.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Alpukat",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Kurma",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 11.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 13.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Buah naga",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Coklat",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Ubi ungu",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Durian",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 14.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "melon",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Jus",
+        "name": "Strawberry",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 11.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 13.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "Salad Buah",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "Ketahuan (TASO)",
+        "variants": [
+          {
+            "variant": "Small",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Large",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "Basreng",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "Fruit sando",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "French fries",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack",
+        "name": "French fries dan Sausage",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Mango Thai",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 16.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Alpukat Thai",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Strawberry Thai",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Ubi ungu",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Choco",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Dragon Fruit",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Kurma",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Smoothies",
+        "name": "Melon",
+        "variants": [
+          {
+            "variant": "",
+            "price": "Rp 15.000"
+          }
+        ]
       }
     ],
     "id": 1
