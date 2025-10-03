@@ -6,6 +6,7 @@ let serviceCounter = 0;
 document.addEventListener('DOMContentLoaded', () => {
     loadRestaurants();
     setupRatingSystem();
+    setupMapsLinkExtraction();
 });
 
 // Load restaurants from localStorage
@@ -270,6 +271,39 @@ function exportData() {
     URL.revokeObjectURL(url);
 
     alert('JSON data has been copied to clipboard and downloaded as restaurants_data.json!');
+}
+
+// Setup Google Maps link extraction
+function setupMapsLinkExtraction() {
+    const mapsLinkInput = document.getElementById('restaurant-maps-link');
+    mapsLinkInput.addEventListener('input', (e) => {
+        const link = e.target.value.trim();
+        if (link) {
+            extractLatLngFromMapsLink(link)
+                .then(coords => {
+                    document.getElementById('restaurant-latitude').value = coords.lat;
+                    document.getElementById('restaurant-longitude').value = coords.lng;
+                })
+                .catch(err => {
+                    console.error('Error extracting coordinates:', err);
+                    alert('Could not extract coordinates from the link. Please enter manually.');
+                });
+        }
+    });
+}
+
+// Extract latitude and longitude from Google Maps link
+function extractLatLngFromMapsLink(link) {
+    return fetch(link)
+        .then(response => response.url)
+        .then(finalUrl => {
+            const match = finalUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+            if (match) {
+                return { lat: parseFloat(match[1]), lng: parseFloat(match[2]) };
+            } else {
+                throw new Error('Coordinates not found in URL');
+            }
+        });
 }
 
 // Close modal when clicking outside
