@@ -278,7 +278,7 @@ function showRestaurantModal(restaurant) {
                                             <span class="service-name">${service.name}</span>
                                             <span class="service-price">${service.price}</span>
                                         </div>
-                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/'/g, "\\'")}', '${service.price}')">
+                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${service.price}')">
                                             <i class="fas fa-cart-plus"></i> Tambah
                                         </button>
                                     </div>
