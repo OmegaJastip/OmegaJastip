@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Omega Jastip Restaurant Management</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="../index.html">
+                        <i class="fas fa-utensils"></i>
+                        Omega Jastip
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="resto.html">Restoran</a></li>
+                    <li><a href="#" class="active">Admin</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-cog"></i> Restaurant Management</h1>
+            <button class="btn-add" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> Add Restaurant
+            </button>
+        </div>
+
+        <table class="restaurants-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Rating</th>
+                    <th>Services</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="restaurants-tbody">
+                <!-- Restaurants will be loaded here -->
+            </tbody>
+        </table>
+
+        <div class="export-section">
+            <h3><i class="fas fa-download"></i> Export Data</h3>
+            <p>Click the button below to export the current restaurant data as JSON:</p>
+            <button class="btn-export" onclick="exportData()">
+                <i class="fas fa-download"></i> Export JSON
+            </button>
+            <textarea id="json-output" class="json-output" readonly></textarea>
+        </div>
+    </main>
+
+    <!-- Add/Edit Modal -->
+    <div id="restaurant-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add Restaurant</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+
+            <form id="restaurant-form">
+                <div class="form-group">
+                    <label for="restaurant-name">Name *</label>
+                    <input type="text" id="restaurant-name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-category">Category *</label>
+                    <select id="restaurant-category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Ayam">Ayam</option>
+                        <option value="Makanan Indonesia">Makanan Indonesia</option>
+                        <option value="Makanan Cepat Saji">Makanan Cepat Saji</option>
+                        <option value="Minuman">Minuman</option>
+                        <option value="Dessert">Dessert</option>
+                        <option value="Seafood">Seafood</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-description">Description *</label>
+                    <textarea id="restaurant-description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-image">Image URL</label>
+                    <input type="text" id="restaurant-image" name="image" placeholder="../images/restaurant.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-address">Address *</label>
+                    <input type="text" id="restaurant-address" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-phone">Phone *</label>
+                    <input type="text" id="restaurant-phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-hours">Operating Hours *</label>
+                    <input type="text" id="restaurant-hours" name="operating_hours" placeholder="10:00 - 22:00" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-price-range">Price Range *</label>
+                    <input type="text" id="restaurant-price-range" name="price_range" placeholder="Rp 15.000 - Rp 35.000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-rating">Rating *</label>
+                    <div class="rating-input">
+                        <div class="rating-stars" id="rating-stars">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                        <input type="hidden" id="restaurant-rating" name="rating" value="0">
+                        <span id="rating-text">0.0</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Availability</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="delivery-available" name="delivery_available" checked>
+                            Delivery Available
+                        </label>
+                        <label>
+                            <input type="checkbox" id="pickup-available" name="pickup_available" checked>
+                            Pickup Available
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-latitude">Latitude *</label>
+                    <input type="number" id="restaurant-latitude" name="latitude" step="0.000001" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="restaurant-longitude">Longitude *</label>
+                    <input type="number" id="restaurant-longitude" name="longitude" step="0.000001" required>
+                </div>
+
+                <div class="services-section">
+                    <h3>Services</h3>
+                    <div id="services-container">
+                        <!-- Services will be added here -->
+                    </div>
+                    <button type="button" class="btn-add-service" onclick="addService()">
+                        <i class="fas fa-plus"></i> Add Service
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Restaurant</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>

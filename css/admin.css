@@ -1,0 +1,763 @@
+/* Admin page styles */
+.admin-container {
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 0 20px 40px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #ee4d2d;
+}
+
+.admin-header h1 {
+    color: #222;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.btn-add {
+    background: #ee4d2d;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(238, 77, 45, 0.6);
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background: #d43d1a;
+    box-shadow: 0 6px 14px rgba(212, 61, 26, 0.8);
+}
+
+.restaurants-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-bottom: 30px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.restaurants-table th,
+.restaurants-table td {
+    padding: 14px 18px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: none;
+}
+
+.restaurants-table th {
+    background: #f8f9fa;
+    font-weight: 700;
+    color: #444;
+    font-size: 16px;
+}
+
+.restaurants-table tr {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease;
+}
+
+.restaurants-table tr:hover {
+    background: #f8f9fa;
+}
+
+.restaurants-table tr td:first-child {
+    font-weight: 700;
+    color: #ee4d2d;
+}
+
+.restaurant-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.services-preview {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-style: italic;
+    color: #666;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-save,
+.btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+    background: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #0056b3;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+.btn-save {
+    background: #28a745;
+    color: white;
+}
+
+.btn-save:hover {
+    background: #218838;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #545b62;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1100;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal-content {
+    background: white;
+    margin: 4% auto;
+    padding: 30px 40px;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 850px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #222;
+    font-size: 1.8rem;
+}
+
+.close {
+    font-size: 32px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #444;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #222;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #ee4d2d;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.services-section {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-color: #fafafa;
+}
+
+.services-section h3 {
+    margin-top: 0;
+    color: #222;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.service-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.service-item input {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+}
+
+.service-item input:focus {
+    border-color: #ee4d2d;
+    outline: none;
+}
+
+.btn-add-service {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.6);
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-service:hover {
+    background: #138496;
+    box-shadow: 0 6px 16px rgba(19, 132, 150, 0.8);
+}
+
+.btn-remove-service {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.6);
+    transition: background-color 0.3s ease;
+}
+
+.btn-remove-service:hover {
+    background: #c82333;
+    box-shadow: 0 5px 14px rgba(200, 35, 51, 0.8);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding-top: 25px;
+    border-top: 1px solid #eee;
+}
+
+.export-section {
+    background: #f8f9fa;
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-top: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.export-section h3 {
+    margin-top: 0;
+    color: #222;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.btn-export {
+    background: #28a745;
+    color: white;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.7);
+    transition: background-color 0.3s ease;
+}
+
+.btn-export:hover {
+    background: #218838;
+    box-shadow: 0 7px 20px rgba(33, 136, 56, 0.9);
+}
+
+.json-output {
+    width: 100%;
+    height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    resize: none;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 30px;
+    margin-top: 12px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #444;
+}
+
+.rating-input {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 28px;
+    color: #ddd;
+    transition: color 0.3s ease;
+}
+
+.star.active {
+    color: #ffc107;
+}
+
+/* Responsive Design for Admin Page */
+@media (max-width: 768px) {
+    .admin-container {
+        margin: 20px auto;
+        padding: 0 10px 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .btn-add {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .restaurants-table {
+        min-width: 1000px;
+        font-size: 14px;
+    }
+
+    .restaurants-table th,
+    .restaurants-table td {
+        padding: 10px 12px;
+    }
+
+    .restaurant-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .services-preview {
+        max-width: 150px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        padding: 20px 20px;
+        margin: 2% auto;
+        max-width: 90%;
+    }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .close {
+        font-size: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .services-section {
+        padding: 15px;
+    }
+
+    .services-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .service-item {
+        gap: 8px;
+    }
+
+    .service-item input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .btn-add-service {
+        padding: 8px 18px;
+        font-size: 14px;
+    }
+
+    .btn-remove-service {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .modal-footer {
+        gap: 12px;
+    }
+
+    .export-section {
+        padding: 20px 20px;
+        margin-top: 30px;
+    }
+
+    .export-section h3 {
+        font-size: 1.4rem;
+    }
+
+    .btn-export {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+
+    .json-output {
+        height: 250px;
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .checkbox-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .rating-input {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .rating-stars {
+        gap: 4px;
+    }
+
+    .star {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-container {
+        padding: 0 5px 20px;
+        margin: 10px auto;
+    }
+
+    .admin-header {
+        gap: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .btn-add {
+        padding: 10px 16px;
+        font-size: 14px;
+        align-self: stretch;
+        justify-content: center;
+    }
+
+    /* Table as cards on very small screens */
+    .restaurants-table, .restaurants-table thead, .restaurants-table tbody, .restaurants-table th, .restaurants-table td, .restaurants-table tr {
+        display: block;
+    }
+
+    .restaurants-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .restaurants-table tr {
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        padding: 15px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .restaurants-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding: 10px 10px 10px 50%;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .restaurants-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 6px;
+        width: 40%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        color: #444;
+        font-size: 12px;
+    }
+
+    .restaurants-table td:last-child {
+        border-bottom: none;
+    }
+
+    .restaurant-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .services-preview {
+        max-width: none;
+    }
+
+    .action-buttons {
+        gap: 8px;
+        justify-content: flex-end;
+        padding-left: 0;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .modal-content {
+        padding: 15px 15px;
+        margin: 1% auto;
+        max-width: 95%;
+    }
+
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .close {
+        font-size: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .services-section {
+        padding: 10px;
+    }
+
+    .services-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+
+    .service-item {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .service-item input {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .btn-add-service {
+        padding: 6px 14px;
+        font-size: 12px;
+    }
+
+    .btn-remove-service {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .modal-footer {
+        gap: 8px;
+        padding-top: 15px;
+    }
+
+    .export-section {
+        padding: 15px 15px;
+        margin-top: 20px;
+    }
+
+    .export-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .btn-export {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .json-output {
+        height: 200px;
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .checkbox-group {
+        gap: 10px;
+    }
+
+    .checkbox-group label {
+        font-size: 13px;
+        gap: 6px;
+    }
+
+    .rating-input {
+        gap: 8px;
+    }
+
+    .rating-stars {
+        gap: 3px;
+    }
+
+    .star {
+        font-size: 20px;
+    }
+}
