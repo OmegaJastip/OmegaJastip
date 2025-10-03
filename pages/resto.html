@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ee4d2d">
     <meta name="google-adsense-account" content="ca-pub-9683887369443910">
-    <meta name="description" content="Daftar restoran di Lubuk Linggau yang tersedia untuk layanan jastip - Omega Jastip Lubuklinggau">
-    <meta name="keywords" content="restoran lubuklinggau, jastip restoran, antar makanan lubuklinggau, daftar restoran lubuk linggau">
+    <meta name="description" content="Daftar restoran di Lubuk Linggau yang tersedia untuk layanan jastip antar makanan - Omega Jastip Lubuklinggau">
+    <meta name="keywords" content="restoran lubuklinggau, jastip makanan, antar makanan, pesan makanan lubuk linggau, delivery makanan">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://omegajastip.online/pages/resto.html">
-    <title>Jastip Restoran Lubuklinggau - Daftar Restoran untuk Antar Makanan</title>
+    <title>Jastip Restoran Lubuklinggau - Layanan Antar Makanan</title>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link rel="manifest" href="../manifest.json">
 
@@ -20,6 +20,7 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZKX5NKXFH"></script>
     <script>
@@ -82,20 +83,20 @@
     <section class="hero resto-hero">
         <div class="container hero-content">
             <h1>Jastip Restoran Lubuklinggau</h1>
-            <p>Kami menyediakan layanan jastip dari berbagai restoran terpercaya di Lubuk Linggau. Pilih restoran favorit Anda dan kami akan mengantarkan pesanan Anda dengan cepat dan aman.</p>
+            <p>Kami menyediakan layanan jastip dari berbagai restoran di Lubuk Linggau. Pesan makanan favorit Anda tanpa harus keluar rumah dengan layanan antar yang cepat dan terpercaya.</p>
             <div>
-                <a href="https://wa.me/62895700341213" class="btn"><i class="fab fa-whatsapp"></i> Pesan Jastip Restoran</a>
+                <a href="https://wa.me/62895700341213" class="btn"><i class="fab fa-whatsapp"></i> Pesan Makanan</a>
                 <a href="../index.html#calculator" class="btn btn-outline">Cek Tarif</a>
             </div>
         </div>
     </section>
 
     <!-- Restaurants Section -->
-    <section class="restaurants" id="restaurants">
+    <section class="stores" id="stores">
         <div class="container">
             <div class="section-title">
                 <h2>Restoran Tersedia untuk Jastip</h2>
-                <p>Pilih restoran favorit Anda di Lubuk Linggau untuk layanan antar makanan</p>
+                <p>Pilih restoran di Lubuk Linggau untuk layanan pesan antar makanan</p>
             </div>
 
             <div class="filter-container">
@@ -103,17 +104,18 @@
                     <input type="text" id="search-resto" placeholder="Cari restoran...">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="filter-dropdown">
-                    <button class="hamburger-btn" id="hamburger-btn">
-                        <i class="fas fa-bars"></i> Filter Kategori
-                    </button>
-                    <div class="dropdown-menu" id="dropdown-menu" style="display: none;">
-                        <!-- Checkboxes will be populated here by JS -->
-                    </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">Semua</button>
+                    <button class="filter-btn" data-category="Makanan Indonesia">Indonesia</button>
+                    <button class="filter-btn" data-category="Makanan Cepat Saji">Cepat Saji</button>
+                    <button class="filter-btn" data-category="Minuman">Minuman</button>
+                    <button class="filter-btn" data-category="Dessert">Dessert</button>
+                    <button class="filter-btn" data-category="Seafood">Seafood</button>
+                    <button class="filter-btn" data-category="Ayam">Ayam</button>
                 </div>
             </div>
 
-            <div class="restaurants-grid" id="restaurants-grid">
+            <div class="stores-grid" id="stores-grid">
                 <!-- Restaurant cards will be loaded here via JavaScript -->
             </div>
 
@@ -125,12 +127,72 @@
         </div>
     </section>
 
+    <!-- Services Section -->
+    <section class="store-services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Jastip Restoran</h2>
+                <p>Kami menyediakan berbagai layanan pesan antar makanan untuk memudahkan Anda</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Pesan Makanan</h3>
+                    <p>Pesan berbagai jenis makanan dari restoran favorit Anda di Lubuk Linggau</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h3>Minuman & Dessert</h3>
+                    <p>Pesan minuman segar, jus, kopi, dan berbagai dessert lezat</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <h3>Kue & Katering</h3>
+                    <p>Pesan kue ulang tahun, catering acara, dan makanan prasmanan</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Pesan di Luar Jam</h3>
+                    <p>Layanan pesan antar makanan tersedia 24 jam untuk kebutuhan mendadak</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Antar Cepat</h3>
+                    <p>Pengantaran makanan dalam waktu 30-60 menit ke lokasi Anda</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Makanan Aman</h3>
+                    <p>Memastikan makanan sampai dalam kondisi baik dan higienis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- How to Order Section -->
     <section class="how-to-order">
         <div class="container">
             <div class="section-title">
-                <h2>Cara Pesan Jastip Restoran</h2>
-                <p>Proses mudah untuk memesan makanan dari restoran favorit Anda</p>
+                <h2>Cara Pesan Makanan</h2>
+                <p>Proses mudah untuk memesan makanan favorit Anda</p>
             </div>
 
             <div class="steps">
@@ -142,19 +204,19 @@
 
                 <div class="step">
                     <div class="step-number">2</div>
+                    <h3>Pilih Menu</h3>
+                    <p>Tentukan menu makanan dan minuman yang ingin dipesan</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
                     <h3>Hubungi Kami</h3>
                     <p>Kirim pesan via WhatsApp dengan detail pesanan Anda</p>
                 </div>
 
                 <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Konfirmasi Pesanan</h3>
-                    <p>Kami akan mengkonfirmasi ketersediaan dan harga</p>
-                </div>
-
-                <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Pesanan Diantar</h3>
+                    <h3>Makanan Diantar</h3>
                     <p>Makanan akan diantar ke lokasi Anda dengan aman</p>
                 </div>
             </div>
@@ -164,8 +226,8 @@
     <!-- CTA Section -->
     <section class="cta" id="contact">
         <div class="container">
-            <h2>Siap Pesan Makanan Favorit Anda?</h2>
-            <p>Hubungi kami sekarang untuk pemesanan jastip restoran di Lubuk Linggau</p>
+            <h2>Siap Pesan Makanan?</h2>
+            <p>Hubungi kami sekarang untuk pemesanan jastip makanan di Lubuk Linggau</p>
             <a href="https://wa.me/62895700341213" class="btn cta-link" aria-label="Hubungi via WhatsApp"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</a>
             <p class="cta-phone">Atau telepon: <a href="tel:+62895700341213" style="color: #fff; text-decoration: underline;">0895-7003-41213</a></p>
         </div>
@@ -196,7 +258,20 @@
                         <li><a href="../index.html#services">Kirim Hadiah</a></li>
                     </ul>
                 </div>
-                
+
+                <div class="footer-column">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="../index.html">Beranda</a></li>
+                        <li><a href="services.html">Layanan</a></li>
+                        <li><a href="../index.html#calculator">Kalkulator Tarif</a></li>
+                        <li><a href="../index.html#how-it-works">Cara Kerja</a></li>
+                        <li><a href="../index.html#testimonials">Testimoni</a></li>
+                        <li><a href="privacy.html">Kebijakan Privasi</a></li>
+                        <li><a href="terms.html">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+
                 <div class="footer-column">
                     <h3>Kontak</h3>
                     <ul>
@@ -220,17 +295,17 @@
             <li><a href="../index.html#home" class="nav-item"><i class="fas fa-home"></i><span>Beranda</span></a></li>
             <li><a href="../index.html#services" class="nav-item"><i class="fas fa-concierge-bell"></i><span>Layanan</span></a></li>
             <li><a href="#" class="nav-item active"><i class="fas fa-utensils"></i><span>Restoran</span></a></li>
-            <li><a href="/pages/toko.html" class="nav-item"><i class="fas fa-store"></i><span>Toko</span></a></li>
+            <li><a href="toko.html" class="nav-item"><i class="fas fa-store"></i><span>Toko</span></a></li>
             <li><a href="blog.html" class="nav-item"><i class="fas fa-blog"></i><span>Blog</span></a></li>
             <li><a href="../index.html#calculator" class="nav-item"><i class="fas fa-calculator"></i><span>Tarif</span></a></li>
             <li><a href="#contact" class="nav-item"><i class="fab fa-whatsapp"></i><span>Kontak</span></a></li>
         </ul>
     </nav>
 
-    <script src="../js/notifications.js"></script>
-    <script src="../js/protection.js"></script>
-    <script src="../js/resto.js"></script>
-    <script src="../js/script.js"></script>
+    <script src="../js/notifications.js?v=1.0.1"></script>
+    <script src="../js/resto.js?v=1.0.3"></script>
+    <script src="../js/script.js?v=1.0.1"></script>
+    <script src="../js/protection.js?v=1.0.1"></script>
 
     <!-- PWA Install Popup -->
     <div id="pwa-install-popup" class="pwa-install-popup">
@@ -248,9 +323,9 @@
             </div>
         </div>
     </div>
-        <!-- Floating WhatsApp CTA -->
-    <a href="https://wa.me/62895700341213" class="floating-cta" aria-label="Hubungi via WhatsApp">
-        <i class="fab fa-whatsapp"></i>
+    <!-- Floating Shopping Cart CTA -->
+    <a href="checkout.html" class="floating-cta" aria-label="Keranjang Belanja">
+        <i class="fas fa-shopping-cart"></i>
     </a>
 </body>
 </html>

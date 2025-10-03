@@ -2660,14 +2660,14 @@ footer {
         }
 
 /* Restaurant Cards */
-.restaurants-grid {
+.stores-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
 }
 
-.restaurant-card {
+.store-card {
     background: white;
     border-radius: 15px;
     overflow: hidden;
@@ -2676,12 +2676,12 @@ footer {
     position: relative;
 }
 
-.restaurant-card:hover {
+.store-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.restaurant-image {
+.store-image {
     position: relative;
     width: 100%;
     height: 200px;
@@ -2692,7 +2692,7 @@ footer {
     justify-content: center;
 }
 
-.restaurant-image img {
+.store-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -2702,11 +2702,11 @@ footer {
     max-width: 100%;
 }
 
-.restaurant-card:hover .restaurant-image img {
+.store-card:hover .store-image img {
     transform: scale(1.05);
 }
 
-.restaurant-overlay {
+.store-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -2718,43 +2718,46 @@ footer {
     padding: 15px;
 }
 
-.services-badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+.services-preview {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.service-badge {
-    background: rgba(255, 255, 255, 0.9);
+.services-preview h4 {
     color: #333333;
-    padding: 4px 8px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.service-item {
+    background: white;
+    padding: 4px 10px;
     border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    color: #555555;
+    border: 1px solid #ddd;
 }
 
-.service-badge.delivery {
-    background: #4CAF50;
-    color: white;
-}
-
-.service-badge.pickup {
-    background: #2196F3;
-    color: white;
-}
-
-.restaurant-info {
+.store-info {
     padding: 25px;
 }
 
-.restaurant-header {
+.store-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 15px;
 }
 
-.restaurant-header h3 {
+.store-header h3 {
     font-size: 1.3rem;
     color: #333333;
     margin: 0;
@@ -2776,23 +2779,13 @@ footer {
     margin-left: 5px;
 }
 
-.restaurant-category {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-    color: #ee4d2d;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.restaurant-description {
+.store-description {
     color: #555555;
     margin-bottom: 20px;
     line-height: 1.6;
 }
 
-.restaurant-details {
+.store-details {
     margin-bottom: 20px;
 }
 
@@ -2815,41 +2808,13 @@ footer {
     color: #555555;
 }
 
-.menu-preview {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.menu-preview h4 {
-    color: #333333;
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
-
-.menu-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.menu-item {
-    background: white;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    color: #555555;
-    border: 1px solid #ddd;
-}
-
-.restaurant-actions {
+.store-actions {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
 }
 
-.restaurant-actions .btn {
+.store-actions .btn {
     flex: 1;
     min-width: 120px;
     justify-content: center;
@@ -3896,5 +3861,295 @@ footer {
     .share-buttons {
         flex-wrap: wrap;
         justify-content: center;
+    }
+}
+
+/* Checkout Page Styles */
+.checkout-hero {
+    background: linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 50%)), url(../images/hero-background.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding-top: 80px;
+    margin-bottom: 60px;
+}
+
+.checkout-hero .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.checkout-hero .hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+}
+
+.checkout {
+    background: var(--background);
+    padding: 60px 0;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cart-summary {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: var(--elevation-2);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cart-summary h2 {
+    color: var(--dark);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 15px;
+}
+
+.cart-items {
+    margin-bottom: 30px;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text);
+}
+
+.empty-cart i {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.empty-cart p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.cart-total {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 20px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.total-row.total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    border-top: 2px solid var(--primary);
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.checkout-form {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: var(--elevation-2);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.checkout-form h2 {
+    color: var(--dark);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 15px;
+}
+
+.checkout-form .form-group {
+    margin-bottom: 20px;
+}
+
+.checkout-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 1rem;
+}
+
+.checkout-form .form-group input,
+.checkout-form .form-group select,
+.checkout-form .form-group textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--surface);
+    font-family: inherit;
+}
+
+.checkout-form .form-group input:focus,
+.checkout-form .form-group select:focus,
+.checkout-form .form-group textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+    transform: scale(1.02);
+}
+
+.checkout-form .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background: var(--surface);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.payment-method:hover {
+    border-color: var(--primary);
+    background: rgba(238, 77, 45, 0.05);
+}
+
+.payment-method input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+}
+
+.payment-method span {
+    font-size: 1rem;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.checkout-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 18px 30px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--elevation-2);
+}
+
+.checkout-btn:hover {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-4);
+}
+
+.checkout-btn i {
+    font-size: 1.2rem;
+}
+
+/* Responsive Checkout Styles */
+@media (max-width: 768px) {
+    .checkout-hero {
+        height: 300px;
+        padding-top: 100px;
+    }
+
+    .checkout-hero .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .checkout-hero .hero-content p {
+        font-size: 1rem;
+    }
+
+    .checkout {
+        padding: 40px 0;
+    }
+
+    .checkout-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 15px;
+    }
+
+    .cart-summary,
+    .checkout-form {
+        padding: 25px;
+    }
+
+    .cart-summary h2,
+    .checkout-form h2 {
+        font-size: 1.3rem;
+    }
+
+    .checkout-btn {
+        padding: 16px 25px;
+        font-size: 1rem;
+    }
+
+    .payment-methods {
+        gap: 12px;
+    }
+
+    .payment-method {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-hero .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .cart-summary,
+    .checkout-form {
+        padding: 20px;
+    }
+
+    .checkout-btn {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+
+    .checkout-form .form-group input,
+    .checkout-form .form-group select,
+    .checkout-form .form-group textarea {
+        padding: 14px 16px;
+        font-size: 0.95rem;
     }
 }

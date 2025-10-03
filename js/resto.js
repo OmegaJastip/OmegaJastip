@@ -2,79 +2,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load restaurant data
     loadRestaurants();
+
+    // Setup search functionality
+    setupSearch();
+
+    // Setup filter functionality
+    setupFilters();
+
+    // Update cart count on page load
+    updateCartCount();
 });
-
-// Function to get unique categories from restaurant data
-function getUniqueCategories(restaurants) {
-    const categories = new Set();
-
-    // Add "all" category for "Semua" button
-    categories.add('all');
-
-    // Extract unique categories from restaurant data
-    restaurants.forEach(restaurant => {
-        if (restaurant.category) {
-            // Split categories by comma and add each one
-            const restaurantCategories = restaurant.category.split(',').map(cat => cat.trim());
-            restaurantCategories.forEach(cat => {
-                if (cat) { // Only add non-empty categories
-                    categories.add(cat);
-                }
-            });
-        }
-    });
-
-    return Array.from(categories);
-}
-
-// Function to create filter checkboxes dynamically
-function createFilterCheckboxes(categories) {
-    const dropdownMenu = document.getElementById('dropdown-menu');
-
-    // Clear existing checkboxes
-    dropdownMenu.innerHTML = '';
-
-    // Create checkboxes for each category
-    categories.forEach(category => {
-        const label = document.createElement('label');
-        label.className = 'filter-checkbox-label';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'filter-checkbox';
-        checkbox.dataset.category = category;
-        checkbox.value = category;
-
-        // Check "all" by default
-        if (category === 'all') {
-            checkbox.checked = true;
-        }
-
-        const span = document.createElement('span');
-        span.textContent = category === 'all' ? 'Semua' : category;
-
-        label.appendChild(checkbox);
-        label.appendChild(span);
-        dropdownMenu.appendChild(label);
-    });
-}
 
 async function loadRestaurants() {
     try {
         const response = await fetch('../data/resto.json');
         const restaurants = await response.json();
-
-        // Get unique categories and create filter checkboxes dynamically
-        const categories = getUniqueCategories(restaurants);
-        createFilterCheckboxes(categories);
-
-        // Setup filter functionality after buttons are created
-        setupFilters();
-
-        // Setup search functionality
-        setupSearch();
-
-        // Display restaurants
         displayRestaurants(restaurants);
     } catch (error) {
         console.error('Error loading restaurant data:', error);
@@ -83,7 +25,7 @@ async function loadRestaurants() {
 }
 
 function displayRestaurants(restaurants) {
-    const container = document.getElementById('restaurants-grid');
+    const container = document.getElementById('stores-grid');
 
     if (!restaurants || restaurants.length === 0) {
         container.innerHTML = '<div class="no-results">Tidak ada restoran yang tersedia saat ini.</div>';
@@ -94,30 +36,37 @@ function displayRestaurants(restaurants) {
     container.innerHTML = html;
 }
 
-function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
+function createRestaurantCard(restaurant) {
     const ratingStars = generateStars(restaurant.rating);
+    const services = restaurant.services && restaurant.services.length > 0
+        ? restaurant.services.map(service => `<span class="service-item">${service.name}</span>`).join('')
+        : '<span class="service-item">Menu tidak tersedia</span>';
 
     return `
-        <div class="restaurant-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}" style="cursor: pointer;" onclick="window.location.href='menu.html?id=${restaurant.id}'">
-            <div class="restaurant-image">
-                <img src="../${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/placeholder-resto.jpg'">
+        <div class="store-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}">
+            <div class="store-image">
+                <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/toko.png'">
+                <div class="store-overlay">
+                    <div class="category-badge">${restaurant.category}</div>
+                </div>
             </div>
-            <div class="restaurant-info">
-                <div class="restaurant-header">
+            <div class="store-info">
+                <div class="store-header">
                     <h3>${restaurant.name}</h3>
                     <div class="rating">
                         ${ratingStars}
                         <span class="rating-number">${restaurant.rating}</span>
                     </div>
                 </div>
-                <div class="restaurant-category">
-                    <i class="fas fa-tag"></i>
-                    <span>${restaurant.category}</span>
-                </div>
-                <div class="restaurant-details">
+                <p class="store-description">${restaurant.description}</p>
+                <div class="store-details">
                     <div class="detail-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <span>${restaurant.address}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <span>${restaurant.phone}</span>
                     </div>
                     <div class="detail-item">
                         <i class="fas fa-clock"></i>
@@ -127,6 +76,20 @@ function createRestaurantCard(restaurant, currentCategoryFilter = 'all') {
                         <i class="fas fa-money-bill-wave"></i>
                         <span>${restaurant.price_range}</span>
                     </div>
+                </div>
+                <div class="services-preview">
+                    <h4>Menu Populer:</h4>
+                    <div class="services-list">
+                        ${services}
+                    </div>
+                </div>
+                <div class="store-actions">
+                    <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan makanan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Pesan Makanan
+                    </a>
+                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id})">
+                        <i class="fas fa-info-circle"></i> Detail
+                    </button>
                 </div>
             </div>
         </div>
@@ -154,155 +117,37 @@ function generateStars(rating) {
 function setupSearch() {
     const searchInput = document.getElementById('search-resto');
 
-    // Add clear button functionality
-    const clearBtn = document.createElement('button');
-    clearBtn.innerHTML = '<i class="fas fa-times"></i>';
-    clearBtn.className = 'search-clear-btn';
-    clearBtn.style.display = 'none';
-    clearBtn.setAttribute('aria-label', 'Clear search');
-    searchInput.parentNode.style.position = 'relative';
-    searchInput.parentNode.appendChild(clearBtn);
-
-    // Add debouncing for better performance
-    let searchTimeout;
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
-
-        // Show/hide clear button
-        clearBtn.style.display = searchTerm ? 'block' : 'none';
-
-        // Clear previous timeout
-        clearTimeout(searchTimeout);
-
-        // Set new timeout for debounced search
-        searchTimeout = setTimeout(() => {
-            currentSearchTerm = searchTerm;
-            unifiedFilter();
-        }, 300); // Wait 300ms after user stops typing
+        filterRestaurants(searchTerm);
     });
-
-    // Clear search functionality
-    clearBtn.addEventListener('click', function() {
-        searchInput.value = '';
-        clearBtn.style.display = 'none';
-        currentSearchTerm = '';
-        unifiedFilter();
-        searchInput.focus();
-    });
-
-    // Handle Enter key to search immediately
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            clearTimeout(searchTimeout);
-            currentSearchTerm = this.value.toLowerCase();
-            unifiedFilter();
-        }
-    });
-}
-
-let currentSearchTerm = '';
-let currentSelectedCategories = ['all'];
-
-// Function to toggle dropdown menu
-function toggleDropdown() {
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-
-    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
-        dropdownMenu.style.display = 'block';
-        hamburgerBtn.classList.add('active');
-    } else {
-        dropdownMenu.style.display = 'none';
-        hamburgerBtn.classList.remove('active');
-    }
 }
 
 function setupFilters() {
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const checkboxes = document.querySelectorAll('.filter-checkbox');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
-    // Toggle dropdown on hamburger button click
-    hamburgerBtn.addEventListener('click', toggleDropdown);
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
 
-    // Handle checkbox changes
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const isAll = this.dataset.category === 'all';
-            const isChecked = this.checked;
-
-            if (isAll) {
-                if (isChecked) {
-                    // If "all" is checked, uncheck all others
-                    checkboxes.forEach(cb => {
-                        if (cb.dataset.category !== 'all') {
-                            cb.checked = false;
-                        }
-                    });
-                    currentSelectedCategories = ['all'];
-                } else {
-                    // If "all" is unchecked, do nothing (shouldn't happen normally)
-                    currentSelectedCategories = [];
-                }
-            } else {
-                if (isChecked) {
-                    // If a category is checked, uncheck "all" if it was checked
-                    const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
-                    if (allCheckbox && allCheckbox.checked) {
-                        allCheckbox.checked = false;
-                    }
-                }
-
-                // Update selected categories
-                const selectedCategories = Array.from(checkboxes)
-                    .filter(cb => cb.checked)
-                    .map(cb => cb.dataset.category);
-
-                if (selectedCategories.length === 0) {
-                    // If no categories selected, check "all"
-                    const allCheckbox = document.querySelector('.filter-checkbox[data-category="all"]');
-                    if (allCheckbox) {
-                        allCheckbox.checked = true;
-                        currentSelectedCategories = ['all'];
-                    }
-                } else {
-                    currentSelectedCategories = selectedCategories;
-                }
-            }
-
-            unifiedFilter();
+            const category = this.dataset.category;
+            filterByCategory(category);
         });
     });
 }
 
-function unifiedFilter() {
-    const cards = document.querySelectorAll('.restaurant-card');
+function filterRestaurants(searchTerm) {
+    const cards = document.querySelectorAll('.store-card');
     let visibleCount = 0;
 
     cards.forEach(card => {
         const name = card.dataset.name;
         const category = card.dataset.category;
 
-        // Split category by comma for search
-        const categoryList = category.split(',').map(cat => cat.trim().toLowerCase());
-
-        // First, check category filter
-        let passesCategory = false;
-        if (currentSelectedCategories.includes('all')) {
-            passesCategory = true;
-        } else {
-            const cardCategoryList = category.split(',').map(cat => cat.trim());
-            passesCategory = currentSelectedCategories.some(selectedCat => cardCategoryList.includes(selectedCat));
-        }
-
-        // Then, check search if category passes
-        let passesSearch = true;
-        if (currentSearchTerm && passesCategory) {
-            passesSearch = name.includes(currentSearchTerm) ||
-                           categoryList.some(cat => cat.includes(currentSearchTerm));
-        }
-
-        if (passesCategory && passesSearch) {
+        if (name.includes(searchTerm) || category.toLowerCase().includes(searchTerm)) {
             card.style.display = 'block';
             visibleCount++;
         } else {
@@ -311,29 +156,15 @@ function unifiedFilter() {
     });
 
     // Show/hide no results message
-    const container = document.getElementById('restaurants-grid');
+    const container = document.getElementById('stores-grid');
     let noResultsMsg = container.querySelector('.no-results');
 
     if (visibleCount === 0) {
         if (!noResultsMsg) {
             noResultsMsg = document.createElement('div');
             noResultsMsg.className = 'no-results';
-            let message = 'Tidak ada restoran yang tersedia saat ini.';
-            if (currentSearchTerm) {
-                message = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
-            } else if (currentSelectedCategories.length > 0 && !currentSelectedCategories.includes('all')) {
-                message = 'Tidak ada restoran dalam kategori yang dipilih.';
-            }
-            noResultsMsg.textContent = message;
+            noResultsMsg.textContent = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
             container.appendChild(noResultsMsg);
-        } else {
-            let message = 'Tidak ada restoran yang tersedia saat ini.';
-            if (currentSearchTerm) {
-                message = 'Tidak ada restoran yang sesuai dengan pencarian Anda.';
-            } else if (currentSelectedCategories.length > 0 && !currentSelectedCategories.includes('all')) {
-                message = 'Tidak ada restoran dalam kategori yang dipilih.';
-            }
-            noResultsMsg.textContent = message;
         }
     } else {
         if (noResultsMsg) {
@@ -342,16 +173,45 @@ function unifiedFilter() {
     }
 }
 
+function filterByCategory(category) {
+    const cards = document.querySelectorAll('.store-card');
+    let visibleCount = 0;
 
+    cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
 
-function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
+    // Show/hide no results message
+    const container = document.getElementById('stores-grid');
+    let noResultsMsg = container.querySelector('.no-results');
+
+    if (visibleCount === 0) {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.textContent = 'Tidak ada restoran dalam kategori ini.';
+            container.appendChild(noResultsMsg);
+        }
+    } else {
+        if (noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+}
+
+function showRestaurantDetails(restaurantId) {
     // Get restaurant data
     fetch('../data/resto.json')
         .then(response => response.json())
         .then(restaurants => {
             const restaurant = restaurants.find(r => r.id === restaurantId);
             if (restaurant) {
-                showRestaurantModal(restaurant, menuCategoryFilter);
+                showRestaurantModal(restaurant);
             } else {
                 alert('Data restoran tidak ditemukan!');
             }
@@ -362,65 +222,8 @@ function showRestaurantDetails(restaurantId, menuCategoryFilter = null) {
         });
 }
 
-
-function showRestaurantModal(restaurant, menuCategoryFilter = null) {
+function showRestaurantModal(restaurant) {
     const ratingStars = generateStars(restaurant.rating);
-
-    // Group menu items by category
-    const menuByCategory = {};
-    if (restaurant.menu && restaurant.menu.length > 0) {
-        restaurant.menu.forEach(item => {
-            if (!menuByCategory[item.category]) {
-                menuByCategory[item.category] = [];
-            }
-            menuByCategory[item.category].push(item);
-        });
-    }
-
-    // Get unique categories for category filter
-    const categories = Object.keys(menuByCategory);
-
-    // Generate HTML for category filter buttons
-    let categoryFilterHtml = '<div class="modal-category-filters">';
-    categoryFilterHtml += '<button class="category-filter-btn active" data-category="all">Semua</button>';
-    categories.forEach(cat => {
-        categoryFilterHtml += `<button class="category-filter-btn" data-category="${cat}">${cat}</button>`;
-    });
-    categoryFilterHtml += '</div>';
-
-    // Generate HTML for menu grouped by category
-    let menuHtml = '<div id="modal-menu-list">';
-    for (const category in menuByCategory) {
-        menuHtml += `<h4 class="menu-category" data-category="${category}">${category}</h4><div class="services-list">`;
-        menuByCategory[category].forEach(item => {
-            menuHtml += `
-                <div class="service-item-detail" data-name="${item.name.toLowerCase()}">
-                    <div class="service-header">
-                        <span class="service-name">${item.name}</span>
-                        <span class="service-price">${item.price}</span>
-                    </div>
-                    ${item.description ? `<p class="service-description">${item.description}</p>` : ''}
-            `;
-
-            // Add variants if they exist
-            if (item.variants && item.variants.length > 0) {
-                menuHtml += '<div class="service-variants">';
-                item.variants.forEach(variant => {
-                    menuHtml += `
-                        <div class="variant-item">
-                            <span class="variant-name">${variant.name}</span>
-                            <span class="variant-price">${variant.price}</span>
-                        </div>
-                    `;
-                });
-                menuHtml += '</div>';
-            }
-
-            menuHtml += '</div>';
-        });
-        menuHtml += '</div>';
-    }
-    menuHtml += '</div>';
 
     const modal = document.createElement('div');
     modal.className = 'detail-modal';
@@ -432,7 +235,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             </div>
             <div class="modal-body">
                 <div class="modal-image">
-                    <img src="../${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/placeholder-resto.jpg'">
+                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/toko.png'">
                 </div>
                 <div class="modal-info">
                     <div class="modal-rating">
@@ -442,6 +245,8 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                         </div>
                         <span class="category">${restaurant.category}</span>
                     </div>
+
+                    <p class="description">${restaurant.description}</p>
 
                     <div class="info-section">
                         <h3>Informasi Kontak</h3>
@@ -463,13 +268,23 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                         </div>
                     </div>
 
-                    <p class="description">${restaurant.description}</p>
-
                     <div class="info-section">
-                        <h3>Menu & Layanan (berdasarkan kategori menu)</h3>
-                        <input type="text" id="modal-menu-search" placeholder="Search menu..." />
-                        ${categoryFilterHtml}
-                        ${menuHtml}
+                        <h3>Menu & Harga</h3>
+                        <div class="services-list">
+                            ${restaurant.services && restaurant.services.length > 0
+                                ? restaurant.services.map(service => `
+                                    <div class="service-item-detail">
+                                        <div class="service-info">
+                                            <span class="service-name">${service.name}</span>
+                                            <span class="service-price">${service.price}</span>
+                                        </div>
+                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/'/g, "\\'")}', '${service.price}')">
+                                            <i class="fas fa-cart-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                `).join('')
+                                : '<div class="service-item-detail">Menu tidak tersedia</div>'}
+                        </div>
                     </div>
 
                     <div class="info-section">
@@ -487,8 +302,11 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                <a href="checkout.html" class="btn btn-secondary">
+                    <i class="fas fa-shopping-cart"></i> Lihat Keranjang
+                </a>
+                <a href="https://wa.me/62895700341213?text=Halo, saya mau pesan makanan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Pesan Makanan
                 </a>
                 <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
             </div>
@@ -518,32 +336,26 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .modal-content {
                 background: white;
-                border-radius: 16px;
-                max-width: 700px;
+                border-radius: 12px;
+                max-width: 600px;
                 max-height: 90vh;
-                width: 95%;
+                width: 90%;
                 overflow-y: auto;
                 animation: slideIn 0.3s ease;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-                border: 1px solid #e0e0e0;
             }
 
             .modal-header {
-                padding: 24px 20px;
-                border-bottom: 2px solid #f8f9fa;
+                padding: 20px;
+                border-bottom: 1px solid #eee;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                background: linear-gradient(135deg, #ee4d2d 0%, #f57c5a 100%);
-                color: white;
-                border-radius: 16px 16px 0 0;
             }
 
             .modal-header h2 {
                 margin: 0;
-                color: white;
-                font-size: 1.6rem;
-                font-weight: 600;
+                color: #333;
+                font-size: 1.5rem;
             }
 
             .close-btn {
@@ -565,11 +377,10 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             }
 
             .modal-body {
-                padding: 24px;
+                padding: 20px;
                 display: flex;
                 flex-direction: column;
-                gap: 24px;
-                background: #fafafa;
+                gap: 20px;
             }
 
             .modal-image {
@@ -577,19 +388,12 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                 height: 200px;
                 overflow: hidden;
                 border-radius: 8px;
-                background: #f0f0f0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
             }
 
             .modal-image img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                object-position: center;
-                display: block;
-                max-width: 100%;
             }
 
             .modal-info {
@@ -639,58 +443,73 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
 
             .info-item i {
                 width: 16px;
-                color: #EE4D2D;
+                color: #007bff;
             }
 
             .service-item-detail {
                 display: flex;
-                flex-direction: column;
-                gap: 8px;
-                padding: 12px 0;
-                border-bottom: 1px solid #f0f0f0;
-                transition: background-color 0.2s ease;
-            }
-
-            .service-item-detail:hover {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                padding: 12px;
-                margin: 0 -12px;
-            }
-
-            .service-header {
-                display: flex;
                 justify-content: space-between;
                 align-items: center;
-                width: 100%;
+                padding: 8px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .service-info {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
             }
 
             .service-name {
-                font-weight: 600;
-                font-size: 1rem;
-                color: #333;
+                font-weight: 500;
             }
 
             .service-price {
-                color: #EE4D2D;
-                font-weight: 700;
-                font-size: 1.1rem;
-                background: #fff5f5;
-                padding: 4px 8px;
-                border-radius: 6px;
-                border: 1px solid #ffeaea;
+                color: #007bff;
+                font-weight: 600;
             }
 
-            .service-description {
-                margin: 0;
-                font-size: 0.9rem;
-                color: #666;
-                line-height: 1.4;
-                font-style: normal;
-                background: #f8f9fa;
-                padding: 8px 12px;
+            .btn-add-cart {
+                background: #28a745;
+                color: white;
+                border: none;
+                padding: 6px 12px;
                 border-radius: 6px;
-                border-left: 3px solid #EE4D2D;
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                transition: background-color 0.2s;
+            }
+
+            .btn-add-cart:hover {
+                background: #218838;
+            }
+
+            .btn-add-cart i {
+                font-size: 0.8rem;
+            }
+
+            .btn-secondary {
+                background: #6c757d;
+                color: white;
+                text-decoration: none;
+                padding: 10px 16px;
+                border-radius: 6px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition: background-color 0.2s;
+            }
+
+            .btn-secondary:hover {
+                background: #5a6268;
+                color: white;
+                text-decoration: none;
             }
 
             .services-badges {
@@ -712,7 +531,7 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
             }
 
             .service-badge.pickup {
-                background: #EE4D2D;
+                background: #007bff;
                 color: white;
             }
 
@@ -750,207 +569,9 @@ function showRestaurantModal(restaurant, menuCategoryFilter = null) {
                     flex-direction: column;
                 }
             }
-
-            .modal-category-filters {
-                margin-bottom: 10px;
-            }
-
-            .category-filter-btn {
-                background: #f0f0f0;
-                border: none;
-                border-radius: 20px;
-                padding: 6px 12px;
-                margin-right: 8px;
-                cursor: pointer;
-                font-size: 0.9rem;
-                transition: background-color 0.3s ease;
-            }
-
-            .category-filter-btn.active,
-            .category-filter-btn:hover {
-                background: #EE4D2D;
-                color: white;
-            }
-
-            #modal-menu-search {
-                width: 100%;
-                padding: 8px 12px;
-                margin-bottom: 10px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                font-size: 1rem;
-            }
-
-            .service-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-            }
-
-            .service-variants {
-                margin-left: 20px;
-                margin-top: 5px;
-                border-left: 2px solid #f0f0f0;
-                padding-left: 15px;
-            }
-
-            .variant-item {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 4px 0;
-                font-size: 0.9rem;
-            }
-
-            .variant-name {
-                color: #666;
-                font-style: italic;
-            }
-
-            .variant-price {
-                color: #EE4D2D;
-                font-weight: 500;
-                font-size: 0.85rem;
-            }
-
-            .service-description {
-                margin: 5px 0 0 0;
-                font-size: 0.9rem;
-                color: #666;
-                font-style: italic;
-            }
-
-            .services-list {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-
-            #modal-menu-list {
-                max-height: 400px;
-                overflow-y: auto;
-                padding-right: 10px;
-            }
-
-            #modal-menu-list::-webkit-scrollbar {
-                width: 6px;
-            }
-
-            #modal-menu-list::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 3px;
-            }
-
-            #modal-menu-list::-webkit-scrollbar-thumb {
-                background: #c1c1c1;
-                border-radius: 3px;
-            }
-
-            #modal-menu-list::-webkit-scrollbar-thumb:hover {
-                background: #a8a8a8;
-            }
-
-            .menu-category {
-                margin: 20px 0 10px 0;
-                color: #333;
-                font-size: 1.2rem;
-                font-weight: 600;
-                border-bottom: 2px solid #ee4d2d;
-                padding-bottom: 5px;
-            }
-
-            .info-section {
-                border-top: 1px solid #eee;
-                padding-top: 15px;
-                margin-bottom: 20px;
-            }
-
-            .description {
-                font-size: 1rem;
-                line-height: 1.6;
-                color: #555;
-                margin-bottom: 20px;
-                background: #f9f9f9;
-                padding: 15px;
-                border-radius: 8px;
-                border-left: 4px solid #ee4d2d;
-            }
-
-            @media (min-width: 769px) {
-                .modal-body {
-                    flex-direction: row;
-                    gap: 30px;
-                }
-
-                .modal-image {
-                    flex: 0 0 300px;
-                    height: auto;
-                    max-height: 400px;
-                }
-
-                .modal-info {
-                    flex: 1;
-                }
-            }
         `;
         document.head.appendChild(styles);
     }
-
-    // Add event listeners for search and category filter
-    const searchInput = document.getElementById('modal-menu-search');
-    const categoryButtons = modal.querySelectorAll('.category-filter-btn');
-    const menuList = modal.querySelector('#modal-menu-list');
-
-    function filterMenu() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const activeCategoryBtn = modal.querySelector('.category-filter-btn.active');
-        const activeCategory = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'all';
-
-        const menuCategories = menuList.querySelectorAll('.menu-category');
-        menuCategories.forEach(categoryEl => {
-            const category = categoryEl.dataset.category;
-            const serviceItems = categoryEl.nextElementSibling.querySelectorAll('.service-item-detail');
-
-            // Show/hide category based on active category filter
-            if (activeCategory !== 'all' && category !== activeCategory) {
-                categoryEl.style.display = 'none';
-                categoryEl.nextElementSibling.style.display = 'none';
-                return;
-            } else {
-                categoryEl.style.display = '';
-                categoryEl.nextElementSibling.style.display = '';
-            }
-
-            // Filter service items by search term
-            serviceItems.forEach(item => {
-                const name = item.dataset.name;
-                if (name.includes(searchTerm)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // If all items are hidden, hide the category as well
-            const visibleItems = Array.from(serviceItems).some(item => item.style.display !== 'none');
-            if (!visibleItems) {
-                categoryEl.style.display = 'none';
-                categoryEl.nextElementSibling.style.display = 'none';
-            }
-        });
-    }
-
-    searchInput.addEventListener('input', filterMenu);
-
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            filterMenu();
-        });
-    });
 }
 
 function closeModal() {
@@ -964,6 +585,143 @@ function closeModal() {
 }
 
 function displayErrorMessage() {
-    const container = document.getElementById('restaurants-grid');
+    const container = document.getElementById('stores-grid');
     container.innerHTML = '<div class="error-message">Maaf, terjadi kesalahan saat memuat data restoran. Silakan coba lagi nanti.</div>';
+}
+
+// Cart management functions
+function getCart() {
+    const cart = localStorage.getItem('shoppingCart');
+    return cart ? JSON.parse(cart) : [];
+}
+
+function parsePrice(priceStr) {
+    // Extract number from "Rp 15.000" -> 15000
+    const match = priceStr.match(/Rp\s*([\d.,]+)/);
+    return match ? parseInt(match[1].replace(/\./g, '')) : 0;
+}
+
+function saveCart(cart) {
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+}
+
+function addToCart(itemName, priceStr, variant = null) {
+    const cart = getCart();
+    const price = parsePrice(priceStr);
+
+    // Check if item already exists
+    const existingItem = cart.find(item =>
+        item.name === itemName &&
+        item.variant === variant
+    );
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            name: itemName,
+            price: price,
+            quantity: 1,
+            variant: variant
+        });
+    }
+
+    saveCart(cart);
+    updateCartCount();
+
+    // Show success message
+    showToast('Item berhasil ditambahkan ke keranjang!');
+}
+
+function updateCartCount() {
+    const cart = getCart();
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const floatingCta = document.querySelector('.floating-cta');
+    if (!floatingCta) return;
+
+    let countBadge = floatingCta.querySelector('.cart-count-badge');
+    if (!countBadge) {
+        countBadge = document.createElement('span');
+        countBadge.className = 'cart-count-badge';
+        countBadge.style.position = 'absolute';
+        countBadge.style.top = '5px';
+        countBadge.style.right = '5px';
+        countBadge.style.background = '#ee4d2d';
+        countBadge.style.color = 'white';
+        countBadge.style.borderRadius = '50%';
+        countBadge.style.padding = '2px 6px';
+        countBadge.style.fontSize = '0.75rem';
+        countBadge.style.fontWeight = '700';
+        countBadge.style.minWidth = '20px';
+        countBadge.style.textAlign = 'center';
+        floatingCta.style.position = 'fixed';
+        floatingCta.appendChild(countBadge);
+    }
+    if (count > 0) {
+        countBadge.textContent = count;
+        countBadge.style.display = 'inline-block';
+    } else {
+        countBadge.style.display = 'none';
+    }
+}
+
+function showToast(message) {
+    // Create toast notification
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    toast.style.position = 'fixed';
+    toast.style.top = '20px';
+    toast.style.right = '20px';
+    toast.style.background = '#28a745';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 20px';
+    toast.style.borderRadius = '6px';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    toast.style.zIndex = '9999';
+    toast.style.fontSize = '0.9rem';
+    toast.style.fontWeight = '500';
+    toast.style.animation = 'slideInRight 0.3s ease';
+
+    document.body.appendChild(toast);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, 3000);
+
+    // Add toast styles if not already added
+    if (!document.getElementById('toast-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'toast-styles';
+        styles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styles);
+    }
 }
