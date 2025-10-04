@@ -46,29 +46,7 @@
       gtag('config', 'G-QZKX5NKXFH');
     </script>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
-    <script>
-      // Firebase config - REPLACE WITH YOUR VALUES
-      const firebaseConfig = {
-        apiKey: "AIzaSyDgk_2BLj-p2bbCNleQZFbI1dzsMH5omzo",
-        authDomain: "botwa-99954.firebaseapp.com",
-        databaseURL: "https://botwa-99954-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "botwa-99954",
-        storageBucket: "botwa-99954.firebasestorage.app",
-        messagingSenderId: "1003488855126",
-        appId: "1:1003488855126:web:31a4b0938244e11d3c27f7",
-        measurementId: "G-4LFXCXK7YG"
-      };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const messaging = firebase.messaging();
-
-      // Make messaging available globally
-      window.firebaseMessaging = messaging;
-    </script>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -167,7 +145,6 @@
             <div>
                 <a href="https://wa.me/62895700341213" class="btn"><i class="fab fa-whatsapp"></i> Pesan via WhatsApp</a>
                 <a href="/pages/calculator.html" class="btn btn-outline">Cek Tarif</a>
-                <button id="test-notification-btn" class="btn btn-secondary" style="background: #10b981; border: none; color: white;"><i class="fas fa-bell"></i> Test Notifikasi</button>
             </div>
         </div>
     </section>
@@ -388,27 +365,9 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/script.js?v=1.0.1"></script>
-    <script src="js/notifications.js?v=1.0.1"></script>
     <script src="js/protection.js?v=1.0.1"></script>
 
-    <!-- Initialize notifications -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        if (window.NotificationManager) {
-          window.NotificationManager.init();
-        }
 
-        // Test notification button
-        const testBtn = document.getElementById('test-notification-btn');
-        if (testBtn) {
-          testBtn.addEventListener('click', function() {
-            if (window.NotificationManager) {
-              window.NotificationManager.testNotification();
-            }
-          });
-        }
-      });
-    </script>
 
     <!-- PWA Install Popup -->
     <div id="pwa-install-popup" class="pwa-install-popup">

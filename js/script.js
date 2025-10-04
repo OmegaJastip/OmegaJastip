@@ -783,11 +783,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // PWA Install Prompt
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize notifications
-    if (window.NotificationManager) {
-        window.NotificationManager.init();
-    }
-
     // Register service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js', { scope: '/' })
