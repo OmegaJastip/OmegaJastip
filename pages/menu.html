@@ -16,7 +16,7 @@
         </div>
         <div class="store-info">
             <div class="store-image">
-                <img id="restaurant-image" src="" alt="Restaurant Image" onerror="this.src='../images/toko.png'">
+                <img id="restaurant-image" src="" alt="Restaurant Image" onerror="this.src='../images/logo.png'">
             </div>
             <div class="store-header">
                 <h3 id="restaurant-name-display">Restaurant Name</h3>
@@ -276,10 +276,12 @@
                     servicesByCategory[category].forEach(service => {
                         if (service.variants && service.variants.length > 0) {
                             service.variants.forEach(variant => {
-                                const displayName = variant.variant ? `${service.name} (${variant.variant})` : service.name;
+                                const displayName = service.name;
+                                const variantName = variant.variant ? variant.variant : '';
                                 menuHtml += `
                                     <div class="service-item-detail">
                                         <span class="service-name">${displayName}</span>
+                                        <span class="service-variant">${variantName}</span>
                                         <span class="service-price">${variant.price}</span>
                                         <button class="btn-add-cart" onclick="addToCart('${displayName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${variant.price}', '${variant.variant || ''}', '${restaurant.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')">
                                             <i class="fas fa-cart-plus"></i> Tambah

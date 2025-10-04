@@ -208,7 +208,8 @@ function showRestaurantModal(restaurant) {
             </div>
             <div class="modal-body">
                 <div class="modal-image">
-                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/toko.png'">
+                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/logo.png'">
+                    <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/logo.png'">
                 </div>
                 <div class="modal-info">
                     <div class="modal-rating">
