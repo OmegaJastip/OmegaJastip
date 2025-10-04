@@ -969,6 +969,49 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Cart management functions
+function getCart() {
+    const cart = localStorage.getItem('shoppingCart');
+    return cart ? JSON.parse(cart) : [];
+}
+
+function updateCartCount() {
+    const cart = getCart();
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const floatingCta = document.querySelector('.floating-cta');
+    if (!floatingCta) return;
+
+    let countBadge = floatingCta.querySelector('.cart-count-badge');
+    if (!countBadge) {
+        countBadge = document.createElement('span');
+        countBadge.className = 'cart-count-badge';
+        countBadge.style.position = 'absolute';
+        countBadge.style.top = '5px';
+        countBadge.style.right = '5px';
+        countBadge.style.background = '#ee4d2d';
+        countBadge.style.color = 'white';
+        countBadge.style.borderRadius = '50%';
+        countBadge.style.padding = '2px 6px';
+        countBadge.style.fontSize = '0.75rem';
+        countBadge.style.fontWeight = '700';
+        countBadge.style.minWidth = '20px';
+        countBadge.style.textAlign = 'center';
+        floatingCta.style.position = 'fixed';
+        floatingCta.appendChild(countBadge);
+    }
+    if (count > 0) {
+        countBadge.textContent = count;
+        countBadge.style.display = 'inline-block';
+    } else {
+        countBadge.style.display = 'none';
+    }
+}
+
+// Update cart count on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+});
+
 // Fix for back/forward cache to always update content
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
