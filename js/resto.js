@@ -39,85 +39,15 @@ function displayRestaurants(restaurants) {
 function createRestaurantCard(restaurant) {
     const ratingStars = generateStars(restaurant.rating);
 
-    // Group services by category
-    let servicesPreview = '';
-    if (restaurant.services && restaurant.services.length > 0) {
-        const servicesByCategory = {};
-
-        // Group services by category
-        restaurant.services.forEach(service => {
-            const category = service.category || 'Lainnya';
-            if (!servicesByCategory[category]) {
-                servicesByCategory[category] = [];
-            }
-            servicesByCategory[category].push(service.name);
-        });
-
-        // Create HTML for each category
-        Object.keys(servicesByCategory).forEach(category => {
-            const services = servicesByCategory[category].slice(0, 5); // Limit to 5 items per category
-            servicesPreview += `
-                <div class="category-group">
-                    <h5>${category}:</h5>
-                    <div class="category-services">
-                        ${services.map(service => `<span class="service-item">${service}</span>`).join('')}
-                    </div>
-                </div>
-            `;
-        });
-    } else {
-        servicesPreview = '<span class="service-item">Menu tidak tersedia</span>';
-    }
-
     return `
-        <div class="store-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}">
-            <div class="store-image">
-                <img src="${restaurant.image}" alt="${restaurant.name}" onerror="this.src='../images/toko.png'">
-                <div class="store-overlay">
-                    <div class="category-badge">${restaurant.category}</div>
+        <div class="store-card clickable-card" data-category="${restaurant.category}" data-name="${restaurant.name.toLowerCase()}" onclick="window.location.href='menu.html?id=${restaurant.id}'" style="background-image: url('${restaurant.image}'); background-size: cover; background-position: center; position: relative; height: 250px; border-radius: 12px; overflow: hidden; cursor: pointer;">
+            <div class="store-overlay-transparent" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)); padding: 15px; color: white;">
+                <h3 style="margin: 0 0 5px 0; font-size: 1.2rem; font-weight: 600;">${restaurant.name}</h3>
+                <div class="rating" style="margin-bottom: 5px;">
+                    ${ratingStars}
+                    <span class="rating-number" style="color: #ffd700; margin-left: 5px;">${restaurant.rating}</span>
                 </div>
-            </div>
-            <div class="store-info">
-                <div class="store-header">
-                    <h3>${restaurant.name}</h3>
-                    <div class="rating">
-                        ${ratingStars}
-                        <span class="rating-number">${restaurant.rating}</span>
-                    </div>
-                </div>
-                <p class="store-description">${restaurant.description}</p>
-                <div class="store-details">
-                    <div class="detail-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${restaurant.address}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-phone"></i>
-                        <span>${restaurant.phone}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-clock"></i>
-                        <span>${restaurant.operating_hours}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>${restaurant.price_range}</span>
-                    </div>
-                </div>
-                <div class="services-preview">
-                    <h4>Menu Populer:</h4>
-                    <div class="services-list">
-                        ${servicesPreview}
-                    </div>
-                </div>
-                <div class="store-actions">
-                    ${restaurant.name !== "MANGO QUEEN linggau" ? `<a href="https://wa.me/62895700341213?text=Halo, saya mau pesan makanan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Pesan Makanan
-                    </a>` : ''}
-                    <button class="btn btn-outline" onclick="showRestaurantDetails(${restaurant.id})">
-                        <i class="fas fa-info-circle"></i> Detail
-                    </button>
-                </div>
+                <div class="category-badge" style="background: rgba(238, 77, 45, 0.9); color: white; padding: 3px 8px; border-radius: 10px; display: inline-block; font-size: 0.8rem; font-weight: 500;">${restaurant.category}</div>
             </div>
         </div>
     `;
@@ -144,9 +74,25 @@ function generateStars(rating) {
 function setupSearch() {
     const searchInput = document.getElementById('search-resto');
 
+    // Add clear button dynamically
+    let clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'search-clear-btn';
+    clearBtn.innerHTML = '&times;';
+    clearBtn.style.display = 'none';
+    searchInput.parentNode.appendChild(clearBtn);
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        filterRestaurants('');
+        searchInput.focus();
+    });
+
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         filterRestaurants(searchTerm);
+        clearBtn.style.display = this.value ? 'block' : 'none';
     });
 }
 
@@ -373,7 +319,7 @@ function showRestaurantModal(restaurant) {
                 <a href="checkout.html" class="btn btn-secondary">
                     <i class="fas fa-shopping-cart"></i> Lihat Keranjang
                 </a>
-                ${restaurant.name !== "MANGO QUEEN linggau" ? `<a href="https://wa.me/62895700341213?text=Halo, saya mau pesan makanan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
+                ${restaurant.name !== "Mango Queen Lubuklinggau" ? `<a href="https://wa.me/62895700341213?text=Halo, saya mau pesan makanan dari ${encodeURIComponent(restaurant.name)}" class="btn btn-primary" target="_blank">
                     <i class="fab fa-whatsapp"></i> Pesan Makanan
                 </a>` : ''}
                 <button class="btn btn-outline" onclick="closeModal()">Tutup</button>

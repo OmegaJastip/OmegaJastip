@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Menu Restoran</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-header">
+            <h1 id="restaurant-name">Menu Restoran</h1>
+            <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i> Kembali</button>
+        </div>
+        <div class="store-info">
+            <div class="store-image">
+                <img id="restaurant-image" src="" alt="Restaurant Image" onerror="this.src='../images/toko.png'">
+            </div>
+            <div class="store-header">
+                <h3 id="restaurant-name-display">Restaurant Name</h3>
+                <div class="rating">
+                    <span class="rating-stars"></span>
+                    <span class="rating-number"></span>
+                </div>
+            </div>
+            <div class="store-description" id="restaurant-description-display">Description</div>
+            <div class="store-details">
+                <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="restaurant-address">Address</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-phone"></i>
+                    <span id="restaurant-phone">Phone</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="restaurant-hours">Operating Hours</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span id="restaurant-price-range">Price Range</span>
+                </div>
+            </div>
+            <div class="services-badges">
+                <!-- Delivery/Pickup badges will be added here -->
+            </div>
+        </div>
+        <div id="menu-content">
+            <!-- Menu items will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function parsePrice(priceStr) {
+            const match = priceStr.match(/Rp\s*([\d.,]+)/);
+            return match ? parseInt(match[1].replace(/\./g, '')) : 0;
+        }
+
+        function getCart() {
+            const cart = localStorage.getItem('shoppingCart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+        }
+
+        function addToCart(itemName, priceStr, variant = null, restaurantName = null) {
+            const cart = getCart();
+            const price = parsePrice(priceStr);
+
+            const existingItem = cart.find(item =>
+                item.name === itemName &&
+                item.variant === variant &&
+                item.restaurantName === restaurantName
+            );
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: itemName,
+                    price: price,
+                    quantity: 1,
+                    variant: variant,
+                    restaurantName: restaurantName
+                });
+            }
+
+            saveCart(cart);
+            updateCartCount();
+            showToast('Item berhasil ditambahkan ke keranjang!');
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            const floatingCta = document.querySelector('.floating-cta');
+            if (!floatingCta) return;
+
+            let countBadge = floatingCta.querySelector('.cart-count-badge');
+            if (!countBadge) {
+                countBadge = document.createElement('span');
+                countBadge.className = 'cart-count-badge';
+                countBadge.style.position = 'absolute';
+                countBadge.style.top = '5px';
+                countBadge.style.right = '5px';
+                countBadge.style.background = '#ee4d2d';
+                countBadge.style.color = 'white';
+                countBadge.style.borderRadius = '50%';
+                countBadge.style.padding = '2px 6px';
+                countBadge.style.fontSize = '0.75rem';
+                countBadge.style.fontWeight = '700';
+                countBadge.style.minWidth = '20px';
+                countBadge.style.textAlign = 'center';
+                floatingCta.style.position = 'relative';
+                floatingCta.appendChild(countBadge);
+            }
+            if (count > 0) {
+                countBadge.textContent = count;
+                countBadge.style.display = 'inline-block';
+            } else {
+                countBadge.style.display = 'none';
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.position = 'fixed';
+            toast.style.top = '20px';
+            toast.style.right = '20px';
+            toast.style.background = '#28a745';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 20px';
+            toast.style.borderRadius = '6px';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            toast.style.zIndex = '9999';
+            toast.style.fontSize = '0.9rem';
+            toast.style.fontWeight = '500';
+            toast.style.animation = 'slideInRight 0.3s ease';
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+
+            if (!document.getElementById('toast-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'toast-styles';
+                styles.textContent = `
+                    @keyframes slideInRight {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+
+                    @keyframes slideOutRight {
+                        from {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                        to {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(styles);
+            }
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            return stars;
+        }
+
+        async function loadMenu() {
+            const restaurantId = parseInt(getQueryParam('id'));
+            if (!restaurantId) {
+                document.getElementById('menu-content').innerHTML = '<p class="no-menu">ID restoran tidak valid.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('../data/resto.json');
+                const restaurants = await response.json();
+                const restaurant = restaurants.find(r => r.id === restaurantId);
+
+                if (!restaurant) {
+                    document.getElementById('menu-content').innerHTML = '<p class="no-menu">Restoran tidak ditemukan.</p>';
+                    return;
+                }
+
+                // Set header
+                document.getElementById('restaurant-name').textContent = restaurant.name;
+
+                // Set store info
+                document.getElementById('restaurant-image').src = restaurant.image;
+                document.getElementById('restaurant-name-display').textContent = restaurant.name;
+                document.querySelector('.rating-stars').innerHTML = generateStars(restaurant.rating);
+                document.querySelector('.rating-number').textContent = restaurant.rating;
+                document.getElementById('restaurant-description-display').textContent = restaurant.description;
+                document.getElementById('restaurant-address').textContent = restaurant.address;
+                document.getElementById('restaurant-phone').textContent = restaurant.phone;
+                document.getElementById('restaurant-hours').textContent = restaurant.operating_hours;
+                document.getElementById('restaurant-price-range').textContent = restaurant.price_range;
+
+                // Set services badges
+                let badgesHtml = '';
+                if (restaurant.delivery_available) {
+                    badgesHtml += '<span class="service-badge delivery">Delivery</span>';
+                }
+                if (restaurant.pickup_available) {
+                    badgesHtml += '<span class="service-badge pickup">Pickup</span>';
+                }
+                if (!restaurant.delivery_available && !restaurant.pickup_available) {
+                    badgesHtml = '<span class="service-badge">Tidak ada layanan</span>';
+                }
+                document.querySelector('.services-badges').innerHTML = badgesHtml;
+
+                if (!restaurant.services || restaurant.services.length === 0) {
+                    document.getElementById('menu-content').innerHTML = '<p class="no-menu">Menu tidak tersedia.</p>';
+                    return;
+                }
+
+                const servicesByCategory = {};
+                restaurant.services.forEach(service => {
+                    const category = service.category || 'Lainnya';
+                    if (!servicesByCategory[category]) {
+                        servicesByCategory[category] = [];
+                    }
+                    servicesByCategory[category].push(service);
+                });
+
+                let menuHtml = '';
+                Object.keys(servicesByCategory).forEach(category => {
+                    menuHtml += `<div class="category-group"><h2>${category}</h2>`;
+                    servicesByCategory[category].forEach(service => {
+                        if (service.variants && service.variants.length > 0) {
+                            service.variants.forEach(variant => {
+                                const displayName = variant.variant ? `${service.name} (${variant.variant})` : service.name;
+                                menuHtml += `
+                                    <div class="service-item-detail">
+                                        <span class="service-name">${displayName}</span>
+                                        <span class="service-price">${variant.price}</span>
+                                        <button class="btn-add-cart" onclick="addToCart('${displayName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${variant.price}', '${variant.variant || ''}', '${restaurant.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')">
+                                            <i class="fas fa-cart-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            menuHtml += `
+                                <div class="service-item-detail">
+                                    <span class="service-name">${service.name}</span>
+                                    <span class="service-price">Harga tidak tersedia</span>
+                                    <button class="btn-add-cart" disabled>
+                                        <i class="fas fa-cart-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            `;
+                        }
+                    });
+                    menuHtml += `</div>`;
+                });
+
+                document.getElementById('menu-content').innerHTML = menuHtml;
+
+            } catch (error) {
+                document.getElementById('menu-content').innerHTML = '<p class="no-menu">Terjadi kesalahan saat memuat menu.</p>';
+                console.error('Error loading menu:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMenu);
+    </script>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="bottom-nav" id="bottom-nav">
+        <ul>
+            <li><a href="../index.html#home" class="nav-item"><i class="fas fa-home"></i><span>Beranda</span></a></li>
+            <li><a href="../index.html#services" class="nav-item"><i class="fas fa-concierge-bell"></i><span>Layanan</span></a></li>
+            <li><a href="#" class="nav-item active"><i class="fas fa-utensils"></i><span>Restoran</span></a></li>
+            <li><a href="toko.html" class="nav-item"><i class="fas fa-store"></i><span>Toko</span></a></li>
+            <li><a href="blog.html" class="nav-item"><i class="fas fa-blog"></i><span>Blog</span></a></li>
+            <li><a href="../index.html#calculator" class="nav-item"><i class="fas fa-calculator"></i><span>Tarif</span></a></li>
+            <li><a href="#contact" class="nav-item"><i class="fab fa-whatsapp"></i><span>Kontak</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Floating Shopping Cart CTA -->
+    <a href="checkout.html" class="floating-cta" aria-label="Keranjang Belanja">
+        <i class="fas fa-shopping-cart"></i>
+    </a>
+</body>
+</html>

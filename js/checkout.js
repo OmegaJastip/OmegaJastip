@@ -726,9 +726,6 @@ function setDestinationFromMap(lat, lng) {
                 }
             }
 
-            // Update address input
-            document.getElementById('address').value = address;
-
             // Update marker popup
             destinationMarker.bindPopup(`<b>Tujuan Pengiriman</b><br>${address}`);
 
@@ -739,7 +736,6 @@ function setDestinationFromMap(lat, lng) {
             console.error('Reverse geocoding error:', error);
             // Fallback to coordinates
             const coordAddress = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-            document.getElementById('address').value = coordAddress;
             destinationMarker.bindPopup(`<b>Tujuan Pengiriman</b><br>${coordAddress}`);
             calculateRoute(selectedRestaurant.id, lat, lng);
         });
@@ -778,9 +774,6 @@ function updateMarkerPosition(lat, lng) {
                 }
             }
 
-            // Update address input
-            document.getElementById('address').value = address;
-
             // Update marker popup
             destinationMarker.bindPopup(`<b>Tujuan Pengiriman</b><br>${address}`).openPopup();
 
@@ -791,7 +784,6 @@ function updateMarkerPosition(lat, lng) {
             console.error('Reverse geocoding error:', error);
             // Fallback to coordinates
             const coordAddress = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-            document.getElementById('address').value = coordAddress;
             destinationMarker.bindPopup(`<b>Tujuan Pengiriman</b><br>${coordAddress}`).openPopup();
             calculateRoute(selectedRestaurant.id, lat, lng);
         });
