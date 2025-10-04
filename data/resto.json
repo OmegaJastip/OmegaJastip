@@ -1,8 +1,9 @@
 [
   {
+    "id": 1,
     "name": "Mango Queen Lubuklinggau",
     "category": "Makanan Cepat Saji",
-    "description": "Minuman kekinian ",
+    "description": "Minuman kekinian",
     "image": "../images/resto/manggo-queen.jpg",
     "address": "Jl. Lintas Sumatera, Jawa Kanan, Kec. Lubuk Linggau Tim. II, Kota Lubuklinggau, Sumatera Selatan 31613",
     "phone": "089523255082",
@@ -19,7 +20,7 @@
         "name": "Ori",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 8.000"
           }
         ]
@@ -29,7 +30,7 @@
         "name": "Coklat",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -39,7 +40,7 @@
         "name": "Greentea",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -49,7 +50,7 @@
         "name": "Tiramisu",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -59,7 +60,7 @@
         "name": "Taro",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -69,7 +70,7 @@
         "name": "White choco",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -79,7 +80,7 @@
         "name": "Strawberry",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -89,7 +90,7 @@
         "name": "Keju",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -99,7 +100,7 @@
         "name": "Capucino",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 11.000"
           }
         ]
@@ -109,7 +110,7 @@
         "name": "Choco crunch",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 12.000"
           }
         ]
@@ -119,7 +120,7 @@
         "name": "Tiramisu Crunch",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 12.000"
           }
         ]
@@ -129,7 +130,7 @@
         "name": "Grentea Crunchy",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 13.000"
           }
         ]
@@ -139,7 +140,7 @@
         "name": "Pancong Jumbo (Free 3 top + 3 ex top)",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 25.000"
           }
         ]
@@ -149,7 +150,7 @@
         "name": "Mix Rasa",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 20.000"
           }
         ]
@@ -173,7 +174,7 @@
         "name": "Koko krunch",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 2.000"
           }
         ]
@@ -183,7 +184,7 @@
         "name": "Crumb black",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 2.000"
           }
         ]
@@ -193,7 +194,7 @@
         "name": "Crumb greantea",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 2.000"
           }
         ]
@@ -203,7 +204,7 @@
         "name": "Crumb red velvet",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 2.000"
           }
         ]
@@ -213,7 +214,7 @@
         "name": "Whipecream",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 2.000"
           }
         ]
@@ -223,7 +224,7 @@
         "name": "Marsmellow",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 3.000"
           }
         ]
@@ -233,7 +234,7 @@
         "name": "Air Mineral",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 5.000"
           }
         ]
@@ -397,7 +398,7 @@
         "name": "Basreng",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -407,7 +408,7 @@
         "name": "Fruit sando",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -417,7 +418,7 @@
         "name": "French fries",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 10.000"
           }
         ]
@@ -427,7 +428,7 @@
         "name": "French fries dan Sausage",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 18.000"
           }
         ]
@@ -437,7 +438,7 @@
         "name": "Mango Thai",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 16.000"
           }
         ]
@@ -447,7 +448,7 @@
         "name": "Alpukat Thai",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -457,7 +458,7 @@
         "name": "Strawberry Thai",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -467,7 +468,7 @@
         "name": "Ubi ungu",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -477,7 +478,7 @@
         "name": "Choco",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -487,7 +488,7 @@
         "name": "Dragon Fruit",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -497,7 +498,7 @@
         "name": "Kurma",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
@@ -507,12 +508,28 @@
         "name": "Melon",
         "variants": [
           {
-            "variant": "",
+            "variant": null,
             "price": "Rp 15.000"
           }
         ]
       }
-    ],
-    "id": 1
+    ]
+  },
+  {
+    "id": 1759605838027,
+    "name": "Satu Hal Indonesia Coffee & Space Vol.002",
+    "category": "Coffee Shop",
+    "description": "Lokasi dipinggir jalan garuda lubuklinggau. Berupa bangunan tua terbuat dari kayu tapi sudah dimodif sehingga terlihat estetik. Di dalam adem dengan penataan kursi dari kayu. Minumannya lumayan enak begitu juga dishes yang ada,",
+    "image": "",
+    "address": "Jl. Garuda, Bandung Ujung, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31611",
+    "phone": "082290555168",
+    "operating_hours": "9.00 am–10.00 pm",
+    "price_range": "Rp 25.000–50.000",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": true,
+    "latitude": -3.3027906,
+    "longitude": 102.8520295,
+    "services": []
   }
 ]
