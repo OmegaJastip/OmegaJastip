@@ -76,7 +76,22 @@ function sendToServer(token) {
   // Store token in localStorage for demo purposes
   localStorage.setItem('fcm_token', token);
 
-  
+  // Also store in subscribed tokens array for broadcast simulation
+  const subscribedTokens = JSON.parse(localStorage.getItem('subscribed_tokens') || '[]');
+  const tokenData = {
+    token: token,
+    subscribedAt: new Date().toISOString(),
+    userAgent: navigator.userAgent
+  };
+
+  // Check if token already exists
+  const existingIndex = subscribedTokens.findIndex(t => t.token === token);
+  if (existingIndex === -1) {
+    subscribedTokens.push(tokenData);
+    localStorage.setItem('subscribed_tokens', JSON.stringify(subscribedTokens));
+    console.log('Token added to subscribed users list');
+  }
+
   // Example implementation for actual server call (uncomment if backend available):
   /*
   fetch('/api/subscribe', {
@@ -89,6 +104,54 @@ function sendToServer(token) {
   .then(response => response.json())
   .then(data => console.log('Token sent to server:', data))
   .catch(error => console.error('Error sending token:', error));
+  */
+}
+
+// Send push notification to subscribed users (requires server-side implementation)
+function sendPushNotification(title, body, targetTokens = null) {
+  // This is a placeholder for server-side push notification sending
+  // In a real implementation, you would send this data to your server
+  // which would then use Firebase Admin SDK to send the notification
+
+  const payload = {
+    title: title || 'Omega Jastip',
+    body: body || 'Ada update baru dari Omega Jastip!',
+    icon: '/images/logo.png',
+    badge: '/images/favicon-32x32.png'
+  };
+
+  // For demo purposes, if no targetTokens provided, send to current user
+  if (!targetTokens) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification(payload.title, {
+        body: payload.body,
+        icon: payload.icon,
+        badge: payload.badge
+      });
+    }
+    return;
+  }
+
+  // Placeholder for server request
+  // In production, replace with actual server endpoint
+  console.log('Sending push notification to server:', { payload, targetTokens });
+
+  // Example fetch request (commented out as no server exists)
+  /*
+  fetch('/api/send-notification', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: payload.title,
+      body: payload.body,
+      tokens: targetTokens
+    })
+  })
+  .then(response => response.json())
+  .then(data => console.log('Notification sent:', data))
+  .catch(error => console.error('Error sending notification:', error));
   */
 }
 
@@ -335,28 +398,66 @@ function showNotificationPrompt() {
     }, 3000);
   }
 
-// Test notification function
+// Test notification function (broadcast to all subscribed users)
 function showTestNotification() {
-  if (Notification.permission === 'granted') {
-    const notification = new Notification('Test Notifikasi Omega Jastip', {
-      body: 'Ini adalah notifikasi test untuk memastikan sistem notifikasi berfungsi dengan baik.',
-      icon: '/images/logo.png',
-      badge: '/images/favicon-32x32.png',
-      tag: 'test-notification'
-    });
+  // Get all stored FCM tokens (simulating subscribed users)
+  const storedTokens = JSON.parse(localStorage.getItem('subscribed_tokens') || '[]');
 
-    notification.onclick = () => {
-      window.focus();
-      notification.close();
-    };
+  if (storedTokens.length === 0) {
+    // If no tokens stored, just show to current user
+    if (Notification.permission === 'granted') {
+      const notification = new Notification('Test Notifikasi Omega Jastip', {
+        body: 'Ini adalah notifikasi test untuk memastikan sistem notifikasi berfungsi dengan baik.',
+        icon: '/images/logo.png',
+        badge: '/images/favicon-32x32.png',
+        tag: 'test-notification'
+      });
 
-    // Auto close after 5 seconds
-    setTimeout(() => {
-      notification.close();
-    }, 5000);
-  } else {
-    alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+
+      // Auto close after 5 seconds
+      setTimeout(() => {
+        notification.close();
+      }, 5000);
+    } else {
+      alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+    }
+    return;
   }
+
+  // Broadcast to all subscribed users (simulated)
+  console.log(`Broadcasting test notification to ${storedTokens.length} subscribed users...`);
+
+  // In a real implementation, this would send to server
+  // For demo, we'll show multiple notifications to simulate broadcast
+  storedTokens.forEach((tokenData, index) => {
+    setTimeout(() => {
+      if (Notification.permission === 'granted') {
+        const notification = new Notification('Test Broadcast - Omega Jastip', {
+          body: `Notifikasi test broadcast ke user ${index + 1}/${storedTokens.length}. Sistem notifikasi berfungsi dengan baik!`,
+          icon: '/images/logo.png',
+          badge: '/images/favicon-32x32.png',
+          tag: `broadcast-test-${index}`
+        });
+
+        notification.onclick = () => {
+          window.focus();
+          notification.close();
+        };
+
+        // Auto close after 5 seconds
+        setTimeout(() => {
+          notification.close();
+        }, 5000);
+      }
+    }, index * 1000); // Stagger notifications by 1 second each
+  });
+
+  // Show confirmation
+  alert(`Test notification dikirim ke ${storedTokens.length} user yang subscribe!`);
 }
 
 // Scheduled notifications system
@@ -609,6 +710,7 @@ window.NotificationManager = {
   requestPermission: requestNotificationPermission,
   getToken: getFCMToken,
   testNotification: showTestNotification,
+  sendPushNotification: sendPushNotification,
 
   // Scheduled notification functions
   scheduleNotification: (title, options, delayMs, id) => scheduledNotificationManager.scheduleNotification(title, options, delayMs, id),
