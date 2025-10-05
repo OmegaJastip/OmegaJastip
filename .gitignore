@@ -416,3 +416,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+js/admin.js
+package-lock.json
+package.json
+pages/admin.html
+server.js
