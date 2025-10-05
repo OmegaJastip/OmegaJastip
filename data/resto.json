@@ -1325,7 +1325,7 @@
     "rating": 5,
     "delivery_available": true,
     "pickup_available": false,
-    "latitude": -3.2956726,
+    "latitude": -3.2956726, 
     "longitude": 102.861134,
     "services": []
   },
