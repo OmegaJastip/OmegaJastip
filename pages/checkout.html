@@ -32,17 +32,38 @@
             text-align: center;
         }
 
+        .checkout-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .checkout-hero p {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
         .checkout {
             padding: 60px 0;
             background: #f8f9fa;
         }
 
         .checkout-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            gap: 40px;
+        }
+
+        @media (min-width: 769px) {
+            .checkout-container {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
         }
 
         .cart-summary, .checkout-form {
@@ -235,16 +256,45 @@
             margin: 5px 0;
         }
 
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .checkout-container {
+                gap: 30px;
+            }
 
+            .cart-summary, .checkout-form {
+                padding: 25px;
+            }
+
+            .checkout-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .checkout-hero p {
+                font-size: 1rem;
+            }
+        }
 
         @media (max-width: 768px) {
             .checkout-container {
                 grid-template-columns: 1fr;
                 gap: 20px;
+                padding: 0 15px;
             }
 
             .checkout {
                 padding: 40px 0;
+            }
+
+            .checkout-hero {
+                padding: 50px 20px;
+            }
+
+            .checkout-hero h1 {
+                font-size: 2rem;
+            }
+
+            .checkout-hero p {
+                font-size: 1rem;
             }
 
             .cart-item {
@@ -260,6 +310,89 @@
 
             #shipping-map {
                 height: 250px;
+            }
+
+            .cart-summary, .checkout-form {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .checkout-hero {
+                padding: 40px 20px;
+            }
+
+            .checkout-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .checkout-hero p {
+                font-size: 0.95rem;
+            }
+
+            .checkout {
+                padding: 20px 0;
+            }
+
+            .checkout-container {
+                padding: 0 10px;
+                gap: 15px;
+            }
+
+            .cart-summary, .checkout-form {
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            .cart-summary h2, .checkout-form h2 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+
+            .cart-item {
+                padding: 15px 0;
+            }
+
+            .cart-item-info h4 {
+                font-size: 1rem;
+            }
+
+            .cart-item-price, .cart-item-variant {
+                font-size: 0.85rem;
+            }
+
+            .total-row {
+                font-size: 1rem;
+            }
+
+            .total-row.total {
+                font-size: 1.1rem;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group input, .form-group textarea {
+                padding: 10px;
+                font-size: 0.95rem;
+            }
+
+            .checkout-btn {
+                padding: 12px;
+                font-size: 1rem;
+            }
+
+            #shipping-map {
+                height: 200px;
+            }
+
+            .map-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .distance-info {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -343,6 +476,7 @@
                         <div class="map-section">
                             <h3>Hitung Ongkos Kirim</h3>
                             <p class="map-instruction">Klik pada peta untuk menentukan lokasi pengiriman, atau seret marker merah untuk menyesuaikan posisi.</p>
+                            <button id="locate-btn" class="btn" type="button" style="margin-bottom: 10px;">Lokasi Saya Sekarang</button>
                             <div id="shipping-map"></div>
                         </div>
 

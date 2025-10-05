@@ -5,6 +5,7 @@ let restaurantMarkers = [];
 let destinationMarker = null;
 let routingControl = null;
 let restaurants = [];
+let destinationCoords = null; // Store destination coordinates separately
 
 document.addEventListener('DOMContentLoaded', () => {
     setupFormSubmission();
@@ -153,10 +154,20 @@ function loadCartItems() {
         items.forEach(({ item, index }) => {
             const itemTotal = item.price * item.quantity;
 
+            // Find category from restaurant services
+            let category = '';
+            if (restaurant && restaurant.services) {
+                const service = restaurant.services.find(s => s.name === item.name && (item.variant ? s.variants.some(v => v.variant === item.variant) : true));
+                if (service) {
+                    category = service.category || '';
+                }
+            }
+
             cartHtml += `
                 <div class="cart-item" data-index="${index}">
                     <div class="cart-item-info">
                         <h4>${item.name}</h4>
+                        <p class="cart-item-category">Kategori: ${category}</p>
                         <p class="cart-item-price">${formatPrice(item.price)} x ${item.quantity}</p>
                         ${item.variant ? `<p class="cart-item-variant">Varian: ${item.variant}</p>` : ''}
                     </div>
@@ -307,11 +318,10 @@ function setupFormSubmission() {
         const notes = formData.get('notes');
         const payment = formData.get('payment');
 
-        // Get accurate coordinates from marker if available
+        // Get accurate coordinates from stored coordinates if available
         let mapsLink = `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
-        if (destinationMarker) {
-            const pos = destinationMarker.getLatLng();
-            mapsLink = `https://www.google.com/maps?q=${pos.lat},${pos.lng}`;
+        if (destinationCoords) {
+            mapsLink = `https://www.google.com/maps?q=${destinationCoords.lat},${destinationCoords.lng}`;
         }
 
         // Calculate totals
@@ -330,7 +340,8 @@ function setupFormSubmission() {
         let message = `PESANAN BARU - OMEGA JASTIP\n\n`;
         message += `Nama: ${name}\n`;
         message += `No. HP: ${phone}\n`;
-        message += `Alamat: ${mapsLink}\n`;
+        message += `Alamat: ${address}\n`;
+        message += `Link Maps: ${mapsLink}\n`;
         if (notes) {
             message += `Catatan: ${notes}\n`;
         }
@@ -353,9 +364,22 @@ function setupFormSubmission() {
             message += `Nama Resto: ${restaurantName}\n`;
             let itemCounter = 1;
             itemsByRestaurant[restaurantName].forEach(({ item, index }) => {
+                // Find category from restaurant services
+                let category = '';
+                const restaurant = restaurants.find(r => r.name === restaurantName);
+                if (restaurant && restaurant.services) {
+                    const service = restaurant.services.find(s => s.name === item.name && (item.variant ? s.variants.some(v => v.variant === item.variant) : true));
+                    if (service) {
+                        category = service.category || '';
+                    }
+                }
+
                 message += `${itemCounter}. ${item.name}`;
                 if (item.variant) {
                     message += ` (${item.variant})`;
+                }
+                if (category) {
+                    message += ` [Kategori: ${category}]`;
                 }
                 message += ` - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
                 itemCounter++;
@@ -405,6 +429,12 @@ function initializeMap() {
     // Add address input listener
     const addressInput = document.getElementById('address');
     addressInput.addEventListener('input', debounce(geocodeAddress, 1000));
+
+    // Add locate button event listener
+    const locateBtn = document.getElementById('locate-btn');
+    if (locateBtn) {
+        locateBtn.addEventListener('click', getCurrentLocation);
+    }
 }
 
 function loadRestaurants() {
@@ -516,6 +546,9 @@ function geocodeAddress() {
             if (data && data.length > 0) {
                 const lat = parseFloat(data[0].lat);
                 const lon = parseFloat(data[0].lon);
+
+                // Store coordinates
+                destinationCoords = { lat, lng: lon };
 
                 // Remove previous destination marker
                 if (destinationMarker) {
@@ -678,6 +711,9 @@ function setDestinationFromMap(lat, lng) {
         restaurantSelect.value = selectedRestaurant.id;
     }
 
+    // Store coordinates
+    destinationCoords = { lat, lng };
+
     // Remove previous destination marker
     if (destinationMarker) {
         map.removeLayer(destinationMarker);
@@ -750,6 +786,9 @@ function updateMarkerPosition(lat, lng) {
         return;
     }
 
+    // Update stored coordinates
+    destinationCoords = { lat, lng };
+
     // Use the first restaurant from cart for shipping calculation
     const selectedRestaurant = cartRestaurants[0];
 
@@ -787,6 +826,62 @@ function updateMarkerPosition(lat, lng) {
             destinationMarker.bindPopup(`<b>Tujuan Pengiriman</b><br>${coordAddress}`).openPopup();
             calculateRoute(selectedRestaurant.id, lat, lng);
         });
+}
+
+// Get current location using geolocation API
+function getCurrentLocation() {
+    if (!navigator.geolocation) {
+        alert('Geolokasi tidak didukung oleh browser ini.');
+        return;
+    }
+
+    // Show loading state
+    const locateBtn = document.getElementById('locate-btn');
+    const originalText = locateBtn.textContent;
+    locateBtn.textContent = 'Mencari lokasi...';
+    locateBtn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            // Set destination on map
+            setDestinationFromMap(lat, lng);
+
+            // Center map on current location
+            map.setView([lat, lng], 15);
+
+            // Reset button
+            locateBtn.textContent = originalText;
+            locateBtn.disabled = false;
+        },
+        function(error) {
+            console.error('Error getting location:', error);
+            let errorMessage = 'Gagal mendapatkan lokasi.';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = 'Akses lokasi ditolak. Izinkan akses lokasi untuk menggunakan fitur ini.';
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = 'Informasi lokasi tidak tersedia.';
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = 'Waktu permintaan lokasi habis.';
+                    break;
+            }
+            alert(errorMessage);
+
+            // Reset button
+            locateBtn.textContent = originalText;
+            locateBtn.disabled = false;
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000 // 5 minutes
+        }
+    );
 }
 
 // Utility function for debouncing
