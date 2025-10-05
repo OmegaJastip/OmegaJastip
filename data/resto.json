@@ -530,7 +530,208 @@
     "pickup_available": true,
     "latitude": -3.3027906,
     "longitude": 102.8520295,
-    "services": []
+    "services": [
+      {
+        "category": "Coffee Series",
+        "name": "Signature Satu Hal",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Creamy milk Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Brown Sugar Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Baileys Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Caramel Machiato",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Hazelnut Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Tiramisu Coffee",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Vanila Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Cinamon Coffee",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Butterscooth Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 28.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Latte",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Cappucino",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Americano",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Premium Chocolate Coffee",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Es Kopi Blueberry",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Es Kopi Pandan",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Es Kopi 1 Liter",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 85.000"
+          }
+        ]
+      },
+      {
+        "category": "Coffee Series",
+        "name": "Kopitiam",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759610839261,
