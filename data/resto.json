@@ -730,6 +730,398 @@
             "price": "Rp 18.000"
           }
         ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Lychee Tea",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Lemon Tea",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Yuzu Lemon Honey",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Blue Hawaian",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Butterfiye Pea Lemonade",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Mojito Lemon Lime",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Tropical Mango",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Strawberry Punch",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Flower Tea Pot",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 38.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Exotica Punch",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Smashing Grape",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Fresh Series",
+        "name": "Shade Of Summer",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Premium Chocolate Milk",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Matcha Milk",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Taro Milk",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Red Velvet Milk",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Black Charcoal",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Avocado Chocolate",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Brow Sugar Milk",
+        "variants": [
+          {
+            "variant": "Hot",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Cold",
+            "price": "Rp 18.000"
+          }
+        ]
+      },
+      {
+        "category": "Milk Series",
+        "name": "Premium Iced Cube Chocolate",
+        "variants": [
+          {
+            "variant": "Cold",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Smoke Beef Toast",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Sosis Toast ",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Crispy Chiken Toast ",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Ice Cream Toast ",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Chese Choco Toast",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Nutela Toast",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Premium Chocolate Toast",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Toast Series",
+        "name": "Smoke Beef Cheese Toast",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 28.000"
+          }
+        ]
+      },
+      {
+        "category": "Ricebowl Series",
+        "name": "Black Papper Beef Rice",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 28.000"
+          }
+        ]
+      },
+      {
+        "category": "Ricebowl Series",
+        "name": "Chiken Katsu Rice",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 28.000"
+          }
+        ]
+      },
+      {
+        "category": "Ricebowl Series",
+        "name": "Chiken Wings Rice",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Ricebowl Series",
+        "name": "Cracking Chiken Skin Rice",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Ricebowl Series",
+        "name": "Chiken Popcorn Rice",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack Series",
+        "name": "Party Snack",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 40.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack Series",
+        "name": "French Fries",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Snack Series",
+        "name": "Banana Choco",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 20.000"
+          }
+        ]
       }
     ]
   },
