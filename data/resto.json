@@ -2572,5 +2572,22 @@
         ]
       }
     ]
+  },
+  {
+    "id": 1759773149423,
+    "name": "Nasi Goreng BDR",
+    "category": "Nasi Goreng",
+    "description": "Menjual Berbagai Macam Nasi Goreng",
+    "image": "",
+    "address": "Di Depan Polres Lubuk Linggau",
+    "phone": "-",
+    "operating_hours": "-",
+    "price_range": "-",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": true,
+    "latitude": -3.2959152,
+    "longitude": 102.8654222,
+    "services": []
   }
 ]
