@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": 1759769415996,
+    "name": "Subur Lestari",
+    "category": "Grosir",
+    "description": "",
+    "image": "",
+    "address": "Terminal atas, Dempo, Kec. Lubuk Linggau Tim. II, Kota Lubuklinggau, Sumatera Selatan 31613",
+    "phone": "-",
+    "operating_hours": "-",
+    "price_range": "-",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": true,
+    "services": []
+  }
+]
