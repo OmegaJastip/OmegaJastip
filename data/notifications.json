@@ -1,22 +1,52 @@
 [
   {
-    "id": "default-promo-1",
-    "title": "Selamat Datang di Omega Jastip! 🎉",
+    "id": "morning-service-available",
+    "title": "Layanan Omega Jastip Sudah Bisa Dipesan! 🌅",
     "options": {
-      "body": "Layanan jastip terpercaya untuk kebutuhan harian Anda. Pesan sekarang!",
+      "body": "Layanan kami sudah siap melayani Anda mulai jam 7 pagi. Pesan sekarang!",
       "icon": "/images/logo.png",
       "badge": "/images/favicon-32x32.png"
     },
-    "delayMs": 3600000
+    "time": "07:00"
   },
   {
-    "id": "default-reminder-1",
-    "title": "Jangan Lupa! 📦",
+    "id": "lunch-reminder",
+    "title": "Waktunya Makan Siang 🍽️",
     "options": {
-      "body": "Ada pesanan yang perlu diantar hari ini. Cek aplikasi Omega Jastip!",
+      "body": "Jangan lupa makan siang untuk menjaga energi Anda!",
       "icon": "/images/logo.png",
       "badge": "/images/favicon-32x32.png"
     },
-    "delayMs": 7200000
+    "time": "12:00"
+  },
+  {
+    "id": "afternoon-snack-reminder",
+    "title": "Waktunya Makan Sore ☕",
+    "options": {
+      "body": "Saatnya istirahat dan nikmati camilan sore Anda.",
+      "icon": "/images/logo.png",
+      "badge": "/images/favicon-32x32.png"
+    },
+    "time": "15:00-16:00"
+  },
+  {
+    "id": "dinner-reminder",
+    "title": "Waktunya Makan Malam 🍽️",
+    "options": {
+      "body": "Jangan lupa makan malam untuk mengisi tenaga setelah seharian beraktivitas.",
+      "icon": "/images/logo.png",
+      "badge": "/images/favicon-32x32.png"
+    },
+    "time": "18:00-20:00"
+  },
+  {
+    "id": "service-close-reminder",
+    "title": "Layanan Omega Jastip Akan Tutup ⏰",
+    "options": {
+      "body": "Layanan kami akan tutup pada jam 9 malam. Segera lakukan pemesanan terakhir Anda.",
+      "icon": "/images/logo.png",
+      "badge": "/images/favicon-32x32.png"
+    },
+    "time": "21:00"
   }
 ]

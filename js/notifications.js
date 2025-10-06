@@ -565,7 +565,8 @@ function triggerImmediateTestNotification() {
   }
 }
 
-// Scheduled notifications system
+
+
 class ScheduledNotificationManager {
   constructor() {
     this.scheduledNotifications = this.loadScheduledNotifications();
@@ -593,7 +594,7 @@ class ScheduledNotificationManager {
   }
 
   // Schedule a notification
-  scheduleNotification(title, options, delayMs, id = null) {
+  scheduleNotification(title, options, scheduledTime, id = null) {
     if (!('Notification' in window)) {
       originalConsole.warn('Notifications not supported in this browser');
       return null;
@@ -604,7 +605,6 @@ class ScheduledNotificationManager {
     }
 
     const notificationId = id || `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const scheduledTime = Date.now() + delayMs;
 
     const scheduledNotification = {
       id: notificationId,
@@ -615,8 +615,7 @@ class ScheduledNotificationManager {
         badge: options.badge || '/images/favicon-32x32.png',
         tag: options.tag || notificationId
       },
-      scheduledTime,
-      delayMs
+      scheduledTime
     };
 
     this.scheduledNotifications.push(scheduledNotification);
@@ -653,7 +652,7 @@ class ScheduledNotificationManager {
         type: 'SCHEDULE_NOTIFICATION',
         title: notification.title,
         options: notification.options,
-        delayMs: notification.delayMs,
+        scheduledTime: notification.scheduledTime,
         id: notification.id
       });
     }
@@ -701,17 +700,50 @@ class ScheduledNotificationManager {
         // Check if notification with this ID already exists
         const existingNotification = this.scheduledNotifications.find(n => n.id === notificationData.id);
         if (!existingNotification) {
-          // Schedule the notification from JSON
-          this.scheduleNotification(
-            notificationData.title,
-            notificationData.options || {},
-            notificationData.delayMs,
-            notificationData.id
-          );
+          // Calculate scheduledTime based on current date and notification time string
+          const scheduledTime = this.calculateScheduledTime(notificationData.time);
+          if (scheduledTime) {
+            // Schedule the notification from JSON
+            this.scheduleNotification(
+              notificationData.title,
+              notificationData.options || {},
+              scheduledTime,
+              notificationData.id
+            );
+          }
         }
       });
     } catch (error) {
       console.error('Error loading scheduled notifications from JSON:', error);
+    }
+  }
+
+  // Calculate scheduled time in milliseconds from time string (e.g. "07:00" or "15:00-16:00")
+  calculateScheduledTime(timeStr) {
+    try {
+      const now = new Date();
+      let targetTime;
+
+      if (timeStr.includes('-')) {
+        // Time range, take start time
+        const startTime = timeStr.split('-')[0];
+        const [hours, minutes] = startTime.split(':').map(Number);
+        targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+      } else {
+        // Single time
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+      }
+
+      // If target time already passed today, schedule for next day
+      if (targetTime.getTime() <= now.getTime()) {
+        targetTime.setDate(targetTime.getDate() + 1);
+      }
+
+      return targetTime.getTime();
+    } catch (error) {
+      console.error('Error calculating scheduled time:', error);
+      return null;
     }
   }
 
@@ -725,8 +757,6 @@ class ScheduledNotificationManager {
     await this.loadScheduledNotificationsFromJSON();
   }
 
-  // Remove the scheduleDefaultNotifications method entirely
-
   // Get all scheduled notifications
   getScheduledNotifications() {
     return this.scheduledNotifications;
@@ -739,7 +769,6 @@ class ScheduledNotificationManager {
   }
 }
 
-// Initialize scheduled notification manager
 const scheduledNotificationManager = new ScheduledNotificationManager();
 
 // Show welcome notification
