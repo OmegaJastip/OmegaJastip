@@ -1293,7 +1293,7 @@
     "address": "Jl. Kalimantan No.6, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31613",
     "phone": "-",
     "operating_hours": "-",
-    "price_range": "-",
+    "price_range": "Rp 5.000 - Rp 50.000",
     "rating": 5,
     "delivery_available": true,
     "pickup_available": true,
@@ -1992,7 +1992,38 @@
     "pickup_available": true,
     "latitude": -3.2964453,
     "longitude": 102.864056,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Singkong Meledak",
+        "variants": [
+          {
+            "variant": "Balado",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Balado Pedas manis",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "BBQ",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Jangung Manis",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Original",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Mix",
+            "price": "Rp 15.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759611383021,
