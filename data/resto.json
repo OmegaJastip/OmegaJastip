@@ -1400,6 +1400,160 @@
             "price": "Rp 35.000"
           }
         ]
+      },
+      {
+        "category": "Extra",
+        "name": "Puding",
+        "variants": [
+          {
+            "variant": "Telur Ayam Kampung (2 Butir)",
+            "price": "Rp 14.000"
+          },
+          {
+            "variant": "Telur Bebek (2 Butir)",
+            "price": "Rp 16.000"
+          }
+        ]
+      },
+      {
+        "category": "Canai",
+        "name": "Canai",
+        "variants": [
+          {
+            "variant": "Polos",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Gula",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Susu",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Coklat Meses",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Keju ",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Milo",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Nutella",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Ovomaltime",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Kari ayam",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Kari daging",
+            "price": "Rp 30.000"
+          }
+        ]
+      },
+      {
+        "category": "Roti Bakar",
+        "name": "Roti Bakar",
+        "variants": [
+          {
+            "variant": "Coklat",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Keju Susu",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Strawberry",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Coklat Keju",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Strawberry Coklat",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Strawberry Coklat Keju",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Milo",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ovomeltime",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Nuttela",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Martabak",
+        "name": "Martabak Mesir",
+        "variants": [
+          {
+            "variant": "Biasa",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Istimewa",
+            "price": "Rp 45.000"
+          },
+          {
+            "variant": "Super",
+            "price": "Rp 55.000"
+          },
+          {
+            "variant": "Jumbo",
+            "price": "Rp 60.000"
+          }
+        ]
+      },
+      {
+        "category": "Martabak Aceh",
+        "name": "Martabak Aceh",
+        "variants": [
+          {
+            "variant": "1 telur ayam",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "2 telur ayam",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "3 telur ayam",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "1 telur bebek",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "2 telur bebek",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "3 telur bebek",
+            "price": "Rp 25.000"
+          }
+        ]
       }
     ]
   },
