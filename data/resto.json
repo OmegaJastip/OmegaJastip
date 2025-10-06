@@ -1675,7 +1675,7 @@
       },
       {
         "category": "Minuman",
-        "name": "jus",
+        "name": "Jus",
         "variants": [
           {
             "variant": "Jeruk",
@@ -1723,6 +1723,112 @@
           },
           {
             "variant": "Nanas",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Cappucino",
+        "variants": [
+          {
+            "variant": "Cincau",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Blend",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Blend Oreo",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Aneka Minuman",
+        "variants": [
+          {
+            "variant": "Es Kacang Merah",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Es Kosong",
+            "price": "Rp 2.000"
+          },
+          {
+            "variant": "Nipis Madu",
+            "price": "Rp 7.000"
+          },
+          {
+            "variant": "Air Mineral",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Extra Joss Ori ",
+            "price": "Rp 8.000"
+          },
+          {
+            "variant": "Kuku bima Ori",
+            "price": "Rp 8.000"
+          },
+          {
+            "variant": "Sirup Patung",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Milo Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Milo Dingin",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Extra Joss + Susu ",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Kuku Bima + Susu ",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Lemon Tea Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Badak Ori ",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Lemon Tea Dingin",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Es Jeruk ",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Sirup Patung + Susu Dingin",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Badak + Susu ",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Spesial ",
+        "variants": [
+          {
+            "variant": "Jus Martabe Markisa + Terong Belanda",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Sekuteng",
             "price": "Rp 15.000"
           }
         ]
