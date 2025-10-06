@@ -1554,6 +1554,178 @@
             "price": "Rp 25.000"
           }
         ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Teh ",
+        "variants": [
+          {
+            "variant": "Manis Panas",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Manis Dingin",
+            "price": "Rp 8.000"
+          },
+          {
+            "variant": "Madu Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Madu Dingin",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Susu Panas",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Susu Dingin",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Tarik Panas",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Tarik Dingin",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Tarik + Cincau",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Green Tea / Thai Tea Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Green Tea / Thai Tea Dingin",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Green Tea / Thai Tea + Cincau",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Lime Tea Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Lime Tea Dingin",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Leci Tea Panas",
+            "price": "Rp 17.000"
+          },
+          {
+            "variant": "Leci Tea Dingin",
+            "price": "Rp 24.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Teh Talua",
+        "variants": [
+          {
+            "variant": "Melimpah Original",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Tapai",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Melimpeh Pinang Muda",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Melimpeh Gula Aren",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Kopi ",
+        "variants": [
+          {
+            "variant": "Tarik Aceh Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Tarik Aceh Dingin",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Sanger Panas",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Sanger Dingin",
+            "price": "Rp 17.000"
+          },
+          {
+            "variant": "Khop",
+            "price": "Rp 12.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "jus",
+        "variants": [
+          {
+            "variant": "Jeruk",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Semangka",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Manga",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Melon",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Aplukat",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Buah Naga",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Apel",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Serut",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Jeruk Kasturi",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Pepaya",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Pepaya Cincau",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Nanas",
+            "price": "Rp 15.000"
+          }
+        ]
       }
     ]
   },
