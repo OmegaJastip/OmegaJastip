@@ -1,5 +1,10 @@
 // Store page JavaScript rewritten to match resto.js logic with cart management and enhanced modal
 
+// Escapes JS string literals for inclusion in single-quoted attributes (backslash then single quote)
+function jsStringEscape(str) {
+    return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Load store data
     loadStores();
@@ -247,7 +252,7 @@ function showStoreModalContent(store) {
                                             <span class="service-name">${service.name}</span>
                                             <span class="service-price">${service.price || 'Harga tidak tersedia'}</span>
                                         </div>
-                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/'/g, "\\'")}', '${service.price || ''}', '', '${store.name.replace(/'/g, "\\'")}')">
+                                        <button class="btn-add-cart" onclick="addToCart('${jsStringEscape(service.name)}', '${service.price || ''}', '', '${jsStringEscape(store.name)}')">
                                             <i class="fas fa-cart-plus"></i> Tambah
                                         </button>
                                     </div>
