@@ -2589,5 +2589,22 @@
     "latitude": -3.2959152,
     "longitude": 102.8654222,
     "services": []
+  },
+  {
+    "id": 1759773217342,
+    "name": "Kedaiqiu110",
+    "category": "Kedai",
+    "description": "",
+    "image": "",
+    "address": "Jl. Batu Urip, Batu Urip Taba, Lubuk Linggau Timur I, Lubuklinggau City, South Sumatra 31628",
+    "phone": "-",
+    "operating_hours": "-",
+    "price_range": "-",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": true,
+    "latitude": -3.2805233,
+    "longitude": 102.8908314,
+    "services": []
   }
 ]
