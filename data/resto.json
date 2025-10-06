@@ -2040,7 +2040,86 @@
     "pickup_available": true,
     "latitude": -3.299655,
     "longitude": 102.8553839,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Sate",
+        "variants": [
+          {
+            "variant": "Padang sapi / ayam",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Kacang sapi .ayam",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Indomie",
+        "variants": [
+          {
+            "variant": "Goreng",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Kuah",
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman ",
+        "name": "Panas / Dingin",
+        "variants": [
+          {
+            "variant": "Teh",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Jeruk",
+            "price": "Rp 6.000"
+          },
+          {
+            "variant": "Kosong",
+            "price": "Rp 2.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Jus",
+        "variants": [
+          {
+            "variant": "Aplukat",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Naga",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Mangga",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Melon",
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Kopi",
+        "variants": [
+          {
+            "variant": "Panas",
+            "price": "Rp 5.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759611508503,
