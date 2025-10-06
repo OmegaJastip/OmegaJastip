@@ -541,6 +541,30 @@ function showTestNotification() {
   alert(`Test notification dikirim ke ${storedTokens.length} user yang subscribe!`);
 }
 
+// New function to trigger a single test notification immediately
+function triggerImmediateTestNotification() {
+  if (Notification.permission === 'granted') {
+    const notification = new Notification('Test Notifikasi Langsung - Omega Jastip', {
+      body: 'Ini adalah notifikasi test langsung untuk memastikan sistem notifikasi berfungsi dengan baik.',
+      icon: '/images/logo.png',
+      badge: '/images/favicon-32x32.png',
+      tag: 'immediate-test-notification'
+    });
+
+    notification.onclick = () => {
+      window.focus();
+      notification.close();
+    };
+
+    // Auto close after 5 seconds
+    setTimeout(() => {
+      notification.close();
+    }, 5000);
+  } else {
+    alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+  }
+}
+
 // Scheduled notifications system
 class ScheduledNotificationManager {
   constructor() {
