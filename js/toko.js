@@ -1,4 +1,5 @@
-// Store page JavaScript
+// Store page JavaScript rewritten to match resto.js logic with cart management and enhanced modal
+
 document.addEventListener('DOMContentLoaded', function() {
     // Load store data
     loadStores();
@@ -8,11 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Setup filter functionality
     setupFilters();
+
+    // Update cart count on page load
+    updateCartCount();
 });
 
 async function loadStores() {
     try {
-        const response = await fetch('data/toko.json');
+        const response = await fetch('../data/toko.json');
         const stores = await response.json();
         displayStores(stores);
     } catch (error) {
@@ -35,57 +39,16 @@ function displayStores(stores) {
 
 function createStoreCard(store) {
     const ratingStars = generateStars(store.rating);
-    const services = store.services.map(service => `<span class="service-item">${service.name}</span>`).join('');
 
     return `
-        <div class="store-card" data-category="${store.category}" data-name="${store.name.toLowerCase()}">
-            <div class="store-image">
-                <img src="${store.image}" alt="${store.name}" onerror="this.src='images/placeholder-store.jpg'">
-                <div class="store-overlay">
-                    <div class="category-badge">${store.category}</div>
+        <div class="store-card clickable-card" data-category="${store.category}" data-name="${store.name.toLowerCase()}" onclick="showStoreModal(${store.id})" style="background-image: url('${store.image}'); background-size: cover; background-position: center; position: relative; height: 250px; border-radius: 12px; overflow: hidden; cursor: pointer;">
+            <div class="store-overlay-transparent" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)); padding: 15px; color: white;">
+                <h3 style="margin: 0 0 5px 0; font-size: 1.2rem; font-weight: 600;">${store.name}</h3>
+                <div class="rating" style="margin-bottom: 5px;">
+                    ${ratingStars}
+                    <span class="rating-number" style="color: #ffd700; margin-left: 5px;">${store.rating}</span>
                 </div>
-            </div>
-            <div class="store-info">
-                <div class="store-header">
-                    <h3>${store.name}</h3>
-                    <div class="rating">
-                        ${ratingStars}
-                        <span class="rating-number">${store.rating}</span>
-                    </div>
-                </div>
-                <p class="store-description">${store.description}</p>
-                <div class="store-details">
-                    <div class="detail-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>${store.address}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-phone"></i>
-                        <span>${store.phone}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-clock"></i>
-                        <span>${store.operating_hours}</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>${store.price_range}</span>
-                    </div>
-                </div>
-                <div class="services-preview">
-                    <h4>Layanan:</h4>
-                    <div class="services-list">
-                        ${services}
-                    </div>
-                </div>
-                <div class="store-actions">
-                    <a href="https://wa.me/62895700341213?text=Halo, saya mau jastip belanja di ${encodeURIComponent(store.name)}" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Jastip Belanja
-                    </a>
-                    <button class="btn btn-outline" onclick="showStoreDetails(${store.id})">
-                        <i class="fas fa-info-circle"></i> Detail
-                    </button>
-                </div>
+                <div class="category-badge" style="background: rgba(238, 77, 45, 0.9); color: white; padding: 3px 8px; border-radius: 10px; display: inline-block; font-size: 0.8rem; font-weight: 500;">${store.category}</div>
             </div>
         </div>
     `;
@@ -112,9 +75,25 @@ function generateStars(rating) {
 function setupSearch() {
     const searchInput = document.getElementById('search-toko');
 
+    // Add clear button dynamically
+    let clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'search-clear-btn';
+    clearBtn.innerHTML = '&times;';
+    clearBtn.style.display = 'none';
+    searchInput.parentNode.appendChild(clearBtn);
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        filterStores('');
+        searchInput.focus();
+    });
+
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         filterStores(searchTerm);
+        clearBtn.style.display = this.value ? 'block' : 'none';
     });
 }
 
@@ -123,9 +102,7 @@ function setupFilters() {
 
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
             this.classList.add('active');
 
             const category = this.dataset.category;
@@ -150,7 +127,6 @@ function filterStores(searchTerm) {
         }
     });
 
-    // Show/hide no results message
     const container = document.getElementById('stores-grid');
     let noResultsMsg = container.querySelector('.no-results');
 
@@ -181,7 +157,6 @@ function filterByCategory(category) {
         }
     });
 
-    // Show/hide no results message
     const container = document.getElementById('stores-grid');
     let noResultsMsg = container.querySelector('.no-results');
 
@@ -199,14 +174,13 @@ function filterByCategory(category) {
     }
 }
 
-function showStoreDetails(storeId) {
-    // Get store data
-    fetch('data/toko.json')
+function showStoreModal(storeId) {
+    fetch('../data/toko.json')
         .then(response => response.json())
         .then(stores => {
             const store = stores.find(s => s.id === storeId);
             if (store) {
-                showStoreModal(store);
+                showStoreModalContent(store);
             } else {
                 alert('Data toko tidak ditemukan!');
             }
@@ -217,7 +191,7 @@ function showStoreDetails(storeId) {
         });
 }
 
-function showStoreModal(store) {
+function showStoreModalContent(store) {
     const ratingStars = generateStars(store.rating);
 
     const modal = document.createElement('div');
@@ -230,7 +204,7 @@ function showStoreModal(store) {
             </div>
             <div class="modal-body">
                 <div class="modal-image">
-                    <img src="${store.image}" alt="${store.name}" onerror="this.src='images/placeholder-store.jpg'">
+                    <img src="${store.image}" alt="${store.name}" onerror="this.src='../images/placeholder-store.jpg'">
                 </div>
                 <div class="modal-info">
                     <div class="modal-rating">
@@ -264,14 +238,21 @@ function showStoreModal(store) {
                     </div>
 
                     <div class="info-section">
-                        <h3>Layanan & Produk</h3>
+                        <h3>Produk & Harga</h3>
                         <div class="services-list">
-                            ${store.services.map(service => `
-                                <div class="service-item-detail">
-                                    <span class="service-name">${service.name}</span>
-                                    <span class="service-price">${service.price}</span>
-                                </div>
-                            `).join('')}
+                            ${store.services && store.services.length > 0
+                                ? store.services.map(service => `
+                                    <div class="service-item-detail">
+                                        <div class="service-info">
+                                            <span class="service-name">${service.name}</span>
+                                            <span class="service-price">${service.price || 'Harga tidak tersedia'}</span>
+                                        </div>
+                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/'/g, "\\'")}', '${service.price || ''}', '', '${store.name.replace(/'/g, "\\'")}')">
+                                            <i class="fas fa-cart-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                `).join('')
+                                : '<div class="service-item-detail">Produk tidak tersedia</div>'}
                         </div>
                     </div>
 
@@ -290,6 +271,9 @@ function showStoreModal(store) {
                 </div>
             </div>
             <div class="modal-footer">
+                <a href="checkout.html" class="btn btn-secondary">
+                    <i class="fas fa-shopping-cart"></i> Lihat Keranjang
+                </a>
                 <a href="https://wa.me/62895700341213?text=Halo, saya mau jastip belanja di ${encodeURIComponent(store.name)}" class="btn btn-primary" target="_blank">
                     <i class="fab fa-whatsapp"></i> Jastip Belanja
                 </a>
@@ -299,210 +283,361 @@ function showStoreModal(store) {
     `;
 
     document.body.appendChild(modal);
+    modal.style.display = 'flex';
 
-    // Add modal styles if not already added
     if (!document.getElementById('modal-styles')) {
         const styles = document.createElement('style');
         styles.id = 'modal-styles';
         styles.textContent = `
             .detail-modal {
+                display: none;
                 position: fixed;
-                top: 0;
+                z-index: 1001;
                 left: 0;
+                top: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-                animation: fadeIn 0.3s ease;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+                animation: fadeIn 0.3s ease-out;
             }
-
             .modal-content {
-                background: white;
-                border-radius: 12px;
-                max-width: 600px;
-                max-height: 90vh;
+                background-color: #ffffff;
+                margin: 5% auto;
+                padding: 0;
+                border-radius: 24px;
                 width: 90%;
-                overflow-y: auto;
-                animation: slideIn 0.3s ease;
+                max-width: 800px;
+                max-height: 90vh;
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+                overflow: hidden;
+                animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                border: 1px solid rgba(0, 0, 0, 0.05);
             }
-
             .modal-header {
-                padding: 20px;
-                border-bottom: 1px solid #eee;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding: 20px 25px;
+                background: linear-gradient(135deg, #ee4d2d, #f57c5a);
+                color: white;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-
             .modal-header h2 {
                 margin: 0;
-                color: #333;
                 font-size: 1.5rem;
+                font-weight: 600;
             }
-
             .close-btn {
-                background: none;
+                background: rgba(255, 255, 255, 0.2);
                 border: none;
-                font-size: 24px;
+                color: white;
+                font-size: 1.8rem;
                 cursor: pointer;
-                color: #666;
-                padding: 0;
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             }
-
-            .close-btn:hover {
-                color: #333;
+            .close-btn:hover,
+            .close-btn:active {
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(1.1);
             }
-
+            .close-btn:active {
+                transition: all 0.1s ease;
+            }
             .modal-body {
-                padding: 20px;
+                max-height: 60vh;
+                overflow-y: auto;
+                padding: 25px;
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
             }
-
+            .modal-body::-webkit-scrollbar {
+                width: 6px;
+            }
+            .modal-body::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 3px;
+            }
+            .modal-body::-webkit-scrollbar-thumb {
+                background: #ee4d2d;
+                border-radius: 3px;
+            }
+            .modal-body::-webkit-scrollbar-thumb:hover {
+                background: #f57c5a;
+            }
             .modal-image {
-                width: 100%;
-                height: 200px;
-                overflow: hidden;
-                border-radius: 8px;
+                text-align: center;
+                margin-bottom: 15px;
             }
-
             .modal-image img {
-                width: 100%;
-                height: 100%;
+                max-width: 100%;
+                height: 200px;
                 object-fit: cover;
+                border-radius: 16px;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
             }
-
+            .modal-image img:hover {
+                transform: scale(1.02);
+            }
             .modal-info {
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
-
             .modal-rating {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .modal-rating .rating {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-
-            .modal-rating .category {
-                background: #f0f0f0;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 0.9rem;
-                color: #666;
-            }
-
-            .info-section {
-                border-top: 1px solid #eee;
-                padding-top: 15px;
-            }
-
-            .info-section h3 {
-                margin: 0 0 10px 0;
-                color: #333;
-                font-size: 1.1rem;
-            }
-
-            .info-item {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 8px;
-                color: #666;
-            }
-
-            .info-item i {
-                width: 16px;
-                color: #007bff;
-            }
-
-            .service-item-detail {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 8px 0;
-                border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 15px;
+                padding: 15px;
+                background: #fafafa;
+                border-radius: 12px;
+                border-left: 4px solid #ee4d2d;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-
-            .service-name {
+            .rating {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                color: #ffd700;
+                font-size: 1.1rem;
+            }
+            .rating-number {
+                font-weight: 600;
+                color: #ee4d2d;
+                font-size: 1rem;
+            }
+            .category {
+                background: #f57c5a;
+                color: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 0.85rem;
                 font-weight: 500;
             }
-
-            .service-price {
-                color: #007bff;
+            .description {
+                color: #555555;
+                line-height: 1.6;
+                font-size: 0.95rem;
+                background: #ffffff;
+                padding: 15px;
+                border-radius: 12px;
+                border-left: 4px solid #f57c5a;
+                margin: 10px 0;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .info-section {
+                background: #fafafa;
+                padding: 20px;
+                border-radius: 16px;
+                margin-bottom: 15px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            .info-section h3 {
+                color: #1c1b1f;
+                margin-bottom: 15px;
+                font-size: 1.2rem;
+                border-bottom: 2px solid #ee4d2d;
+                padding-bottom: 8px;
                 font-weight: 600;
             }
-
+            .info-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                gap: 10px;
+            }
+            .info-item i {
+                color: #ee4d2d;
+                width: 20px;
+                font-size: 1.1rem;
+            }
+            .info-item span {
+                color: #555555;
+                flex: 1;
+            }
+            .services-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .service-item-detail {
+                background: #ffffff;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                padding: 15px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .service-item-detail:hover,
+            .service-item-detail:active {
+                border-color: #ee4d2d;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+                transform: translateY(-2px);
+            }
+            .service-item-detail:active {
+                transition: all 0.1s ease;
+            }
+            .service-info {
+                display: flex;
+                flex-direction: column;
+            }
+            .service-name {
+                font-weight: 500;
+                color: #333333;
+                margin-bottom: 4px;
+            }
+            .service-price {
+                color: #ee4d2d;
+                font-weight: 600;
+                font-size: 1rem;
+            }
+            .btn-add-cart {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: background-color 0.3s ease;
+            }
+            .btn-add-cart:hover {
+                background-color: #218838;
+            }
+            .btn-add-cart i {
+                font-size: 16px;
+            }
             .services-badges {
                 display: flex;
                 gap: 10px;
                 flex-wrap: wrap;
             }
-
             .service-badge {
-                padding: 4px 12px;
+                background: #f57c5a;
+                color: white;
+                padding: 6px 12px;
                 border-radius: 20px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 font-weight: 500;
             }
-
             .service-badge.delivery {
                 background: #28a745;
-                color: white;
             }
-
             .service-badge.pickup {
                 background: #007bff;
-                color: white;
             }
-
             .modal-footer {
-                padding: 20px;
-                border-top: 1px solid #eee;
                 display: flex;
                 gap: 15px;
-                justify-content: flex-end;
+                padding: 20px 25px;
+                background: #fafafa;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+                justify-content: center;
+                flex-wrap: wrap;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
-
+            .modal-footer .btn {
+                flex: 1;
+                min-width: 150px;
+                text-align: center;
+                padding: 12px 20px;
+            }
+            .modal-footer .btn-primary {
+                background: linear-gradient(135deg, #ee4d2d, #f57c5a);
+                border: none;
+                box-shadow: 0 4px 15px rgba(238, 77, 45, 0.2);
+            }
+            .modal-footer .btn-primary:hover,
+            .modal-footer .btn-primary:active {
+                background: linear-gradient(135deg, #f57c5a, #ee4d2d);
+                transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(238, 77, 45, 0.3);
+            }
+            .modal-footer .btn-primary:active {
+                transition: all 0.1s ease;
+            }
+            .modal-footer .btn-outline {
+                background: transparent;
+                border: 2px solid #555555;
+                color: #555555;
+            }
+            .modal-footer .btn-outline:hover {
+                background: #555555;
+                color: white;
+                border-color: #555555;
+            }
             @keyframes fadeIn {
                 from { opacity: 0; }
                 to { opacity: 1; }
             }
-
             @keyframes slideIn {
                 from {
                     opacity: 0;
-                    transform: translateY(-50px) scale(0.9);
+                    transform: translateY(-50px) scale(0.95);
                 }
                 to {
                     opacity: 1;
                     transform: translateY(0) scale(1);
                 }
             }
-
             @media (max-width: 768px) {
                 .modal-content {
                     width: 95%;
-                    margin: 10px;
+                    margin: 10% auto;
+                    max-height: 85vh;
                 }
-
+                .modal-body {
+                    max-height: 50vh;
+                    padding: 20px;
+                }
+                .modal-header {
+                    padding: 15px 20px;
+                }
+                .modal-header h2 {
+                    font-size: 1.3rem;
+                }
                 .modal-footer {
+                    padding: 15px 20px;
                     flex-direction: column;
+                }
+                .modal-footer .btn {
+                    min-width: auto;
+                }
+                .info-section {
+                    padding: 15px;
+                }
+                .services-list {
+                    gap: 10px;
+                }
+                .service-item-detail {
+                    padding: 12px;
+                }
+            }
+            @media (max-width: 480px) {
+                .modal-body {
+                    max-height: 45vh;
+                }
+                .modal-image img {
+                    height: 150px;
+                }
+                .description {
+                    font-size: 0.9rem;
                 }
             }
         `;
@@ -517,6 +652,137 @@ function closeModal() {
         setTimeout(() => {
             modal.remove();
         }, 300);
+    }
+}
+
+// Cart management functions
+function getCart() {
+    const cart = localStorage.getItem('shoppingCart');
+    return cart ? JSON.parse(cart) : [];
+}
+
+function parsePrice(priceStr) {
+    const match = priceStr.match(/Rp\s*([\d.,]+)/);
+    return match ? parseInt(match[1].replace(/\./g, '')) : 0;
+}
+
+function saveCart(cart) {
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+}
+
+function addToCart(itemName, priceStr, variant = null, storeName = null) {
+    const cart = getCart();
+    const price = parsePrice(priceStr);
+
+    const existingItem = cart.find(item =>
+        item.name === itemName &&
+        item.variant === variant &&
+        item.storeName === storeName
+    );
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            name: itemName,
+            price: price,
+            quantity: 1,
+            variant: variant,
+            storeName: storeName
+        });
+    }
+
+    saveCart(cart);
+    updateCartCount();
+    showToast('Item berhasil ditambahkan ke keranjang!');
+}
+
+function updateCartCount() {
+    const cart = getCart();
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const floatingCta = document.querySelector('.floating-cta');
+    if (!floatingCta) return;
+
+    let countBadge = floatingCta.querySelector('.cart-count-badge');
+    if (!countBadge) {
+        countBadge = document.createElement('span');
+        countBadge.className = 'cart-count-badge';
+        countBadge.style.position = 'absolute';
+        countBadge.style.top = '5px';
+        countBadge.style.right = '5px';
+        countBadge.style.background = '#ee4d2d';
+        countBadge.style.color = 'white';
+        countBadge.style.borderRadius = '50%';
+        countBadge.style.padding = '2px 6px';
+        countBadge.style.fontSize = '0.75rem';
+        countBadge.style.fontWeight = '700';
+        countBadge.style.minWidth = '20px';
+        countBadge.style.textAlign = 'center';
+        floatingCta.style.position = 'fixed';
+        floatingCta.appendChild(countBadge);
+    }
+    if (count > 0) {
+        countBadge.textContent = count;
+        countBadge.style.display = 'inline-block';
+    } else {
+        countBadge.style.display = 'none';
+    }
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    toast.style.position = 'fixed';
+    toast.style.top = '20px';
+    toast.style.right = '20px';
+    toast.style.background = '#28a745';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 20px';
+    toast.style.borderRadius = '6px';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    toast.style.zIndex = '9999';
+    toast.style.fontSize = '0.9rem';
+    toast.style.fontWeight = '500';
+    toast.style.animation = 'slideInRight 0.3s ease';
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, 3000);
+
+    if (!document.getElementById('toast-styles')) {
+        const styles = document.createElement('style');
+        styles.id = 'toast-styles';
+        styles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styles);
     }
 }
 
