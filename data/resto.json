@@ -1174,7 +1174,128 @@
     "pickup_available": true,
     "latitude": -3.2972008,
     "longitude": 102.8586968,
-    "services": []
+    "services": [
+      {
+        "category": "Mie",
+        "name": "Indomie Bangladesh",
+        "variants": [
+          {
+            "variant": "B",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "J",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Udang",
+            "price": "Rp 32.000"
+          },
+          {
+            "variant": "Cumi",
+            "price": "Rp 32.000"
+          },
+          {
+            "variant": "Seafood",
+            "price": "Rp 32.000"
+          },
+          {
+            "variant": "Ayam",
+            "price": "Rp 30.000"
+          }
+        ]
+      },
+      {
+        "category": "Mie",
+        "name": "Mie Bangladesh",
+        "variants": [
+          {
+            "variant": "B + Puding",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "J + Puding",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Ayam",
+            "price": "Rp 30.000"
+          }
+        ]
+      },
+      {
+        "category": "Mie",
+        "name": "Indomie",
+        "variants": [
+          {
+            "variant": "Kuah Original B",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Kuah Original B + Telur",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Kuah Original J",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Kuah Original J + Telur",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Goreng Original B",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Goreng Original B + Telur",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Goreng Original J",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Goreng Original J + Telur",
+            "price": "Rp 23.000"
+          }
+        ]
+      },
+      {
+        "category": "Mie",
+        "name": "Mie Aceh",
+        "variants": [
+          {
+            "variant": "Biasa",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Telur",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Daging",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Cumi",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Seafood",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Ayam",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Spesial",
+            "price": "Rp 40.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759611239602,
