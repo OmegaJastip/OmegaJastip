@@ -278,7 +278,7 @@
 
         function updateCartCount() {
             const cart = getCart();
-            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            const count = cart.reduce((acc, item) => acc + (item.quantity || 0), 0);
             const floatingCta = document.querySelector('.floating-cta');
             if (!floatingCta) return;
 
