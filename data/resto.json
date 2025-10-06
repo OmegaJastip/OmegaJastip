@@ -1151,7 +1151,7 @@
     "address": "Jalan Yos Sudarso, Talang Jawa Kiri, Lubuk Linggau Timur I, Jawa Kiri, Kec. Lubuk Linggau Tim. II, Lubuk Linggau, Sumatera Selatan 31628",
     "phone": "-",
     "operating_hours": "-",
-    "price_range": "-",
+    "price_range": "Rp 15.000–50.000",
     "rating": 5,
     "delivery_available": true,
     "pickup_available": true,
@@ -1325,7 +1325,7 @@
     "rating": 5,
     "delivery_available": true,
     "pickup_available": false,
-    "latitude": -3.2956726, 
+    "latitude": -3.2956726,
     "longitude": 102.861134,
     "services": []
   },
