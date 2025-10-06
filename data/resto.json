@@ -1294,6 +1294,112 @@
             "price": "Rp 40.000"
           }
         ]
+      },
+      {
+        "category": "Nasi",
+        "name": "Paket Nasi",
+        "variants": [
+          {
+            "variant": "Udang Saos Padang",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Udang Asam Manis",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Cumi Saos Padang",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Cumi Asam Manis",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Ayam Saos Padang",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Ayam Asam Manis",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Ayam Goreng Cabe Ijo",
+            "price": "Rp 30.000"
+          }
+        ]
+      },
+      {
+        "category": "Menu Spesial",
+        "name": "Menu Spesial",
+        "variants": [
+          {
+            "variant": "Nasi Goreng Pattaya",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Nasi Soto Padang Ayam",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Nasi Soto Padang Daging",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Gado Gado",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Bubur Kampiun Spesial",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Lupis",
+            "price": "Rp 5.000"
+          }
+        ]
+      },
+      {
+        "category": "Nasi Goreng",
+        "name": "Nasi Goreng Aceh",
+        "variants": [
+          {
+            "variant": "Telur",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ayam Suwir Telur",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Ayam Goreng",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Daging",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Udang",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Cumi ",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Seafood",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Spesial",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Briyani",
+            "price": "Rp 35.000"
+          }
+        ]
       }
     ]
   },
