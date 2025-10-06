@@ -830,4 +830,3 @@ window.NotificationManager = {
   clearAllScheduledNotifications: () => scheduledNotificationManager.clearAllScheduledNotifications(),
   removeScheduledNotification: (id) => scheduledNotificationManager.removeScheduledNotification(id)
 };
-
