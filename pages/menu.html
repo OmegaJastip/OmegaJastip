@@ -7,6 +7,178 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="../js/protection.js?v=1.0.1"></script>
+    <style>
+        .service-item.expandable .service-header {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .service-item.expandable .service-header .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .service-item.expandable .service-header .service-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: left;
+            display: inline-block;
+            width: 50%;
+        }
+        .service-item.expandable .service-header .service-price {
+            font-size: 1em;
+            font-weight: bold;
+            color: #ee4d2d;
+            flex-grow: 0;
+            text-align: right;
+            display: inline-block;
+            width: 50%;
+        }
+        .service-item.expandable .service-header .bottom-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .service-item.expandable .service-header .toggle-icon {
+            font-size: 1.2em;
+            color: #666;
+            transition: transform 0.3s;
+        }
+        .service-item.expandable .variants {
+            display: none;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 3px solid #ee4d2d;
+        }
+        .service-item.expandable .variant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .service-item.expandable .variant-item:last-child {
+            border-bottom: none;
+        }
+        .service-item.expandable .variant-item .variant-name {
+            font-size: 0.95em;
+            flex: 1;
+        }
+        .service-item.expandable .variant-item .variant-price {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #ee4d2d !important;
+            margin-right: 10px;
+            visibility: visible !important;
+            opacity: 1 !important;
+            transition: color 0.3s ease, visibility 0.3s ease, opacity 0.3s ease;
+        }
+        .service-item.expandable .variant-item:hover .variant-price {
+            color: #ee4d2d !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .service-item.expandable .variant-item:hover {
+            background-color: #fff3e6;
+        }
+        .service-item.expandable .variant-item .btn-add-cart {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            cursor: pointer;
+            min-width: 70px;
+        }
+        .service-item-detail {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .service-item-detail .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .service-item-detail .service-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            flex-grow: 1;
+            text-align: left;
+            display: inline-block;
+            width: 50%;
+        }
+        .service-item-detail .service-price {
+            font-size: 1em;
+            font-weight: bold;
+            color: #ee4d2d;
+            text-align: right;
+            display: inline-block;
+            width: 50%;
+        }
+        .service-item-detail .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-item-detail .service-variant {
+            font-size: 0.9em;
+            color: #666;
+            margin-right: 10px;
+        }
+        .service-item-detail .btn-add-cart {
+            background: #ee4d2d;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        .service-item-detail .btn-add-cart:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .service-item.expandable .service-header,
+            .service-item-detail {
+                padding: 12px;
+            }
+            .service-item.expandable .service-header .service-name,
+            .service-item-detail .service-name {
+                font-size: 1em;
+            }
+            .service-item-detail .btn-add-cart {
+                padding: 6px 10px;
+                font-size: 0.85em;
+                min-width: 70px;
+            }
+            .service-item.expandable .variant-item .btn-add-cart {
+                padding: 5px 8px;
+                font-size: 0.75em;
+                min-width: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="menu-container">
@@ -212,6 +384,21 @@
             return stars;
         }
 
+        function toggleVariants(header) {
+            const item = header.parentElement;
+            const variants = item.querySelector('.variants');
+            const icon = header.querySelector('.toggle-icon');
+            if (variants.style.display === 'none' || variants.style.display === '') {
+                variants.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                variants.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
         async function loadMenu() {
             const restaurantId = parseInt(getQueryParam('id'));
             if (!restaurantId) {
@@ -274,29 +461,60 @@
                 Object.keys(servicesByCategory).forEach(category => {
                     menuHtml += `<div class="category-group"><h2>${category}</h2>`;
                     servicesByCategory[category].forEach(service => {
-                        if (service.variants && service.variants.length > 0) {
-                            service.variants.forEach(variant => {
-                                const displayName = service.name;
-                                const variantName = variant.variant ? variant.variant : '';
-                                menuHtml += `
-                                    <div class="service-item-detail">
-                                        <span class="service-name">${displayName}</span>
-                                        <span class="service-variant">${variantName}</span>
-                                        <span class="service-price">${variant.price}</span>
-                                        <button class="btn-add-cart" onclick="addToCart('${displayName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${variant.price}', '${variant.variant || ''}', '${restaurant.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')">
+                        if (!service.variants || service.variants.length === 0) {
+                            menuHtml += `
+                                <div class="service-item-detail">
+                                    <div class="top-row">
+                                        <span class="service-name">${service.name}</span>
+                                        <span class="service-price">Harga tidak tersedia</span>
+                                    </div>
+                                    <div class="bottom-row">
+                                        <button class="btn-add-cart" disabled>
                                             <i class="fas fa-cart-plus"></i> Tambah
                                         </button>
                                     </div>
-                                `;
-                            });
-                        } else {
+                                </div>
+                            `;
+                        } else if (service.variants.length === 1) {
+                            const variant = service.variants[0];
+                            const variantName = variant.variant ? variant.variant : '';
                             menuHtml += `
                                 <div class="service-item-detail">
-                                    <span class="service-name">${service.name}</span>
-                                    <span class="service-price">Harga tidak tersedia</span>
-                                    <button class="btn-add-cart" disabled>
-                                        <i class="fas fa-cart-plus"></i> Tambah
-                                    </button>
+                                    <div class="top-row">
+                                        <span class="service-name">${service.name}</span>
+                                        <span class="service-price">${variant.price}</span>
+                                    </div>
+                                    <div class="bottom-row">
+                                        <span class="service-variant">${variantName}</span>
+                                        <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${variant.price}', '${variant.variant || ''}', '${restaurant.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')">
+                                            <i class="fas fa-cart-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            menuHtml += `
+                                <div class="service-item expandable">
+                                    <div class="service-header" onclick="toggleVariants(this)">
+                                        <div class="top-row">
+                                            <span class="service-name">${service.name}</span>
+                                            <span class="service-price">${service.variants[0].price}</span>
+                                        </div>
+                                        <div class="bottom-row">
+                                            <i class="fas fa-chevron-down toggle-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="variants">
+                                        ${service.variants.map(variant => `
+                                            <div class="variant-item">
+                                                <span class="variant-name">${variant.variant || ''}</span>
+                                                <span class="variant-price">${variant.price}</span>
+                                                <button class="btn-add-cart" onclick="addToCart('${service.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${variant.price}', '${variant.variant || ''}', '${restaurant.name.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')">
+                                                    <i class="fas fa-cart-plus"></i> Tambah
+                                                </button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
                                 </div>
                             `;
                         }
