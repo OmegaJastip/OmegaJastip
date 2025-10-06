@@ -2170,7 +2170,60 @@
     "pickup_available": true,
     "latitude": -3.2967079,
     "longitude": 102.8595927,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Bakso",
+        "variants": [
+          {
+            "variant": "Urat",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Mercon",
+            "price": "Rp 18.000"
+          },
+          {
+            "variant": "Daging",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Telur",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Daging + Urat",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Daging + Mercon",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Daging + Telur",
+            "price": "Rp 25.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Toping",
+        "variants": [
+          {
+            "variant": "Tahu",
+            "price": "Rp 3.000"
+          },
+          {
+            "variant": "Tetelan",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Kuah Dower",
+            "price": "Rp 3.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759611747258,
