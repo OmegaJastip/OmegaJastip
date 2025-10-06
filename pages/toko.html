@@ -30,29 +30,7 @@
       gtag('config', 'G-QZKX5NKXFH');
     </script>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
-    <script>
-      // Firebase config - REPLACE WITH YOUR VALUES
-      const firebaseConfig = {
-        apiKey: "AIzaSyDgk_2BLj-p2bbCNleQZFbI1dzsMH5omzo",
-        authDomain: "botwa-99954.firebaseapp.com",
-        databaseURL: "https://botwa-99954-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "botwa-99954",
-        storageBucket: "botwa-99954.firebasestorage.app",
-        messagingSenderId: "1003488855126",
-        appId: "1:1003488855126:web:31a4b0938244e11d3c27f7",
-        measurementId: "G-4LFXCXK7YG"
-      };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const messaging = firebase.messaging();
-
-      // Make messaging available globally
-      window.firebaseMessaging = messaging;
-    </script>
 </head>
 <body>
     <!-- Header -->
@@ -280,7 +258,8 @@
         </ul>
     </nav>
 
-    <script src="../js/notifications.js?v=1.0.1"></script>
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
     <script src="../js/toko.js?v=1.0.3"></script>
     <script src="../js/script.js?v=1.0.1"></script>
     <script src="../js/protection.js?v=1.0.1"></script>

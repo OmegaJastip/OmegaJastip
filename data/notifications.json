@@ -1,0 +1,22 @@
+[
+  {
+    "id": "default-promo-1",
+    "title": "Selamat Datang di Omega Jastip! 🎉",
+    "options": {
+      "body": "Layanan jastip terpercaya untuk kebutuhan harian Anda. Pesan sekarang!",
+      "icon": "/images/logo.png",
+      "badge": "/images/favicon-32x32.png"
+    },
+    "delayMs": 3600000
+  },
+  {
+    "id": "default-reminder-1",
+    "title": "Jangan Lupa! 📦",
+    "options": {
+      "body": "Ada pesanan yang perlu diantar hari ini. Cek aplikasi Omega Jastip!",
+      "icon": "/images/logo.png",
+      "badge": "/images/favicon-32x32.png"
+    },
+    "delayMs": 7200000
+  }
+]

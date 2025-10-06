@@ -1,12 +1,17 @@
-// Firebase is already initialized in index.html
-const fcmMessaging = window.firebaseMessaging;
+// Import Firebase messaging from config
+import { firebaseMessaging } from './firebase-config.js';
+import { onMessage } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-messaging.js";
+const fcmMessaging = firebaseMessaging;
+
+// Save original console before protection.js overrides it
+const originalConsole = window.console;
 
 // Request notification permission and subscribe user
 async function requestNotificationPermission() {
   try {
     // Check if notifications are supported
     if (!('Notification' in window)) {
-      console.warn('Notifications not supported in this browser.');
+      originalConsole.warn('Notifications not supported in this browser.');
       alert('Notifikasi tidak didukung oleh browser Anda.');
       return null;
     }
@@ -17,7 +22,7 @@ async function requestNotificationPermission() {
     }
 
     if (Notification.permission === 'denied') {
-      console.warn('Notification permission was previously denied.');
+      originalConsole.warn('Notification permission was previously denied.');
       alert('Anda telah menolak izin notifikasi. Silakan izinkan notifikasi di pengaturan browser Anda untuk menerima update.');
       return null;
     }
@@ -28,15 +33,15 @@ async function requestNotificationPermission() {
     if (permission === 'granted') {
       return await getFCMToken();
     } else if (permission === 'denied') {
-      console.warn('Notification permission denied by user.');
+      originalConsole.warn('Notification permission denied by user.');
       alert('Anda menolak izin notifikasi. Anda tidak akan menerima update notifikasi.');
       return null;
     } else {
-      console.warn('Notification permission request dismissed.');
+      originalConsole.warn('Notification permission request dismissed.');
       return null;
     }
   } catch (error) {
-    console.error('Error requesting notification permission:', error);
+    originalConsole.error('Error requesting notification permission:', error);
     return null;
   }
 }
@@ -89,7 +94,7 @@ function sendToServer(token) {
   if (existingIndex === -1) {
     subscribedTokens.push(tokenData);
     localStorage.setItem('subscribed_tokens', JSON.stringify(subscribedTokens));
-    console.log('Token added to subscribed users list');
+    originalConsole.log('Token added to subscribed users list');
   }
 
   // Example implementation for actual server call (uncomment if backend available):
@@ -134,7 +139,7 @@ function sendPushNotification(title, body, targetTokens = null) {
 
   // Placeholder for server request
   // In production, replace with actual server endpoint
-  console.log('Sending push notification to server:', { payload, targetTokens });
+  originalConsole.log('Sending push notification to server:', { payload, targetTokens });
 
   // Example fetch request (commented out as no server exists)
   /*
@@ -157,7 +162,7 @@ function sendPushNotification(title, body, targetTokens = null) {
 
 // Handle foreground messages (when app is open)
 if (fcmMessaging) {
-  fcmMessaging.onMessage((payload) => {
+  onMessage(fcmMessaging, (payload) => {
 
     // Show notification even when app is open
     if (Notification.permission === 'granted') {
@@ -196,7 +201,46 @@ function initNotifications() {
   } else if (Notification.permission === 'granted') {
     // Already granted, get token
     requestNotificationPermission();
+  } else if (Notification.permission === 'denied') {
+    // User denied notification permission
+    // Set a reminder to prompt again after some minutes (e.g., 10 minutes)
+    const reminderDelayMs = 10 * 60 * 1000; // 10 minutes
+    const lastDeniedTime = localStorage.getItem('notification-denied-time');
+    const now = Date.now();
+
+    if (!lastDeniedTime || now - parseInt(lastDeniedTime) > reminderDelayMs) {
+      // Save the time of denial
+      localStorage.setItem('notification-denied-time', now.toString());
+
+      // Show PWA install prompt and GPS reminder
+      showPWAInstallPrompt();
+      showGPSReminder();
+
+      // Set timeout to remind user again after reminderDelayMs
+      setTimeout(() => {
+        // Clear the denial time to allow prompt again
+        localStorage.removeItem('notification-denied-time');
+        // Show notification prompt again
+        showNotificationPrompt();
+      }, reminderDelayMs);
+    }
   }
+}
+
+// Show PWA install prompt
+function showPWAInstallPrompt() {
+  // This is a placeholder for PWA install prompt logic
+  // You can customize this to trigger your PWA install UI
+  originalConsole.log('Prompting user to install PWA...');
+  alert('Install aplikasi Omega Jastip untuk pengalaman terbaik!');
+}
+
+// Show GPS reminder prompt
+function showGPSReminder() {
+  // This is a placeholder for GPS reminder logic
+  // You can customize this to remind user to enable GPS/location services
+  originalConsole.log('Reminding user to enable GPS/location services...');
+  alert('Aktifkan GPS Anda untuk mendapatkan layanan jastip yang lebih akurat!');
 }
 
 // Show custom notification prompt UI
@@ -429,7 +473,7 @@ function showTestNotification() {
   }
 
   // Broadcast to all subscribed users (simulated)
-  console.log(`Broadcasting test notification to ${storedTokens.length} subscribed users...`);
+  originalConsole.log(`Broadcasting test notification to ${storedTokens.length} subscribed users...`);
 
   // In a real implementation, this would send to server
   // For demo, we'll show multiple notifications to simulate broadcast
@@ -473,7 +517,7 @@ class ScheduledNotificationManager {
       const stored = localStorage.getItem('scheduled-notifications');
       return stored ? JSON.parse(stored) : [];
     } catch (error) {
-      console.error('Error loading scheduled notifications:', error);
+      originalConsole.error('Error loading scheduled notifications:', error);
       return [];
     }
   }
@@ -483,18 +527,18 @@ class ScheduledNotificationManager {
     try {
       localStorage.setItem('scheduled-notifications', JSON.stringify(this.scheduledNotifications));
     } catch (error) {
-      console.error('Error saving scheduled notifications:', error);
+      originalConsole.error('Error saving scheduled notifications:', error);
     }
   }
 
   // Schedule a notification
   scheduleNotification(title, options, delayMs, id = null) {
     if (!('Notification' in window)) {
-      console.warn('Notifications not supported in this browser');
+      originalConsole.warn('Notifications not supported in this browser');
       return null;
     }
     if (Notification.permission !== 'granted') {
-      console.warn('Notification permission not granted');
+      originalConsole.warn('Notification permission not granted');
       return null;
     }
 
@@ -612,82 +656,15 @@ class ScheduledNotificationManager {
 
   // Initialize scheduled notifications on page load
   async initScheduledNotifications() {
-    // Reschedule all pending notifications
-    this.scheduledNotifications.forEach(notification => {
-      this.scheduleNotificationTimeout(notification);
-    });
+    // Clear any existing scheduled notifications in memory and localStorage
+    this.scheduledNotifications = [];
+    this.saveScheduledNotifications();
 
-    // Load and schedule notifications from JSON file
+    // Load and schedule notifications from JSON file only
     await this.loadScheduledNotificationsFromJSON();
-
-    // Schedule default notifications if none exist
-    if (this.scheduledNotifications.length === 0) {
-      this.scheduleDefaultNotifications();
-    }
   }
 
-  // Schedule default notifications
-  scheduleDefaultNotifications() {
-    const now = new Date();
-    const currentHour = now.getHours();
-
-    // Schedule daily reminder at 9 AM
-    if (currentHour < 9) {
-      const delayTo9AM = (9 - currentHour) * 60 * 60 * 1000;
-      this.scheduleNotification(
-        'Selamat Pagi! 🌅',
-        {
-          body: 'Jangan lupa gunakan layanan jastip Omega untuk kebutuhan harian Anda hari ini!',
-          icon: '/images/logo.png',
-          badge: '/images/favicon-32x32.png'
-        },
-        delayTo9AM,
-        'daily-reminder-9am'
-      );
-    }
-
-    // Schedule evening reminder at 6 PM
-    if (currentHour < 18) {
-      const delayTo6PM = (18 - currentHour) * 60 * 60 * 1000;
-      this.scheduleNotification(
-        'Selamat Sore! 🌇',
-        {
-          body: 'Butuh antar makanan atau barang? Omega Jastip siap melayani Anda!',
-          icon: '/images/logo.png',
-          badge: '/images/favicon-32x32.png'
-        },
-        delayTo6PM,
-        'daily-reminder-6pm'
-      );
-    }
-
-    // Schedule promotional notification in 1 hour
-    this.scheduleNotification(
-      'Promo Spesial! 🎉',
-      {
-        body: 'Diskon 10% untuk layanan antar pertama kali hari ini. Segera pesan!',
-        icon: '/images/logo.png',
-        badge: '/images/favicon-32x32.png'
-      },
-      60 * 60 * 1000, // 1 hour
-      'promo-notification'
-    );
-
-    // Schedule weekend reminder (if it's Friday)
-    if (now.getDay() === 5 && currentHour < 20) { // Friday
-      const delayTo8PM = (20 - currentHour) * 60 * 60 * 1000;
-      this.scheduleNotification(
-        'Weekend Special! 🎊',
-        {
-          body: 'Layanan weekend dengan tarif spesial. Pesan sekarang untuk pengiriman cepat!',
-          icon: '/images/logo.png',
-          badge: '/images/favicon-32x32.png'
-        },
-        delayTo8PM,
-        'weekend-reminder'
-      );
-    }
-  }
+  // Remove the scheduleDefaultNotifications method entirely
 
   // Get all scheduled notifications
   getScheduledNotifications() {

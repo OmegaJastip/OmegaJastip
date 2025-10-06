@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee4d2d">
+    <title>Test Firebase Notifications - Omega Jastip</title>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <link rel="manifest" href="../manifest.json">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .test-section h3 {
+            color: #ee4d2d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-button {
+            background: #ee4d2d;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+        .test-button:hover {
+            background: #d43d2a;
+        }
+
+        .test-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .test-result {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+        .status-warning { background: #ffc107; }
+        .status-info { background: #17a2b8; }
+
+        .notification-log {
+            background: #343a40;
+            color: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .log-info { background: #17a2b8; }
+        .log-success { background: #28a745; }
+        .log-error { background: #dc3545; }
+        .log-warning { background: #ffc107; color: #212529; }
+
+        .token-display {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            word-break: break-all;
+        }
+    </style>
+
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/notifications.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo.png" alt="Omega Jastip Lubuklinggau Logo" width="40" height="40">
+                </div>
+                <div class="logo-text">Omega <span>Jastip</span> LubukLinggau</div>
+            </a>
+        </div>
+    </header>
+
+    <div class="test-container">
+        <h1 style="text-align: center; color: #ee4d2d; margin-bottom: 30px;">
+            <i class="fas fa-flask"></i> Firebase Notifications Test Page
+        </h1>
+
+        <!-- Firebase Status -->
+        <div class="test-section">
+            <h3><i class="fas fa-server"></i> Firebase Status</h3>
+            <div id="firebase-status">
+                <span class="status-indicator status-info"></span>
+                Initializing Firebase...
+            </div>
+            <div class="test-result" id="firebase-result">Loading...</div>
+        </div>
+
+        <!-- Notification Permissions -->
+        <div class="test-section">
+            <h3><i class="fas fa-bell"></i> Notification Permissions</h3>
+            <button class="test-button" onclick="testNotificationPermission()">
+                <i class="fas fa-bell"></i> Request Permission
+            </button>
+            <button class="test-button" onclick="checkPermissionStatus()">
+                <i class="fas fa-info-circle"></i> Check Status
+            </button>
+            <div class="test-result" id="permission-result">Click buttons to test permission handling</div>
+        </div>
+
+        <!-- FCM Token -->
+        <div class="test-section">
+            <h3><i class="fas fa-key"></i> FCM Registration Token</h3>
+            <button class="test-button" onclick="getFCMToken()">
+                <i class="fas fa-key"></i> Get Token
+            </button>
+            <button class="test-button" onclick="refreshToken()">
+                <i class="fas fa-sync"></i> Refresh Token
+            </button>
+            <div id="token-display" class="token-display" style="display: none;"></div>
+            <div class="test-result" id="token-result">Token will appear here</div>
+        </div>
+
+        <!-- Service Worker -->
+        <div class="test-section">
+            <h3><i class="fas fa-cogs"></i> Service Worker Status</h3>
+            <button class="test-button" onclick="checkServiceWorker()">
+                <i class="fas fa-cogs"></i> Check SW Status
+            </button>
+            <button class="test-button" onclick="unregisterServiceWorker()">
+                <i class="fas fa-trash"></i> Unregister SW
+            </button>
+            <div class="test-result" id="sw-result">Service Worker status will appear here</div>
+        </div>
+
+        <!-- Manual Notifications -->
+        <div class="test-section">
+            <h3><i class="fas fa-paper-plane"></i> Manual Notifications</h3>
+            <button class="test-button" onclick="showTestNotification()">
+                <i class="fas fa-bell"></i> Show Test Notification
+            </button>
+            <button class="test-button" onclick="scheduleNotification()">
+                <i class="fas fa-clock"></i> Schedule Notification (5s)
+            </button>
+            <button class="test-button" onclick="showWelcomeNotification()">
+                <i class="fas fa-handshake"></i> Welcome Notification
+            </button>
+            <div class="test-result" id="notification-result">Manual notification results will appear here</div>
+        </div>
+
+        <!-- Notification Log -->
+        <div class="test-section">
+            <h3><i class="fas fa-list"></i> Notification Log</h3>
+            <button class="test-button" onclick="clearLog()">
+                <i class="fas fa-trash"></i> Clear Log
+            </button>
+            <div id="notification-log" class="notification-log">
+                <div class="log-entry log-info">[INFO] Test page loaded - waiting for Firebase initialization</div>
+            </div>
+        </div>
+
+        <!-- Browser Info -->
+        <div class="test-section">
+            <h3><i class="fas fa-globe"></i> Browser Information</h3>
+            <div class="test-result" id="browser-info">Loading browser info...</div>
+        </div>
+    </div>
+
+    <script>
+        // Global test functions
+        let notificationLog = [];
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            // Wait for NotificationManager to be available
+            setTimeout(() => {
+                if (window.NotificationManager) {
+                    logMessage('success', 'NotificationManager loaded successfully');
+                    updateFirebaseStatus('success', 'Firebase initialized successfully');
+                } else {
+                    logMessage('error', 'NotificationManager not found');
+                    updateFirebaseStatus('error', 'Failed to load NotificationManager');
+                }
+            }, 2000);
+
+            // Display browser info
+            displayBrowserInfo();
+        });
+
+        function updateFirebaseStatus(status, message) {
+            const statusEl = document.getElementById('firebase-status');
+            const resultEl = document.getElementById('firebase-result');
+
+            statusEl.innerHTML = `<span class="status-indicator status-${status}"></span>${message}`;
+            resultEl.textContent = `Status: ${message}\nTimestamp: ${new Date().toLocaleString()}`;
+        }
+
+        function logMessage(type, message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            notificationLog.push({ type, message: logEntry });
+
+            const logEl = document.getElementById('notification-log');
+            const entryEl = document.createElement('div');
+            entryEl.className = `log-entry log-${type}`;
+            entryEl.textContent = logEntry;
+            logEl.appendChild(entryEl);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function testNotificationPermission() {
+            logMessage('info', 'Testing notification permission request...');
+
+            if (!window.NotificationManager) {
+                logMessage('error', 'NotificationManager not available');
+                document.getElementById('permission-result').textContent = 'Error: NotificationManager not loaded';
+                return;
+            }
+
+            window.NotificationManager.requestPermission()
+                .then(result => {
+                    logMessage('success', `Permission result: ${result}`);
+                    document.getElementById('permission-result').textContent =
+                        `Permission: ${result}\nTimestamp: ${new Date().toLocaleString()}`;
+                })
+                .catch(error => {
+                    logMessage('error', `Permission error: ${error.message}`);
+                    document.getElementById('permission-result').textContent =
+                        `Error: ${error.message}\nTimestamp: ${new Date().toLocaleString()}`;
+                });
+        }
+
+        function checkPermissionStatus() {
+            const status = Notification.permission;
+            logMessage('info', `Current permission status: ${status}`);
+            document.getElementById('permission-result').textContent =
+                `Current Status: ${status}\nTimestamp: ${new Date().toLocaleString()}`;
+        }
+
+        function getFCMToken() {
+            logMessage('info', 'Requesting FCM token...');
+
+            if (!window.NotificationManager) {
+                logMessage('error', 'NotificationManager not available');
+                document.getElementById('token-result').textContent = 'Error: NotificationManager not loaded';
+                return;
+            }
+
+            window.NotificationManager.getToken()
+                .then(token => {
+                    if (token) {
+                        logMessage('success', 'FCM token retrieved successfully');
+                        document.getElementById('token-display').style.display = 'block';
+                        document.getElementById('token-display').textContent = token;
+                        document.getElementById('token-result').textContent =
+                            `Token Length: ${token.length} characters\nRetrieved at: ${new Date().toLocaleString()}`;
+                    } else {
+                        logMessage('warning', 'No token received');
+                        document.getElementById('token-result').textContent = 'No token available';
+                    }
+                })
+                .catch(error => {
+                    logMessage('error', `Token error: ${error.message}`);
+                    document.getElementById('token-result').textContent =
+                        `Error: ${error.message}\nTimestamp: ${new Date().toLocaleString()}`;
+                });
+        }
+
+        function refreshToken() {
+            logMessage('info', 'Refreshing FCM token...');
+
+            if (!window.NotificationManager) {
+                logMessage('error', 'NotificationManager not available');
+                return;
+            }
+
+            // Force token refresh by clearing and getting new one
+            window.NotificationManager.getToken(true)
+                .then(token => {
+                    if (token) {
+                        logMessage('success', 'FCM token refreshed successfully');
+                        document.getElementById('token-display').style.display = 'block';
+                        document.getElementById('token-display').textContent = token;
+                        document.getElementById('token-result').textContent =
+                            `New Token Length: ${token.length} characters\nRefreshed at: ${new Date().toLocaleString()}`;
+                    } else {
+                        logMessage('warning', 'No token received after refresh');
+                        document.getElementById('token-result').textContent = 'No token available after refresh';
+                    }
+                })
+                .catch(error => {
+                    logMessage('error', `Token refresh error: ${error.message}`);
+                    document.getElementById('token-result').textContent =
+                        `Error: ${error.message}\nTimestamp: ${new Date().toLocaleString()}`;
+                });
+        }
+
+        function checkServiceWorker() {
+            logMessage('info', 'Checking Service Worker status...');
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations()
+                    .then(registrations => {
+                        if (registrations.length > 0) {
+                            const sw = registrations[0];
+                            const status = sw.active ? 'active' : sw.installing ? 'installing' : 'waiting';
+                            logMessage('success', `Service Worker found: ${status}`);
+                            document.getElementById('sw-result').textContent =
+                                `Status: ${status}\nScope: ${sw.scope}\nScript: ${sw.active?.scriptURL || 'N/A'}\nTimestamp: ${new Date().toLocaleString()}`;
+                        } else {
+                            logMessage('warning', 'No Service Worker registered');
+                            document.getElementById('sw-result').textContent = 'No Service Worker registered';
+                        }
+                    })
+                    .catch(error => {
+                        logMessage('error', `Service Worker check error: ${error.message}`);
+                        document.getElementById('sw-result').textContent = `Error: ${error.message}`;
+                    });
+            } else {
+                logMessage('error', 'Service Worker not supported');
+                document.getElementById('sw-result').textContent = 'Service Worker not supported in this browser';
+            }
+        }
+
+        function unregisterServiceWorker() {
+            logMessage('warning', 'Unregistering Service Worker...');
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations()
+                    .then(registrations => {
+                        const promises = registrations.map(reg => reg.unregister());
+                        return Promise.all(promises);
+                    })
+                    .then(results => {
+                        const successCount = results.filter(r => r).length;
+                        logMessage('success', `Unregistered ${successCount} Service Workers`);
+                        document.getElementById('sw-result').textContent =
+                            `Unregistered ${successCount} Service Workers\nTimestamp: ${new Date().toLocaleString()}`;
+                    })
+                    .catch(error => {
+                        logMessage('error', `Unregister error: ${error.message}`);
+                        document.getElementById('sw-result').textContent = `Error: ${error.message}`;
+                    });
+            } else {
+                logMessage('error', 'Service Worker not supported');
+            }
+        }
+
+        function showTestNotification() {
+            logMessage('info', 'Showing test notification...');
+
+            if (!('Notification' in window)) {
+                logMessage('error', 'Notifications not supported');
+                document.getElementById('notification-result').textContent = 'Notifications not supported';
+                return;
+            }
+
+            if (Notification.permission !== 'granted') {
+                logMessage('warning', 'Notification permission not granted');
+                document.getElementById('notification-result').textContent = 'Permission not granted';
+                return;
+            }
+
+            const notification = new Notification('Test Notification', {
+                body: 'This is a test notification from Omega Jastip',
+                icon: '../images/logo.png',
+                badge: '../images/logo.png',
+                tag: 'test-notification'
+            });
+
+            notification.onclick = () => {
+                logMessage('info', 'Test notification clicked');
+                notification.close();
+            };
+
+            logMessage('success', 'Test notification displayed');
+            document.getElementById('notification-result').textContent =
+                `Test notification sent\nTimestamp: ${new Date().toLocaleString()}`;
+        }
+
+        function scheduleNotification() {
+            logMessage('info', 'Scheduling notification in 5 seconds...');
+
+            setTimeout(() => {
+                if (!('Notification' in window)) {
+                    logMessage('error', 'Notifications not supported');
+                    return;
+                }
+
+                if (Notification.permission !== 'granted') {
+                    logMessage('warning', 'Notification permission not granted');
+                    return;
+                }
+
+                const notification = new Notification('Scheduled Notification', {
+                    body: 'This notification was scheduled 5 seconds ago!',
+                    icon: '../images/logo.png',
+                    badge: '../images/logo.png',
+                    tag: 'scheduled-notification'
+                });
+
+                notification.onclick = () => {
+                    logMessage('info', 'Scheduled notification clicked');
+                    notification.close();
+                };
+
+                logMessage('success', 'Scheduled notification displayed');
+            }, 5000);
+
+            document.getElementById('notification-result').textContent =
+                `Notification scheduled for 5 seconds from now\nTimestamp: ${new Date().toLocaleString()}`;
+        }
+
+        function showWelcomeNotification() {
+            logMessage('info', 'Showing welcome notification...');
+
+            if (!window.NotificationManager) {
+                logMessage('error', 'NotificationManager not available');
+                document.getElementById('notification-result').textContent = 'NotificationManager not loaded';
+                return;
+            }
+
+            // Use the NotificationManager's showNotification method
+            window.NotificationManager.showNotification({
+                title: 'Welcome to Omega Jastip! 🎉',
+                body: 'Terima kasih telah mengunjungi website kami. Dapatkan layanan jastip terbaik di Lubuk Linggau!',
+                icon: '../images/logo.png',
+                actions: [
+                    { action: 'explore', title: 'Jelajahi Layanan' },
+                    { action: 'contact', title: 'Hubungi Kami' }
+                ]
+            });
+
+            logMessage('success', 'Welcome notification sent via NotificationManager');
+            document.getElementById('notification-result').textContent =
+                `Welcome notification sent\nTimestamp: ${new Date().toLocaleString()}`;
+        }
+
+        function clearLog() {
+            notificationLog = [];
+            document.getElementById('notification-log').innerHTML = '';
+            logMessage('info', 'Log cleared');
+        }
+
+        function displayBrowserInfo() {
+            const info = {
+                'User Agent': navigator.userAgent,
+                'Notification Support': 'Notification' in window ? 'Yes' : 'No',
+                'Service Worker Support': 'serviceWorker' in navigator ? 'Yes' : 'No',
+                'Push Support': 'PushManager' in window ? 'Yes' : 'No',
+                'Current Permission': Notification.permission,
+                'Cookie Enabled': navigator.cookieEnabled,
+                'Online Status': navigator.onLine ? 'Online' : 'Offline',
+                'Platform': navigator.platform,
+                'Language': navigator.language
+            };
+
+            let infoText = '';
+            for (const [key, value] of Object.entries(info)) {
+                infoText += `${key}: ${value}\n`;
+            }
+
+            document.getElementById('browser-info').textContent = infoText;
+        }
+
+        // Listen for notification events
+        document.addEventListener('notificationReceived', (event) => {
+            logMessage('info', `Notification received: ${event.detail.title}`);
+        });
+
+        document.addEventListener('notificationClicked', (event) => {
+            logMessage('info', `Notification clicked: ${event.detail.action || 'default'}`);
+        });
+
+        document.addEventListener('tokenRefreshed', (event) => {
+            logMessage('success', 'FCM token refreshed');
+        });
+    </script>
+</body>
+</html>

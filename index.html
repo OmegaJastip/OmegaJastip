@@ -111,6 +111,16 @@
       }
     }
     </script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/notifications.js"></script>
+    <script>
+      // Initialize notifications on page load
+      window.addEventListener('load', () => {
+        if (window.NotificationManager && typeof window.NotificationManager.init === 'function') {
+          window.NotificationManager.init();
+        }
+      });
+    </script>
 </head>
 <body>
     <!-- Header -->
