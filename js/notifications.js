@@ -1,6 +1,6 @@
 // Import Firebase messaging from config
 import { firebaseMessaging } from './firebase-config.js';
-import { onMessage } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-messaging.js";
+import { onMessage, getToken } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-messaging.js";
 const fcmMessaging = firebaseMessaging;
 
 // Save original console before protection.js overrides it
@@ -49,29 +49,66 @@ async function requestNotificationPermission() {
 // Get FCM token
 async function getFCMToken() {
   try {
-    let registration;
+    originalConsole.log('🔑 Attempting to get FCM token...');
 
-    if ('serviceWorker' in navigator) {
-      // Use the main service worker for FCM
-      registration = await navigator.serviceWorker.getRegistration('/');
-      if (!registration) {
-        registration = await navigator.serviceWorker.register('/sw.js');
-      }
+    if (!('serviceWorker' in navigator)) {
+      originalConsole.error('❌ Service Worker not supported in this browser');
+      return null;
     }
 
-    const token = await fcmMessaging.getToken({
+    originalConsole.log('🔧 Checking service worker registration...');
+
+    // Wait for any existing service worker to be ready
+    let registration = await navigator.serviceWorker.ready;
+    originalConsole.log('✅ Service worker is ready');
+
+    // If no active service worker, register one
+    if (!registration.active) {
+      originalConsole.log('📝 No active service worker, registering new one...');
+      registration = await navigator.serviceWorker.register('/sw.js');
+      originalConsole.log('✅ Service worker registered, waiting for activation...');
+
+      // Wait for the service worker to be activated
+      await new Promise((resolve) => {
+        const checkState = () => {
+          if (registration.active) {
+            resolve();
+          } else {
+            setTimeout(checkState, 100);
+          }
+        };
+        checkState();
+      });
+      originalConsole.log('✅ Service worker activated successfully');
+    } else {
+      originalConsole.log('✅ Active service worker found');
+    }
+
+    // Ensure the service worker is controlling this page
+    if (!navigator.serviceWorker.controller) {
+      originalConsole.log('🔄 Service worker not controlling page, refreshing registration...');
+      // Force refresh the registration
+      registration = await navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
+      await navigator.serviceWorker.ready;
+    }
+
+    originalConsole.log('🔐 Requesting FCM token from Firebase...');
+    const token = await getToken(fcmMessaging, {
       vapidKey: 'BBHZYHIRY2KMLJvhU2QBMC4ElGLCd13_dZS3ssVjwWsk1i3hITvlrS172cxhGpu3-gvyVKQVfGW6G1GIx7v70QQ', // REPLACE WITH YOUR VAPID KEY FROM FIREBASE CONSOLE -> Cloud Messaging -> Web Push certificates
       serviceWorkerRegistration: registration
     });
 
     if (token) {
+      originalConsole.log('🎉 FCM token obtained successfully:', token.substring(0, 50) + '...');
       // Send token to your server for storing and sending notifications
       sendToServer(token);
       return token;
     } else {
+      originalConsole.warn('⚠️ No FCM token received from Firebase');
       return null;
     }
   } catch (error) {
+    originalConsole.error('❌ Error getting FCM token:', error);
     return null;
   }
 }
@@ -681,6 +718,101 @@ class ScheduledNotificationManager {
 // Initialize scheduled notification manager
 const scheduledNotificationManager = new ScheduledNotificationManager();
 
+// Show welcome notification
+function showWelcomeNotification() {
+  if (!('Notification' in window)) {
+    originalConsole.warn('Notifications not supported in this browser');
+    alert('Notifikasi tidak didukung oleh browser Anda.');
+    return;
+  }
+
+  if (Notification.permission !== 'granted') {
+    originalConsole.warn('Notification permission not granted');
+    alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+    return;
+  }
+
+  // Use NotificationManager's sendPushNotification for consistency
+  window.NotificationManager.sendPushNotification(
+    'Selamat Datang di Omega Jastip! 🎉',
+    'Terima kasih telah mengunjungi website kami. Dapatkan layanan jastip terbaik di Lubuk Linggau!'
+  );
+
+  originalConsole.log('Welcome notification sent via NotificationManager');
+}
+
+// Schedule a simple notification (different from the manager's scheduleNotification)
+function scheduleNotification() {
+  if (!('Notification' in window)) {
+    originalConsole.warn('Notifications not supported in this browser');
+    alert('Notifikasi tidak didukung oleh browser Anda.');
+    return;
+  }
+
+  if (Notification.permission !== 'granted') {
+    originalConsole.warn('Notification permission not granted');
+    alert('Notifikasi belum diizinkan. Klik "Izinkan" pada prompt notifikasi untuk mengaktifkan.');
+    return;
+  }
+
+  originalConsole.log('Scheduling notification in 5 seconds...');
+
+  setTimeout(() => {
+    const notification = new Notification('Notifikasi Terjadwal', {
+      body: 'Ini adalah notifikasi yang dijadwalkan 5 detik yang lalu!',
+      icon: '/images/logo.png',
+      badge: '/images/favicon-32x32.png',
+      tag: 'scheduled-test-notification'
+    });
+
+    notification.onclick = () => {
+      window.focus();
+      notification.close();
+    };
+
+    // Auto close after 8 seconds
+    setTimeout(() => {
+      notification.close();
+    }, 8000);
+
+    originalConsole.log('Scheduled notification displayed');
+  }, 5000);
+}
+
+// Show notification with options object (for compatibility with test page)
+function showNotification(options) {
+  if (!('Notification' in window)) {
+    originalConsole.warn('Notifications not supported in this browser');
+    return;
+  }
+
+  if (Notification.permission !== 'granted') {
+    originalConsole.warn('Notification permission not granted');
+    return;
+  }
+
+  const notification = new Notification(options.title || 'Omega Jastip', {
+    body: options.body || 'Ada update baru dari Omega Jastip!',
+    icon: options.icon || '/images/logo.png',
+    badge: options.badge || '/images/favicon-32x32.png',
+    tag: options.tag || 'notification',
+    requireInteraction: options.requireInteraction || false,
+    actions: options.actions || []
+  });
+
+  notification.onclick = () => {
+    window.focus();
+    notification.close();
+  };
+
+  // Auto close after specified time or default 10 seconds
+  setTimeout(() => {
+    notification.close();
+  }, options.timeout || 10000);
+
+  originalConsole.log('Notification displayed:', options.title);
+}
+
 // Export functions
 window.NotificationManager = {
   init: initNotifications,
@@ -688,9 +820,12 @@ window.NotificationManager = {
   getToken: getFCMToken,
   testNotification: showTestNotification,
   sendPushNotification: sendPushNotification,
+  showNotification: showNotification,
+  showWelcomeNotification: showWelcomeNotification,
+  scheduleNotification: scheduleNotification,
 
   // Scheduled notification functions
-  scheduleNotification: (title, options, delayMs, id) => scheduledNotificationManager.scheduleNotification(title, options, delayMs, id),
+  scheduleNotificationAdvanced: (title, options, delayMs, id) => scheduledNotificationManager.scheduleNotification(title, options, delayMs, id),
   getScheduledNotifications: () => scheduledNotificationManager.getScheduledNotifications(),
   clearAllScheduledNotifications: () => scheduledNotificationManager.clearAllScheduledNotifications(),
   removeScheduledNotification: (id) => scheduledNotificationManager.removeScheduledNotification(id)

@@ -1,10 +1,7 @@
-/**
- * Firebase configuration and initialization using modular SDK
- */
-
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
 import { getMessaging } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-messaging.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,9 +15,9 @@ const firebaseConfig = {
   measurementId: "G-4LFXCXK7YG"
 };
 
-// Initialize Firebase app
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const firebaseMessaging = getMessaging(app);
 
-// Initialize Firebase Cloud Messaging and export it
-export const firebaseMessaging = getMessaging(app);
+export { firebaseMessaging };
