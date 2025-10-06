@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Mango Queen Lubuklinggau",
-    "category": "Makanan Cepat Saji",
+    "category": "Minuman & Makanan",
     "description": "Minuman kekinian",
     "image": "../images/resto/manggo-queen.jpg",
     "address": "Jl. Lintas Sumatera, Jawa Kanan, Kec. Lubuk Linggau Tim. II, Kota Lubuklinggau, Sumatera Selatan 31613",
@@ -1128,8 +1128,8 @@
   {
     "id": 1759610839261,
     "name": "Pindang Bikmuk",
-    "category": "Makanan",
-    "description": "Makanan Khas Palembang",
+    "category": "Pindang",
+    "description": "Makanan khas sumatera 🍛🍲\nBahan berkualitas dan fresh 🌼\n• PINDANG TULANG\n• PINDANG PEGAGAN\n• PECEL LELE & AYAM\nNASI BUNGKUS SERBA 10,000,- & SNACK",
     "image": "../images/resto/pindang-bikmuk.jpg",
     "address": "Jalan Depat Said Talang Rejo Di Dekat Bidan Tuning ",
     "phone": "-",
@@ -1270,7 +1270,7 @@
   {
     "id": 1759610985328,
     "name": "Bakso Solo Gembira",
-    "category": "Makanan",
+    "category": "Bakso",
     "description": "Menjual Berbagai makanan Khas Solo",
     "image": "../images/resto/bakso-solo-gembira.png",
     "address": "Jalan Yos Sudarso, Talang Jawa Kiri, Lubuk Linggau Timur I, Jawa Kiri, Kec. Lubuk Linggau Tim. II, Lubuk Linggau, Sumatera Selatan 31628",
@@ -1961,26 +1961,9 @@
     ]
   },
   {
-    "id": 1759611239602,
-    "name": "Seblak Alin-lin",
-    "category": "Seblak",
-    "description": "Menjual Berbagai macam seblak",
-    "image": "",
-    "address": "Depan toko pulau mas indah sebrang terminal mesat jaya",
-    "phone": "-",
-    "operating_hours": "-",
-    "price_range": "-",
-    "rating": 5,
-    "delivery_available": true,
-    "pickup_available": true,
-    "latitude": -3.2963499,
-    "longitude": 102.8646077,
-    "services": []
-  },
-  {
     "id": 1759611310962,
     "name": "Singkong Meledak",
-    "category": "Makanan",
+    "category": "Singkong",
     "description": "Menjual Singkong Meledak",
     "image": "../images/resto/singkong-meledak.jpg",
     "address": "Di Depan Pasar Mambo",
@@ -2028,7 +2011,7 @@
   {
     "id": 1759611383021,
     "name": "SATE PADANG PAK WAR",
-    "category": "Makanan",
+    "category": "Sate",
     "description": "Menjual Sate Padang dan Kacang",
     "image": "../images/resto/sate-padang-pakwar.png",
     "address": "Jl. Garuda, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31614",
@@ -2120,23 +2103,6 @@
         ]
       }
     ]
-  },
-  {
-    "id": 1759611508503,
-    "name": "Martabak Depan Kantor Pos",
-    "category": "Makanan",
-    "description": "Menjual Martabak Telor Dan Martabak manis",
-    "image": "",
-    "address": "Di Depan Kantor Pos ",
-    "phone": "-",
-    "operating_hours": "-",
-    "price_range": "-",
-    "rating": 5,
-    "delivery_available": true,
-    "pickup_available": true,
-    "latitude": -3.2969894,
-    "longitude": 102.8616328,
-    "services": []
   },
   {
     "id": 1759611577046,
@@ -2241,7 +2207,7 @@
   {
     "id": 1759611633616,
     "name": "Bakso Len 2",
-    "category": "makanan",
+    "category": "Bakso",
     "description": "Menjual Berbagai-macam bakso ",
     "image": "../images/resto/bakso-len2.jpg",
     "address": "Jalan Puyuh, Bandung Kanan, Kec. Lubuk Linggau Bar. II, Kota Lubuklinggau, Sumatera Selatan 31613",
@@ -2328,7 +2294,7 @@
   {
     "id": 1759626239143,
     "name": "Kedai Barokah",
-    "category": "Makanan",
+    "category": "Sarapan pagi",
     "description": "Menjual Sarapan pagi",
     "image": "../images/resto/kedai-barokah.jpg",
     "address": "Depan Polres Lubuklingau, Dempo, Lubuk Linggau Timur II, Lubuklinggau City, South Sumatra 31613",
@@ -2345,7 +2311,7 @@
   {
     "id": 1759626302997,
     "name": "Soto Bonek Surabaya",
-    "category": "Makanan",
+    "category": "Soto",
     "description": "Menjual Soto Surabaya",
     "image": "../images/resto/soto-bonex.png",
     "address": "Jl. Yos Sudarso No.52, Jawa Kanan Ss, Kec. Lubuk Linggau Tim. II, Kota Lubuklinggau, Sumatera Selatan 31613",
@@ -2362,7 +2328,7 @@
   {
     "id": 1759626430568,
     "name": "Sate Berkah",
-    "category": "Makanan",
+    "category": "Sate berkah ",
     "description": "Menjual Sate Ayam prosian,tumpeng,mika ",
     "image": "../images/resto/sate-berkah.jpg",
     "address": "Jl. Bukit Barisan, Dempo, Kec. Lubuk Linggau Tim. II, Kota Lubuklinggau, Sumatera Selatan 31613",
@@ -2374,23 +2340,237 @@
     "pickup_available": true,
     "latitude": -3.2956458,
     "longitude": 102.8534091,
-    "services": []
+    "services": [
+      {
+        "category": "Tumpeng",
+        "name": "Sate",
+        "variants": [
+          {
+            "variant": "40 Tusuk",
+            "price": "Rp 100.000"
+          },
+          {
+            "variant": "60 Tusuk",
+            "price": "Rp 150.000"
+          },
+          {
+            "variant": "90 Tusuk",
+            "price": "Rp 200.000"
+          },
+          {
+            "variant": "120 Tusuk",
+            "price": "Rp 250.000"
+          },
+          {
+            "variant": "150 Tusuk",
+            "price": "Rp 300.000"
+          },
+          {
+            "variant": "250 Tusuk",
+            "price": "Rp 500.000"
+          }
+        ]
+      },
+      {
+        "category": "Bungkusan",
+        "name": "Sate",
+        "variants": [
+          {
+            "variant": "6 Tusuk",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "15 Tusuk",
+            "price": "Rp 9.000"
+          },
+          {
+            "variant": "12 Tusuk",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Hampes",
+        "name": "Sate",
+        "variants": [
+          {
+            "variant": "35 Tusuk",
+            "price": "Rp 75.000"
+          },
+          {
+            "variant": "50 Tusuk",
+            "price": "Rp 100.000"
+          }
+        ]
+      },
+      {
+        "category": "Tumpeng",
+        "name": "Pempek",
+        "variants": [
+          {
+            "variant": "30 Pcs",
+            "price": "Rp 110.000"
+          },
+          {
+            "variant": "45 Pcs",
+            "price": "Rp 150.000"
+          },
+          {
+            "variant": "60 Pcs",
+            "price": "Rp 200.000"
+          },
+          {
+            "variant": "75 Pcs",
+            "price": "Rp 250.000"
+          },
+          {
+            "variant": "100 Pcs",
+            "price": "Rp 300.000"
+          }
+        ]
+      },
+      {
+        "category": "Mika ",
+        "name": "Sate",
+        "variants": [
+          {
+            "variant": "30 Tusuk + Tulisan ",
+            "price": "Rp 53.000"
+          },
+          {
+            "variant": "60 Tusuk",
+            "price": "Rp 100.000"
+          }
+        ]
+      },
+      {
+        "category": "Kotak ",
+        "name": "Sate + Sendok",
+        "variants": [
+          {
+            "variant": "5 Tusuk",
+            "price": "Rp 11.000"
+          },
+          {
+            "variant": "8 Tusuk",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "11 Tusuk",
+            "price": "Rp 20.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759766953527,
     "name": "Mie Pioner",
     "category": "Mie",
     "description": "",
-    "image": "",
-    "address": "Jl. Pioner No.66, Air Kuti, Kec. Lubuk Linggau Tim. I, Kota Lubuklinggau, Sumatera Selatan 31625",
+    "image": "../images/resto/mie-pioner.jpg",
+    "address": "Jln Pioner (samping stm) Taba Pingin Llg\n\n",
     "phone": "-",
-    "operating_hours": "-",
-    "price_range": "-",
+    "operating_hours": "09:00 - 18:00",
+    "price_range": "Rp 4.000 - Rp 30.000",
     "rating": 5,
     "delivery_available": true,
     "pickup_available": false,
     "latitude": -3.2712433,
     "longitude": 102.9107813,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Mie Pioner",
+        "variants": [
+          {
+            "variant": "Level 1",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Level 2",
+            "price": "Rp 13.000"
+          },
+          {
+            "variant": "Level 3",
+            "price": "Rp 14.000"
+          },
+          {
+            "variant": "Level 4",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Level 5",
+            "price": "Rp 16.000"
+          },
+          {
+            "variant": "Extra Spicy",
+            "price": "Rp 20.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Nasi",
+        "variants": [
+          {
+            "variant": "Ikan Cakalang",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Ayam Suwir",
+            "price": "Rp 12.000"
+          },
+          {
+            "variant": "Mix 2 lauk",
+            "price": "Rp 15.000"
+          }
+        ]
+      },
+      {
+        "category": "Minuman",
+        "name": "Es",
+        "variants": [
+          {
+            "variant": "Jangung Creamy",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Jangung Creamy Keju",
+            "price": "Rp 7.000"
+          },
+          {
+            "variant": "Semangka",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Jeruk",
+            "price": "Rp 4.000"
+          },
+          {
+            "variant": "Teh",
+            "price": "Rp 4.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Snack",
+        "variants": [
+          {
+            "variant": "Queen Salad Small Size",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Queen Salad Big Size",
+            "price": "Rp 30.000"
+          },
+          {
+            "variant": "Queen Salad Jagung",
+            "price": "Rp 10.000"
+          }
+        ]
+      }
+    ]
   }
 ]
