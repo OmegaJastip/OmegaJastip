@@ -1140,7 +1140,132 @@
     "pickup_available": true,
     "latitude": -3.3047591,
     "longitude": 102.8445106,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Pindang",
+        "variants": [
+          {
+            "variant": "Pindang Tulang",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Penganan Patin Biasa",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Penganan Patin Sungai Kepala / Ekor",
+            "price": "Rp 50.000"
+          },
+          {
+            "variant": "Pegangan Patin Sungai Badan",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Pegangan Baung",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Pegangan Tapa Kepala / Ekor",
+            "price": "Rp 50.000"
+          },
+          {
+            "variant": "Pegangan Tapa Badan",
+            "price": "Rp 35.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Goreng / Bakar",
+        "variants": [
+          {
+            "variant": "Lele",
+            "price": "Rp 10.000"
+          },
+          {
+            "variant": "Nila",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ayam",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ayam Kampung",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Bebek ",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Puyuh",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Telur Dadar",
+            "price": "Rp 5.000"
+          },
+          {
+            "variant": "Ikan Seluang Goreng",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Nasi Putih ",
+            "price": "Rp 5.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Gulai Tempoyak",
+        "variants": [
+          {
+            "variant": "Patin Biasa",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Patin Sungai Kepala / Ekor",
+            "price": "Rp 50.000"
+          },
+          {
+            "variant": "Patin Sungai Badan",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Baung",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Tapa Kepala / Ekor",
+            "price": "Rp 50.000"
+          },
+          {
+            "variant": "Badan",
+            "price": "Rp 35.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Brengkes / Pepes",
+        "variants": [
+          {
+            "variant": "Patin",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Patin Sungai",
+            "price": "Rp 35.000"
+          },
+          {
+            "variant": "Nila",
+            "price": "Rp 20.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759610985328,
