@@ -13,5 +13,20 @@
     "delivery_available": true,
     "pickup_available": true,
     "services": []
+  },
+  {
+    "id": 1759805342042,
+    "name": "Karya Tama",
+    "category": "Grosir",
+    "description": "Menjual Berbagai Macam Barang Grosir",
+    "image": "",
+    "address": "PV86+3Q6, Jl. Jendral Sudirman, Ps. Satelit, Kec. Lubuk Linggau Utara II, Kota Lubuklinggau, Sumatera Selatan 31617",
+    "phone": "-",
+    "operating_hours": "-",
+    "price_range": "-",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": false,
+    "services": []
   }
 ]
