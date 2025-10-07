@@ -2595,7 +2595,7 @@
     "name": "Kedaiqiu110",
     "category": "Kedai",
     "description": "",
-    "image": "",
+    "image": "../images/resto/kedaiqiu.jpg",
     "address": "Jl. Batu Urip, Batu Urip Taba, Lubuk Linggau Timur I, Lubuklinggau City, South Sumatra 31628",
     "phone": "-",
     "operating_hours": "-",
@@ -2605,6 +2605,45 @@
     "pickup_available": true,
     "latitude": -3.2805233,
     "longitude": 102.8908314,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Rice Bowl",
+        "variants": [
+          {
+            "variant": "Sambel Telur",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ayam Suir Manis",
+            "price": "Rp 15.000"
+          },
+          {
+            "variant": "Ayam Suir Pedas",
+            "price": "Rp 17.000"
+          },
+          {
+            "variant": "Cumi Asin Pedas",
+            "price": "Rp 20.000"
+          },
+          {
+            "variant": "Bistik Sapi",
+            "price": "Rp 22.000"
+          },
+          {
+            "variant": "Sambal Daging",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Sambal Paru",
+            "price": "Rp 25.000"
+          },
+          {
+            "variant": "Tuna Suwir Pedas",
+            "price": "Rp 17.000"
+          }
+        ]
+      }
+    ]
   }
 ]
