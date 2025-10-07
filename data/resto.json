@@ -2278,7 +2278,7 @@
     "id": 1759611747258,
     "name": "Arkhan Street Food",
     "category": "Makanan",
-    "description": "",
+    "description": "Makanan Khas Timur Tengah",
     "image": "../images/resto/arkhan-street-food.jpg",
     "address": "Di Depan Porles Lubuklinggau",
     "phone": "-",
@@ -2289,7 +2289,38 @@
     "pickup_available": true,
     "latitude": -3.2957154,
     "longitude": 102.8658436,
-    "services": []
+    "services": [
+      {
+        "category": "Makanan",
+        "name": "Nasi Briyani Bombay",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Nasi Mandhi",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 10.000"
+          }
+        ]
+      },
+      {
+        "category": "Makanan",
+        "name": "Lontong Kuah Kari",
+        "variants": [
+          {
+            "variant": null,
+            "price": "Rp 10.000"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": 1759626239143,
