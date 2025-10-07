@@ -2645,5 +2645,22 @@
         ]
       }
     ]
+  },
+  {
+    "id": 1759806296926,
+    "name": "Seafood Al Aziz",
+    "category": "Seafood",
+    "description": "",
+    "image": "",
+    "address": "Jl. Letkol Atmo, Bandung Kiri, Kec. Lubuk Linggau Bar. I, Kota Lubuklinggau, Sumatera Selatan 31614",
+    "phone": "-",
+    "operating_hours": "-",
+    "price_range": "-",
+    "rating": 5,
+    "delivery_available": true,
+    "pickup_available": false,
+    "latitude": -3.3019517,
+    "longitude": 102.8572395,
+    "services": []
   }
 ]
