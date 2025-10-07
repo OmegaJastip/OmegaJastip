@@ -212,23 +212,90 @@ self.addEventListener('notificationclick', event => {
   }
 });
 
+// IndexedDB functions for scheduled notifications
+function openScheduledNotificationsDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('ScheduledNotificationsDB', 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains('notifications')) {
+        db.createObjectStore('notifications', { keyPath: 'id' });
+      }
+    };
+  });
+}
+
+async function storeScheduledNotification(notification) {
+  try {
+    const db = await openScheduledNotificationsDB();
+    const transaction = db.transaction(['notifications'], 'readwrite');
+    const store = transaction.objectStore('notifications');
+    await new Promise((resolve, reject) => {
+      const request = store.put(notification);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+    db.close();
+  } catch (error) {
+    console.error('Error storing scheduled notification:', error);
+  }
+}
+
+async function getDueNotifications() {
+  try {
+    const db = await openScheduledNotificationsDB();
+    const transaction = db.transaction(['notifications'], 'readonly');
+    const store = transaction.objectStore('notifications');
+    const notifications = await new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    db.close();
+    const now = Date.now();
+    return notifications.filter(n => n.scheduledTime <= now);
+  } catch (error) {
+    console.error('Error getting due notifications:', error);
+    return [];
+  }
+}
+
+async function removeScheduledNotification(id) {
+  try {
+    const db = await openScheduledNotificationsDB();
+    const transaction = db.transaction(['notifications'], 'readwrite');
+    const store = transaction.objectStore('notifications');
+    await new Promise((resolve, reject) => {
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+    db.close();
+  } catch (error) {
+    console.error('Error removing scheduled notification:', error);
+  }
+}
+
 // Handle messages from main thread for scheduled notifications
 self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SCHEDULE_NOTIFICATION') {
-    const { title, options, delayMs, id } = event.data;
+    const { title, options, scheduledTime, id } = event.data;
 
-    // Store scheduled notification in IndexedDB or similar
-    // For simplicity, we'll use a basic approach with setTimeout
-    // Note: setTimeout in service worker will only work while the service worker is active
-    setTimeout(() => {
-      self.registration.showNotification(title, {
+    // Store in IndexedDB
+    storeScheduledNotification({
+      id,
+      title,
+      options: {
         ...options,
         icon: options.icon || '/images/logo.png',
         badge: options.badge || '/images/favicon-32x32.png',
         tag: options.tag || id,
         data: { scheduled: true, id }
-      });
-    }, delayMs);
+      },
+      scheduledTime
+    });
   }
 });
 
@@ -238,8 +305,14 @@ setInterval(() => {
   checkScheduledNotifications();
 }, 5 * 60 * 1000); // 5 minutes
 
-function checkScheduledNotifications() {
-  // In a real implementation, you'd check IndexedDB or a server for scheduled notifications
-  // For this demo, we'll skip this as the main thread handles scheduling
-  // when the app is open
+async function checkScheduledNotifications() {
+  try {
+    const dueNotifications = await getDueNotifications();
+    for (const notification of dueNotifications) {
+      self.registration.showNotification(notification.title, notification.options);
+      await removeScheduledNotification(notification.id);
+    }
+  } catch (error) {
+    console.error('Error checking scheduled notifications:', error);
+  }
 }

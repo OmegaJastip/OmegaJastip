@@ -639,10 +639,8 @@ class ScheduledNotificationManager {
 
       // Also send to service worker for background scheduling
       this.sendToServiceWorker(notification);
-    } else {
-      // If delay is negative (past due), show immediately
-      this.showScheduledNotification(notification);
     }
+    // If delay is negative or zero (past due), do not show immediately, only schedule for next occurrence
   }
 
   // Send scheduled notification to service worker
